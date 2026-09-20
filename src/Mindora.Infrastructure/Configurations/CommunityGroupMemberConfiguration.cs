@@ -11,7 +11,7 @@ namespace Mindora.Infrastructure.Configurations
             builder.HasKey(cgm => new { cgm.GroupId, cgm.UserId });
 
             builder.Property(cgm => cgm.JoinedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(cgm => cgm.Group)

@@ -20,7 +20,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Pending");
 
             builder.Property(r => r.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasOne(r => r.Payment)
                 .WithMany()

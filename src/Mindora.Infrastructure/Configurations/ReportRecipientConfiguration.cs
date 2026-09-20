@@ -16,7 +16,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Email");
 
             builder.Property(r => r.AddedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(r => r.ScheduledReport)

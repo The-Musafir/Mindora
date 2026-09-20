@@ -14,7 +14,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasForeignKey(dpr => dpr.UserId);
             builder.Property(dpr => dpr.RequestType).IsRequired().HasMaxLength(50);
             builder.Property(dpr => dpr.Status).HasDefaultValue("Pending");
-            builder.Property(dpr => dpr.RequestedAt).HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(dpr => dpr.RequestedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
     }
 }

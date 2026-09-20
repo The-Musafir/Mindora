@@ -20,7 +20,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Pending");
 
             builder.Property(f => f.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(f => f.Post)

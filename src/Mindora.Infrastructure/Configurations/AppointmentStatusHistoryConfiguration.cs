@@ -15,7 +15,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasMaxLength(50);
 
             builder.Property(h => h.ChangedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasOne(h => h.Appointment)
                 .WithMany(a => a.StatusHistories)

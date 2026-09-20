@@ -18,7 +18,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasColumnType("decimal(18,2)");
 
             builder.Property(i => i.IssuedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationship
             builder.HasOne(i => i.Payment)

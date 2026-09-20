@@ -18,7 +18,7 @@ namespace Mindora.Infrastructure.Configurations
                 .IsRequired();
 
             builder.Property(s => s.GeneratedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasOne<User>()
                 .WithMany()

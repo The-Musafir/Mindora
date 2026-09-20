@@ -16,7 +16,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("InProgress");
 
             builder.Property(ua => ua.StartedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(ua => ua.User)

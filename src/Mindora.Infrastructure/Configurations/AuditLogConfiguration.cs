@@ -15,7 +15,7 @@ namespace Mindora.Infrastructure.Configurations
             builder.Property(a => a.OldValues);
             builder.Property(a => a.NewValues);
             builder.Property(a => a.IpAddress).HasMaxLength(50);
-            builder.Property(a => a.Timestamp).HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(a => a.Timestamp).HasDefaultValueSql("CURRENT_TIMESTAMP");
             builder.HasIndex(a => a.UserId);
             builder.HasIndex(a => a.TableName);
         }

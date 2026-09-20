@@ -39,7 +39,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue(false);
 
             builder.Property(h => h.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationship with User
             builder.HasOne(h => h.User)

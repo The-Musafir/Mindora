@@ -36,11 +36,11 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Subscription");
 
             builder.Property(p => p.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasIndex(p => p.IdempotencyKey)
                 .IsUnique()
-                .HasFilter("[IdempotencyKey] IS NOT NULL");
+                .HasFilter("\"IdempotencyKey\" IS NOT NULL");
 
             // Relationships
             builder.HasOne(p => p.User)

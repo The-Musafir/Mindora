@@ -17,7 +17,7 @@ namespace Mindora.Infrastructure.Configurations
             // Prevent self-follow at DB level (with check constraint)
             builder.ToTable(t => t.HasCheckConstraint(
                 "CK_UserFollow_NoSelfFollow",
-                "[FollowerId] <> [FollowingId]"));
+                "\"FollowerId\" <> \"FollowingId\""));
 
             // Follower relationship
             builder.HasOne(f => f.Follower)
@@ -32,7 +32,7 @@ namespace Mindora.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(f => f.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Indexes for performance
             builder.HasIndex(f => f.FollowerId);

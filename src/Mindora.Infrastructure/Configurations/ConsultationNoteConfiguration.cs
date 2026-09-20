@@ -15,7 +15,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasMaxLength(4000);
 
             builder.Property(n => n.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(n => n.Session)

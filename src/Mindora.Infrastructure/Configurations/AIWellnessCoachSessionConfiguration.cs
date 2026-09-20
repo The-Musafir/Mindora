@@ -11,7 +11,7 @@ namespace Mindora.Infrastructure.Configurations
             builder.HasKey(s => s.SessionId);
 
             builder.Property(s => s.StartedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.Property(s => s.IsActive)
                 .HasDefaultValue(true);

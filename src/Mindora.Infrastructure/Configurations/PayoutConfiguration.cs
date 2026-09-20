@@ -28,7 +28,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Pending");
 
             builder.Property(p => p.RequestedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasOne(p => p.Provider)
                 .WithMany()

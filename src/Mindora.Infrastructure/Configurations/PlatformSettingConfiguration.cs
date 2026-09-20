@@ -19,7 +19,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasMaxLength(500);
 
             builder.Property(s => s.UpdatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasIndex(s => s.Key).IsUnique();
         }

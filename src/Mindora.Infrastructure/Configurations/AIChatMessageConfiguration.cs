@@ -28,7 +28,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasMaxLength(100);
 
             builder.Property(m => m.SentAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.Property(m => m.Metadata)
                 .HasMaxLength(4000);

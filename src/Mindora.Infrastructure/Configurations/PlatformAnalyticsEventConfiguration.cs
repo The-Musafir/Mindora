@@ -18,7 +18,7 @@ namespace Mindora.Infrastructure.Configurations
             builder.Property(e => e.Payload);
 
             builder.Property(e => e.Timestamp)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.HasIndex(e => new { e.EventType, e.Timestamp });
             builder.HasIndex(e => e.UserId);

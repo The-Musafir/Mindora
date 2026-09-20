@@ -18,7 +18,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue(false);
 
             builder.Property(c => c.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(c => c.Post)

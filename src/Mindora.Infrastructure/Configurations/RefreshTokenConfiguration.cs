@@ -14,7 +14,7 @@ namespace Mindora.Infrastructure.Configurations
                 .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasIndex(rt => rt.Token);
-            builder.Property(rt => rt.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(rt => rt.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
     }
 }

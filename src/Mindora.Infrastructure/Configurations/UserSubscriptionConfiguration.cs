@@ -16,13 +16,13 @@ namespace Mindora.Infrastructure.Configurations
                 .HasDefaultValue("Active");
 
             builder.Property(s => s.StartDate)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             builder.Property(s => s.EndDate)
                 .IsRequired();
 
             builder.Property(s => s.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Relationships
             builder.HasOne(s => s.User)

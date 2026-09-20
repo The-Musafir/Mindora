@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +50,7 @@ builder.Services.AddScoped<INotificationDispatcher, NotificationDispatcher>();
 // DATABASE CONTEXT
 // ============================================================
 builder.Services.AddDbContext<MindoraDbContext>(options =>
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("Mindora.Infrastructure"))
     .AddInterceptors(new AuditInterceptor()));

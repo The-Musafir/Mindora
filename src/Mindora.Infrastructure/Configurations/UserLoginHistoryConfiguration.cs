@@ -9,7 +9,7 @@ namespace Mindora.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<UserLoginHistory> builder)
         {
             builder.HasKey(l => l.LoginHistoryId);
-            builder.Property(l => l.LoginAt).HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(l => l.LoginAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             builder.Property(l => l.IpAddress).HasMaxLength(50);
             builder.Property(l => l.UserAgent).HasMaxLength(500);
             builder.Property(l => l.IsSuccess).HasDefaultValue(true);

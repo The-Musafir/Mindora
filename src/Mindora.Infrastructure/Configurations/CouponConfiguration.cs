@@ -16,7 +16,7 @@ namespace Mindora.Infrastructure.Configurations
             builder.Property(c => c.UsageLimit).IsRequired();
             builder.Property(c => c.UsageCount).HasDefaultValue(0);
             builder.Property(c => c.IsActive).HasDefaultValue(true);
-            builder.Property(c => c.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            builder.Property(c => c.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             builder.HasIndex(c => c.Code).IsUnique();
         }
     }
