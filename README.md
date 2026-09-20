@@ -1,6 +1,6 @@
 ﻿<div align="center">
 
-# <img width="1536" height="374" alt="image" src="https://github.com/user-attachments/assets/1c4505a4-9bd1-4a40-b671-58e4601f97f3" />
+<img src="./src/Mindora.Web/wwwroot/images/logo/Mindora-Logo.svg" alt="Mindora" width="260" height="80" />
 ### Recover. Reflect. Rebuild.
 
 **AI-Powered Habit Recovery, Mental Wellness & Professional Support Platform**
