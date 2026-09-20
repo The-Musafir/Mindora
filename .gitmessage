@@ -1,0 +1,18 @@
+﻿# <type>(<scope>): <short summary in imperative mood, under 72 chars>
+#
+# <optional body explaining the WHY, not the WHAT>
+# Wrap at 72 characters per line.
+#
+# <optional footer>
+# BREAKING CHANGE: <description>
+# Closes #<issue-number>
+#
+# ------------------------------------------------------------------
+# Types:  feat | fix | docs | style | refactor | test | chore | perf
+# Scope examples: habit, journal, ai, payment, signalr, admin, auth
+# Examples:
+#   feat(habit): add streak recovery after relapse
+#   fix(auth): handle expired refresh token gracefully
+#   docs(readme): update deployment section with docker steps
+#   chore(deps): bump Microsoft.EntityFrameworkCore to 10.0.12
+# ------------------------------------------------------------------
