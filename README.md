@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
 
 # <img width="1536" height="374" alt="image" src="https://github.com/user-attachments/assets/1c4505a4-9bd1-4a40-b671-58e4601f97f3" />
 ### Recover. Reflect. Rebuild.
@@ -9,21 +9,21 @@ A modular wellness technology platform engineered to bring together **habit reco
 
 <br>
 
-[![Organization](https://img.shields.io/badge/Organization-Bithix-6C5CE7?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bithix)
-[![Repository](https://img.shields.io/badge/Repository-Mindora-00B894?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bithix/Mindora)
+
+
 [![.NET](https://img.shields.io/badge/.NET-10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![C#](https://img.shields.io/badge/C%23-Backend-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-Web%20Platform-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://learn.microsoft.com/aspnet/core/)
 [![EF Core](https://img.shields.io/badge/EF%20Core-ORM-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://learn.microsoft.com/ef/core/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-UI-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![Status](https://img.shields.io/badge/Status-Active%20Development-FFB000?style=for-the-badge)](https://github.com/Bithix/Mindora)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-FFB000?style=for-the-badge)](https://github.com/The-Musafir/Mindora)
 
 <br><br>
 
-> **Mindora is being developed collaboratively by the Bithix engineering team.**
+> **A personal portfolio project showcasing ASP.NET Core, Clean Architecture, SignalR, and AI integration.**
 
-[Explore Repository](https://github.com/Bithix/Mindora) • [Organization](https://github.com/Bithix) • [Report an Issue](https://github.com/Bithix/Mindora/issues)
+[Explore Repository](https://github.com/The-Musafir/Mindora) • [Profile](https://github.com/The-Musafir) • [Report an Issue](https://github.com/The-Musafir/Mindora/issues)
 
 </div>
 
@@ -31,7 +31,7 @@ A modular wellness technology platform engineered to bring together **habit reco
 
 ## ℹ️ What is Mindora?
 
-**Mindora** is a modular digital wellness platform being engineered by **Bithix**.
+**Mindora** is a modular digital wellness platform built with **ASP.NET Core MVC, Clean Architecture, and modern .NET**.
 The project is designed around a broader wellness ecosystem rather than a single-purpose application. Its domain model currently contains concepts covering:
 
 - 🧠 Mental wellness & self-reflection
@@ -558,7 +558,7 @@ dotnet --version
 
 ### 1. Clone
 ```bash
-git clone https://github.com/Bithix/Mindora.git
+git clone https://github.com/The-Musafir/Mindora.git
 cd Mindora
 ```
 
@@ -710,7 +710,7 @@ This repository contains a `LICENSE` file. Refer to `LICENSE` for the project's 
 
 <br><br>
 
-[![Explore Mindora](https://img.shields.io/badge/⭐%20Explore%20Mindora-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bithix/Mindora)
+[![Explore Mindora](https://img.shields.io/badge/⭐%20Explore%20Mindora-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/The-Musafir/Mindora)
 [![Contact Bithix](https://img.shields.io/badge/✉%20Contact%20Bithix-7C3AED?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bithix29@gmail.com)
 
 <br><br>

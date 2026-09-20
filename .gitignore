@@ -472,3 +472,7 @@ src/Mindora.Web/wwwroot/uploads/*
 node_modules/
 package-lock.json
 
+
+# Temporary README backup (do not commit)
+README.md.pre-cleanup-backup
+
