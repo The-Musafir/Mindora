@@ -476,3 +476,7 @@ package-lock.json
 # Temporary README backup (do not commit)
 README.md.pre-cleanup-backup
 
+
+# README backups (any version)
+README.md.pre-cleanup-backup*
+
