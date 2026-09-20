@@ -1,0 +1,65 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Reporting.GeneratedReportDto>
+
+@{
+    ViewData["Title"] = "All Reports";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">All Generated Reports</h2>
+        <div class="d-flex gap-2">
+            <a asp-action="ExportRevenue" class="btn btn-outline-primary btn-sm">Export Revenue (CSV)</a>
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No reports available.</div>
+    }
+    else
+    {
+        <div class="reporting-card shadow-sm">
+            <div class="table-responsive">
+                <table class="table reporting-table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Type</th>
+                            <th>Requested By</th>
+                            <th>Format</th>
+                            <th>Status</th>
+                            <th>Requested</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var report in Model)
+                        {
+                            <tr>
+                                <td>@report.ReportType</td>
+                                <td>@report.RequestedByEmail</td>
+                                <td>@report.Format</td>
+                                <td>
+                                    <span class="reporting-badge @(report.Status == "Completed" ? "bg-success text-white" : report.Status == "Failed" ? "bg-danger text-white" : "bg-warning text-dark")">
+                                        @report.Status
+                                    </span>
+                                </td>
+                                <td>@report.RequestedAt.ToString("g")</td>
+                                <td>
+                                    @if (report.Status == "Completed")
+                                    {
+                                        <a asp-action="Download" asp-route-id="@report.GeneratedReportId"
+                                           class="btn btn-sm btn-outline-primary">Download</a>
+                                    }
+                                    <form asp-action="Delete" asp-route-id="@report.GeneratedReportId" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

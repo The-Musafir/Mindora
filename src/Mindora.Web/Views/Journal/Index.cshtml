@@ -1,0 +1,70 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Journal.JournalResponse>
+
+@{
+    ViewData["Title"] = "My Journal";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">My Journal</h2>
+        <div class="d-flex gap-2">
+            <a asp-action="Statistics" class="btn btn-outline-info">Statistics</a>
+            <a asp-action="Create" class="btn btn-primary">+ New Entry</a>
+        </div>
+    </div>
+
+    <form method="get" class="row g-2 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Search..." value="@ViewBag.SearchTerm" />
+        </div>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="">All Categories</option>
+                <option value="Personal">Personal</option>
+                <option value="Work">Work</option>
+                <option value="Health">Health</option>
+                <option value="Travel">Travel</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-primary w-100">Filter</button>
+        </div>
+    </form>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No journal entries yet.</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var entry in Model)
+            {
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card h-100 shadow-sm border-0 w-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold">@entry.Title</h5>
+                            <span class="badge bg-secondary align-self-start mb-2">@entry.Category</span>
+                            <p class="text-muted small flex-grow-1">@entry.Content.Substring(0, Math.Min(entry.Content.Length, 120))...</p>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-muted small">@entry.EntryDate.ToShortDateString()</span>
+                                <span class="badge @(entry.IsPrivate ? "bg-secondary" : "bg-success")">
+                                    @(entry.IsPrivate ? "Private" : "Public")
+                                </span>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-auto">
+                                <a asp-action="Details" asp-route-id="@entry.EntryId" class="btn btn-sm btn-outline-primary">Details</a>
+                                <a asp-action="Edit" asp-route-id="@entry.EntryId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <form asp-action="Delete" asp-route-id="@entry.EntryId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

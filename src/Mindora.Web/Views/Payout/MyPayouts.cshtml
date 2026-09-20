@@ -1,0 +1,44 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Payment.PayoutDto>
+
+@{
+    ViewData["Title"] = "My Payouts";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">My Payout Requests</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No payout requests.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var payout in Model)
+                    {
+                        <tr>
+                            <td>@payout.RequestedAt.ToShortDateString()</td>
+                            <td>@payout.Amount</td>
+                            <td>@payout.Method</td>
+                            <td>
+                                <span class="badge @(payout.Status == "Paid" ? "bg-success" : payout.Status == "Rejected" ? "bg-danger" : "bg-warning text-dark")">
+                                    @payout.Status
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

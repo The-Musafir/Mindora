@@ -1,0 +1,44 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Payment.InvoiceDto>
+
+@{
+    ViewData["Title"] = "Invoices";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Invoices</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No invoices yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table payment-table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Amount</th>
+                        <th>Issued</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invoice in Model)
+                    {
+                        <tr>
+                            <td class="payment-invoice-number">@invoice.InvoiceNumber</td>
+                            <td>@invoice.Amount</td>
+                            <td>@invoice.IssuedAt.ToShortDateString()</td>
+                            <td>
+                                <a asp-action="DownloadInvoice" asp-route-invoiceId="@invoice.InvoiceId" class="btn btn-sm btn-outline-primary">
+                                    Download PDF
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

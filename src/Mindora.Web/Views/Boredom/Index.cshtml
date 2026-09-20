@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "I'm Bored";
+    var stats = ViewBag.Stats as Mindora.Application.DTOs.Boredom.BoredomStatsDto;
+    var categories = ViewBag.Categories as IReadOnlyList<Mindora.Application.DTOs.Boredom.BoredomCategoryDto>
+                     ?? new List<Mindora.Application.DTOs.Boredom.BoredomCategoryDto>();
+}
+@Html.AntiForgeryToken()
+
+<div class="boredom-page">
+<div class="boredom-page">
+
+    <!-- HEADER -->
+    <div class="boredom-header">
+        <div class="boredom-header-content">
+            <span class="boredom-eyebrow">NEED A BREAK?</span>
+            <h1>Feeling bored?</h1>
+            <p>Let Mindora surprise you with something meaningful, fun, or relaxing.</p>
+        </div>
+
+        @if (stats != null && stats.CompletedSessions > 0)
+        {
+            <div class="boredom-stats">
+                <div class="boredom-stat">
+                    <strong>@stats.CompletedSessions</strong>
+                    <span>Activities Done</span>
+                </div>
+                @if (stats.AverageMoodImprovement.HasValue)
+                {
+                    <div class="boredom-stat">
+                        <strong>@(stats.AverageMoodImprovement > 0 ? "+" : "")@stats.AverageMoodImprovement</strong>
+                        <span>Mood Boost</span>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- CATEGORY FILTERS -->
+    <div class="boredom-categories">
+        <button class="boredom-cat-btn active" data-category="">✨ All</button>
+        @foreach (var cat in categories)
+        {
+            <button class="boredom-cat-btn" data-category="@cat.Name">
+                @cat.Name
+                <span class="boredom-cat-count">@cat.Count</span>
+            </button>
+        }
+    </div>
+
+    <!-- ACTIVITY CARD -->
+    <div id="activityCard" class="boredom-card-container">
+
+        <!-- Idle state -->
+        <div id="idleState" class="boredom-idle-state">
+            <div class="boredom-big-icon">✦</div>
+            <h2>Ready when you are</h2>
+            <p>Click below and I'll pick something perfect for you.</p>
+            <button id="imBoredBtn" class="boredom-primary-btn">
+                <span class="boredom-btn-icon">✦</span>
+                I'm Bored
+                <span>→</span>
+            </button>
+        </div>
+
+        <!-- Loading state -->
+        <div id="loadingState" class="boredom-loading-state d-none">
+            <div class="boredom-loader"></div>
+            <p>Finding something for you...</p>
+        </div>
+
+        <!-- Activity state -->
+        <div id="activityState" class="boredom-activity-state d-none">
+            <div class="boredom-activity-badge" id="categoryBadge">Relaxing</div>
+            <div class="boredom-activity-icon" id="activityEmoji">🧘</div>
+            <h2 id="activityTitle">Activity Title</h2>
+            <p id="activityDesc">Description</p>
+            <div class="boredom-activity-duration" id="activityDuration">10 minutes</div>
+
+            <div class="boredom-actions">
+                <button id="startBtn" class="boredom-primary-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Start Activity
+                </button>
+                <button id="skipBtn" class="boredom-secondary-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                    Skip
+                </button>
+            </div>
+        </div>
+
+        <!-- Active session state (timer) -->
+        <div id="sessionState" class="boredom-session-state d-none">
+            <div class="boredom-timer-circle">
+                <svg viewBox="0 0 100 100" class="boredom-timer-svg">
+                    <circle cx="50" cy="50" r="45" class="boredom-timer-bg"></circle>
+                    <circle cx="50" cy="50" r="45" class="boredom-timer-progress" id="timerProgress"></circle>
+                </svg>
+                <div class="boredom-timer-text" id="timerText">00:00</div>
+            </div>
+
+            <h3>Enjoy your activity</h3>
+            <p class="text-muted" id="sessionTitle"></p>
+
+            <div class="boredom-actions">
+                <button id="completeBtn" class="boredom-primary-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Mark Complete
+                </button>
+            </div>
+        </div>
+
+        <!-- Feedback state (mood after) -->
+        <div id="feedbackState" class="boredom-feedback-state d-none">
+            <div class="boredom-check-icon">✓</div>
+            <h3>Great job!</h3>
+            <p>How do you feel now?</p>
+
+            <div class="boredom-mood-selector" id="moodSelector">
+                <button data-mood="1" class="boredom-mood">😔</button>
+                <button data-mood="2" class="boredom-mood">😕</button>
+                <button data-mood="3" class="boredom-mood">😐</button>
+                <button data-mood="4" class="boredom-mood">🙂</button>
+                <button data-mood="5" class="boredom-mood">😊</button>
+            </div>
+
+            <button id="submitFeedbackBtn" class="boredom-primary-btn" disabled>
+                Submit
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer link -->
+    <div class="text-center mt-4">
+        <a asp-action="History" class="boredom-history-link">
+            View Activity History →
+        </a>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/boredom.js" asp-append-version="true"></script>
+}

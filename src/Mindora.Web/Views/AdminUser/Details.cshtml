@@ -1,0 +1,32 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminUserDto
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="fw-bold mb-4">User Details</h2>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>UserName:</strong> @Model.UserName</p>
+            <p><strong>Role:</strong> @Model.Role</p>
+            <p><strong>Status:</strong> @(Model.IsActive ? "Active" : "Inactive")</p>
+            <p><strong>Created:</strong> @Model.CreatedAt.ToString("g")</p>
+
+            <h6 class="fw-bold mt-4">Change Role</h6>
+            <form asp-action="ChangeRole" method="post" class="d-flex gap-2">
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <select name="roleName" class="form-select">
+                    <option value="User">User</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Change</button>
+            </form>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-secondary mt-3">Back</a>
+</div>

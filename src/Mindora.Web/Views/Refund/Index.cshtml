@@ -1,0 +1,51 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Payment.RefundRequestDto>
+
+@{
+    ViewData["Title"] = "Refund Management";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Refund Requests</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No refund requests.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var refund in Model)
+                    {
+                        <tr>
+                            <td>@refund.UserEmail</td>
+                            <td>@refund.Amount</td>
+                            <td>@refund.Reason</td>
+                            <td>@refund.Status</td>
+                            <td>
+                                @if (refund.Status == "Pending")
+                                {
+                                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                        <input type="hidden" name="RefundId" value="@refund.RefundId" />
+                                        <button type="submit" name="Status" value="Approved" class="btn btn-sm btn-success">Approve</button>
+                                        <button type="submit" name="Status" value="Rejected" class="btn btn-sm btn-danger">Reject</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

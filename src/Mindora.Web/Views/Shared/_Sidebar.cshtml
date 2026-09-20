@@ -1,0 +1,284 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Mindora.Infrastructure.Persistence.DbContext
+@inject UserManager<Mindora.Domain.Entities.User> UserManager
+@inject SignInManager<Mindora.Domain.Entities.User> SignInManager
+@inject MindoraDbContext DbContext
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var currentUser = await UserManager.GetUserAsync(User);
+
+    // Load UserProfile for DisplayName + Avatar
+    var profile = currentUser != null
+        ? await DbContext.UserProfiles.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.UserId == currentUser.Id)
+        : null;
+
+    var displayName = profile?.DisplayName
+        ?? currentUser?.UserName
+        ?? currentUser?.Email
+        ?? "Member";
+
+    var avatarUrl = profile?.AvatarUrl;
+    var initial = !string.IsNullOrEmpty(displayName) ? displayName.Substring(0, 1).ToUpper() : "M";
+
+    var isAdmin = User.IsInRole("Admin");
+    var isModerator = User.IsInRole("Moderator") || isAdmin;
+
+    <aside class="mindora-sidebar" id="mindoraSidebar" role="navigation" aria-label="Main navigation">
+
+        <!-- USER PROFILE BLOCK -->
+        <div class="mindora-sidebar-profile">
+            @if (!string.IsNullOrEmpty(avatarUrl))
+            {
+                <img src="@avatarUrl"
+                     alt="@displayName"
+                     class="mindora-sidebar-avatar-img"
+                     title="@displayName" />
+            }
+            else
+            {
+                <div class="mindora-sidebar-avatar" title="@displayName">@initial</div>
+            }
+
+            <div class="mindora-sidebar-userinfo">
+                <div class="mindora-sidebar-username" title="@displayName">@displayName</div>
+                <div class="mindora-sidebar-role">
+                    @if (isAdmin)
+                    {
+                        <text>Administrator</text>
+                    }
+                    else if (isModerator)
+                    {
+
+                        <text>Moderator</text>
+                    }
+                    else
+                    {
+
+                        <text>Member</text>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="mindora-sidebar-nav">
+
+            <!-- MAIN -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Main</div>
+
+                <a asp-controller="Home" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9" rx="1" />
+                        <rect x="14" y="3" width="7" height="5" rx="1" />
+                        <rect x="14" y="12" width="7" height="9" rx="1" />
+                        <rect x="3" y="16" width="7" height="5" rx="1" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+            </div>
+
+            <!-- RECOVERY -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Recovery</div>
+
+                <a asp-controller="Habit" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    <span>Habits</span>
+                </a>
+
+                <a asp-controller="Journal" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                    </svg>
+                    <span>Journal</span>
+                </a>
+
+                <a asp-controller="Assessment" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                        <path d="M12 2v14" />
+                        <polyline points="9 5 12 2 15 5" />
+                    </svg>
+                    <span>Assessments</span>
+                </a>
+            </div>
+
+            <!-- SOCIAL -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Social</div>
+
+                <a asp-controller="Community" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <span>Community</span>
+                </a>
+
+                <a asp-controller="Notification" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18c0-2-3-2-3-9" />
+                        <path d="M10 21h4" />
+                    </svg>
+                    <span>Notifications</span>
+                </a>
+            </div>
+
+            <!-- WELLNESS -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Wellness</div>
+
+                <a asp-controller="Chat" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="23" />
+                        <line x1="8" y1="23" x2="16" y2="23" />
+                    </svg>
+                    <span>AI Coach</span>
+                    <span class="mindora-nav-badge">New</span>
+                </a>
+
+                <a asp-controller="Professional" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <span>Professionals</span>
+                </a>
+
+                <a asp-controller="Consultation" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="15" rx="2" />
+                        <polyline points="17 2 12 7 7 2" />
+                    </svg>
+                    <span>Consultations</span>
+                </a>
+            </div>
+
+            <!-- BUSINESS -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Business</div>
+
+                <a asp-controller="Payment" asp-action="MySubscription" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" />
+                        <line x1="1" y1="10" x2="23" y2="10" />
+                    </svg>
+                    <span>Billing</span>
+                </a>
+
+                <a asp-controller="UserAnalytics" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+
+                <a asp-controller="ReportingDashboard" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    <span>Reports</span>
+                </a>
+            </div>
+
+            <!-- ADMIN (conditional) -->
+            @if (isAdmin)
+            {
+                <div class="mindora-sidebar-section">
+                    <div class="mindora-sidebar-section-title">Admin</div>
+
+                    <a asp-controller="Admin" asp-action="Index" class="mindora-nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2 4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z" />
+                        </svg>
+                        <span>Admin Panel</span>
+                    </a>
+                </div>
+            }
+
+            <!-- ACCOUNT -->
+            <div class="mindora-sidebar-section">
+                <div class="mindora-sidebar-section-title">Account</div>
+
+                <a asp-controller="Profile" asp-action="Index" class="mindora-nav-item">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <span>Profile</span>
+                </a>
+
+                <form asp-area="Identity" asp-page="/Account/Logout"
+                      asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"
+                      method="post" class="m-0">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="mindora-nav-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+
+        </nav>
+
+        <!-- FOOTER -->
+        <div class="mindora-sidebar-footer">
+            <div class="mindora-sidebar-version">v1.0.0</div>
+        </div>
+
+    </aside>
+
+    <!-- Mobile overlay -->
+    <div class="mindora-sidebar-overlay" id="sidebarOverlay"></div>
+}

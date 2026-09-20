@@ -1,0 +1,50 @@
+﻿@model Mindora.Application.DTOs.Professional.CreateProviderRequest
+
+@{
+    ViewData["Title"] = "Create Professional Profile";
+    var specialties = ViewBag.Specialties as IReadOnlyList<Mindora.Application.DTOs.Professional.SpecialtyDto>;
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="fw-bold mb-4">Create Professional Profile</h2>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Bio" class="form-label"></label>
+            <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="LicenseNumber" class="form-label"></label>
+                <input asp-for="LicenseNumber" class="form-control" />
+                <span asp-validation-for="LicenseNumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="YearsOfExperience" class="form-label"></label>
+                <input asp-for="YearsOfExperience" type="number" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Specialties</label>
+            <div class="d-flex flex-wrap gap-3">
+                @if (specialties != null)
+                {
+                    @foreach (var specialty in specialties)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="SpecialtyIds" value="@specialty.SpecialtyId" id="spec_@specialty.SpecialtyId" />
+                            <label class="form-check-label" for="spec_@specialty.SpecialtyId">@specialty.Name</label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Profile</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,169 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminPaymentManagementDto
+
+@{
+    ViewData["Title"] = "Payment Management";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Payment Management</h2>
+
+    <!-- Tabs or sections -->
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#payments">Payments</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#refunds">Refunds</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#payouts">Payouts</a></li>
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#coupons">Coupons</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <!-- Payments -->
+        <div class="tab-pane fade show active" id="payments">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Gateway</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.Payments)
+                        {
+                            <tr>
+                                <td>@p.CreatedAt.ToString("g")</td>
+                                <td>@p.Amount @p.Currency</td>
+                                <td>@p.Gateway</td>
+                                <td>@p.PaymentMethod</td>
+                                <td>@p.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Refunds -->
+        <div class="tab-pane fade" id="refunds">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var r in Model.Refunds)
+                        {
+                            <tr>
+                                <td>@r.UserEmail</td>
+                                <td>@r.Amount</td>
+                                <td>@r.Reason</td>
+                                <td>@r.Status</td>
+                                <td>
+                                    @if (r.Status == "Pending")
+                                    {
+                                        <form asp-action="UpdateRefundStatus" method="post" class="d-inline">
+                                            <input type="hidden" name="refundId" value="@r.RefundId" />
+                                            <button type="submit" name="status" value="Approved" class="btn btn-sm btn-success">Approve</button>
+                                            <button type="submit" name="status" value="Rejected" class="btn btn-sm btn-danger">Reject</button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Payouts -->
+        <div class="tab-pane fade" id="payouts">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Provider</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.Payouts)
+                        {
+                            <tr>
+                                <td>@p.ProviderName</td>
+                                <td>@p.Amount</td>
+                                <td>@p.Method</td>
+                                <td>@p.Status</td>
+                                <td>
+                                    @if (p.Status == "Pending")
+                                    {
+                                        <form asp-action="UpdatePayoutStatus" method="post" class="d-inline">
+                                            <input type="hidden" name="payoutId" value="@p.PayoutId" />
+                                            <button type="submit" name="status" value="Approved" class="btn btn-sm btn-success">Approve</button>
+                                            <button type="submit" name="status" value="Rejected" class="btn btn-sm btn-danger">Reject</button>
+                                        </form>
+                                    }
+                                    @if (p.Status == "Approved")
+                                    {
+                                        <form asp-action="UpdatePayoutStatus" method="post" class="d-inline">
+                                            <input type="hidden" name="payoutId" value="@p.PayoutId" />
+                                            <button type="submit" name="status" value="Paid" class="btn btn-sm btn-primary">Mark Paid</button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Coupons -->
+        <div class="tab-pane fade" id="coupons">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Type</th>
+                            <th>Value</th>
+                            <th>Usage</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in Model.Coupons)
+                        {
+                            <tr>
+                                <td>@c.Code</td>
+                                <td>@c.DiscountType</td>
+                                <td>@c.DiscountValue</td>
+                                <td>@c.UsageCount / @c.UsageLimit</td>
+                                <td>@c.IsActive</td>
+                                <td>
+                                    <form asp-action="ToggleCouponActive" method="post" class="d-inline">
+                                        <input type="hidden" name="couponId" value="@c.CouponId" />
+                                        <button type="submit" name="isActive" value="@(!c.IsActive)" class="btn btn-sm @(c.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                            @(c.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

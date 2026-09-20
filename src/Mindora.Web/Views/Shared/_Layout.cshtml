@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Mindora.Domain.Entities.User> SignInManager
+@{
+    var isAuthenticated = SignInManager.IsSignedIn(User);
+}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#06B6D4" />
+    <title>@ViewData["Title"] - Mindora</title>
+
+    <!-- Prevent FOUC: apply theme BEFORE paint -->
+    <script>
+            (function () {
+                try {
+                    var theme = localStorage.getItem('mindora-theme');
+                    if (!theme) {
+                        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    }
+                    document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) { }
+            })();
+    </script>
+
+    <script type="importmap"></script>
+
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Mindora Core -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Mindora.Web.styles.css" asp-append-version="true" />
+
+    <!-- Mindora Layout -->
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/legal.css" asp-append-version="true" />
+    
+
+
+    <!-- Feature-specific -->
+    <link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/boredom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/habit.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/journal.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/assessment.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body class="@(isAuthenticated ? "mindora-with-sidebar" : "")">
+
+    <!-- ============================================================
+         NAVBAR
+         ============================================================ -->
+    <partial name="_Navbar" />
+
+    <!-- ============================================================
+         SIDEBAR (authenticated only)
+         ============================================================ -->
+    <partial name="_Sidebar" />
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main role="main" class="mindora-main-content">
+        <div class="container-fluid px-4 py-4">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <partial name="_Footer" />
+
+    <!-- ============================================================
+         SCRIPTS
+         ============================================================ -->
+    <!-- Vendor -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js Library (must load before charts.js helper) -->
+    <script src="~/lib/chartjs/chart.umd.min.js"></script>
+
+    <!-- SignalR Client (local) -->
+    <script src="~/lib/signalr/signalr.min.js" asp-append-version="true"></script>
+
+    <!-- Mindora Core -->
+    <script src="~/js/theme.js" asp-append-version="true"></script>
+    <script src="~/js/sidebar.js" asp-append-version="true"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/charts.js" asp-append-version="true"></script>
+
+    <!-- Mindora Realtime -->
+    <script src="~/js/notifications.js" asp-append-version="true"></script>
+    <script src="~/js/presence.js" asp-append-version="true"></script>
+    <script src="~/js/reconnection.js" asp-append-version="true"></script>
+
+    <!-- Page-specific scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

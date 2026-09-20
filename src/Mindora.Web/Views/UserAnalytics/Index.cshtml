@@ -1,0 +1,263 @@
+﻿@model Mindora.Application.DTOs.Analytics.UserAnalyticsDto
+
+@{
+    ViewData["Title"] = "My Analytics";
+}
+
+<div class="container-fluid py-4" style="max-width: 1200px;">
+
+    <!-- ============================================================
+         PAGE HEADER
+         ============================================================ -->
+    <div class="mindora-page-header">
+        <div>
+            <h1 class="mindora-page-title">My Wellness Analytics</h1>
+            <p class="mindora-page-subtitle">
+                Insights into your habits, mood, and wellness journey
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="Report" asp-action="ExportUserAnalytics" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     style="vertical-align:-2px;margin-right:6px;">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download CSV
+            </a>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         KPI CARDS
+         ============================================================ -->
+    <div class="mindora-stat-grid">
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.HabitCompletionRate.ToString("F1")%</div>
+            <div class="mindora-stat-label">Habit Completion</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.CurrentLongestStreak</div>
+            <div class="mindora-stat-label">Longest Streak (days)</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalJournalEntries</div>
+            <div class="mindora-stat-label">Journal Entries</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                    <line x1="9" y1="9" x2="9.01" y2="9" />
+                    <line x1="15" y1="9" x2="15.01" y2="9" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.LatestWellnessScore.ToString("F1")</div>
+            <div class="mindora-stat-label">Wellness Score</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalHabits</div>
+            <div class="mindora-stat-label">Total Habits</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(236, 72, 153, 0.12); color: #EC4899;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                    <path d="M12 2v14" />
+                    <polyline points="9 5 12 2 15 5" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAssessmentsTaken</div>
+            <div class="mindora-stat-label">Assessments Taken</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAIConversations</div>
+            <div class="mindora-stat-label">AI Conversations</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(239, 68, 68, 0.12); color: #EF4444;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalRelapses</div>
+            <div class="mindora-stat-label">Total Relapses</div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         CHARTS
+         ============================================================ -->
+    <div class="row g-3">
+        <div class="col-lg-6">
+            <div class="mindora-chart-card">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Mood Trend</h3>
+                        <p class="mindora-chart-subtitle">Last 30 days</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="mindora-chart-card">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Habit Completion Trend</h3>
+                        <p class="mindora-chart-subtitle">Daily completion rate</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="habitChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ============================================================
+            // MOOD TREND CHART
+            // ============================================================
+            const moodData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.MoodTrend ?? new List<Mindora.Application.DTOs.Analytics.DailyMoodTrendDto>()));
+
+            if (moodData && moodData.length > 0 && document.getElementById('moodChart')) {
+                const moodLabels = moodData.map(m => {
+                    const d = new Date(m.Date);
+                    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                });
+                const moodScores = moodData.map(m => m.MoodScore);
+
+                MindoraCharts.line('moodChart', moodLabels, [{
+                    label: 'Mood Score',
+                    data: moodScores,
+                    color: '#06B6D4',
+                    fill: true
+                }], {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `Mood: ${ctx.parsed.y}/10`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: { stepSize: 2 }
+                        }
+                    }
+                });
+            } else {
+                const el = document.getElementById('moodChart');
+                if (el) {
+                    el.parentElement.innerHTML =
+                        '<div class="text-center text-muted py-5">' +
+                        '<p class="mb-0">No mood data yet</p></div>';
+                }
+            }
+
+            // ============================================================
+            // HABIT COMPLETION TREND CHART
+            // ============================================================
+            const habitData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.HabitTrend ?? new List<Mindora.Application.DTOs.Analytics.DailyHabitTrendDto>()));
+
+            if (habitData && habitData.length > 0 && document.getElementById('habitChart')) {
+                const habitLabels = habitData.map(h => {
+                    const d = new Date(h.Date);
+                    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                });
+                const habitRates = habitData.map(h => h.CompletionRate);
+
+                MindoraCharts.bar('habitChart', habitLabels, [{
+                    label: 'Completion Rate',
+                    data: habitRates,
+                    color: '#10B981'
+                }], {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => `${ctx.parsed.y.toFixed(1)}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: (v) => v + '%'
+                            }
+                        }
+                    }
+                });
+            } else {
+                const el = document.getElementById('habitChart');
+                if (el) {
+                    el.parentElement.innerHTML =
+                        '<div class="text-center text-muted py-5">' +
+                        '<p class="mb-0">No habit data yet</p></div>';
+                }
+            }
+        });
+    </script>
+}

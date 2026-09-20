@@ -1,0 +1,713 @@
+﻿/* ============================================================
+Mindora — Theme Layer
+Dark mode override + missing utility classes
+============================================================ */
+
+/* ============================================================
+GLOBAL TRANSITIONS
+============================================================ */
+body,
+.mindora-navbar,
+.mindora-sidebar,
+.mindora-footer,
+.card,
+.form-control,
+.form-select,
+section {
+transition: background-color 0.3s ease,
+color 0.3s ease,
+border-color 0.3s ease;
+}
+
+/* ============================================================
+DARK MODE — VARIABLES
+============================================================ */
+[data-theme="dark"] {
+--mindora-text: #CBD5E1;
+--mindora-light: #1E293B;
+--mindora-dark: #F8FAFC;
+--mindora-border: #334155;
+color-scheme: dark;
+}
+
+/* ============================================================
+BODY + TYPOGRAPHY
+============================================================ */
+[data-theme="dark"] body {
+background: #0F172A;
+color: #CBD5E1;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+color: #F1F5F9;
+}
+
+[data-theme="dark"] p {
+color: #CBD5E1;
+}
+
+[data-theme="dark"] a {
+color: #22D3EE;
+}
+
+[data-theme="dark"] a:hover {
+color: #06B6D4;
+}
+
+/* ============================================================
+LANDING PAGE — HERO SECTION
+============================================================ */
+[data-theme="dark"] .mindora-hero-section {
+background: #0F172A !important;
+}
+
+[data-theme="dark"] .hero-main-title {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .hero-main-title .text-primary {
+color: #22D3EE !important;
+}
+
+[data-theme="dark"] .hero-subtitle-box {
+background: #1E293B !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .hero-subtitle-box h6,
+[data-theme="dark"] .hero-subtitle-box .text-dark {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .hero-subtitle-box .text-muted {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dashboard-main-card {
+background: #1E293B !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .dashboard-main-card h5,
+[data-theme="dark"] .dashboard-main-card h6,
+[data-theme="dark"] .dashboard-main-card .text-dark {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .dashboard-main-card .bg-light {
+background: #0F172A !important;
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .dashboard-main-card .text-muted {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+GENERIC SECTIONS
+============================================================ */
+[data-theme="dark"] .mindora-section,
+[data-theme="dark"] .features-section,
+[data-theme="dark"] .consultation-section,
+[data-theme="dark"] .testimonials-section,
+[data-theme="dark"] .bored-section,
+[data-theme="dark"] .statistics-section,
+[data-theme="dark"] .cta-section {
+background: #0F172A !important;
+color: #CBD5E1 !important;
+}
+
+/* Alternate sections darker */
+[data-theme="dark"] .features-section,
+[data-theme="dark"] .testimonials-section {
+background: #111C33 !important;
+}
+
+/* Section heading */
+[data-theme="dark"] .section-heading h2 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .section-heading h2 span {
+color: #22D3EE !important;
+}
+
+[data-theme="dark"] .section-heading p {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .section-eyebrow {
+color: #22D3EE !important;
+}
+
+[data-theme="dark"] .consultation-heading h2 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .consultation-heading h2 span {
+color: #22D3EE !important;
+}
+
+/* ============================================================
+FEATURE CARDS
+============================================================ */
+[data-theme="dark"] .feature-card {
+background: #1E293B !important;
+border-color: #334155 !important;
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .feature-card h3 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .feature-card p {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .feature-card a {
+color: #22D3EE !important;
+}
+
+[data-theme="dark"] .feature-card:hover {
+border-color: #06B6D4 !important;
+}
+
+/* ============================================================
+DOCTOR / PROVIDER CARDS
+============================================================ */
+[data-theme="dark"] .doctor-card {
+background: #1E293B !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .doctor-content h3 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .doctor-content p {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .doctor-meta {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .doctor-button {
+background: #0F172A !important;
+color: #22D3EE !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .doctor-button:hover {
+background: #06B6D4 !important;
+color: #FFFFFF !important;
+border-color: #06B6D4 !important;
+}
+
+/* ============================================================
+BORED SECTION
+============================================================ */
+[data-theme="dark"] .bored-card {
+background: #1E293B !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .bored-card h2 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .bored-card p {
+color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .bored-card small {
+color: #64748B !important;
+}
+
+[data-theme="dark"] .bored-button {
+background: linear-gradient(135deg, #06B6D4, #0891B2) !important;
+color: #FFFFFF !important;
+}
+
+/* ============================================================
+TESTIMONIAL CARDS
+============================================================ */
+[data-theme="dark"] .testimonial-card {
+background: #1E293B !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .testimonial-card p {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .testimonial-user strong {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .testimonial-user small {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+STATISTICS SECTION
+============================================================ */
+[data-theme="dark"] .statistics-section {
+background: #111C33 !important;
+}
+
+[data-theme="dark"] .stat-item strong {
+color: #22D3EE !important;
+}
+
+[data-theme="dark"] .stat-item span {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+CTA SECTION
+============================================================ */
+[data-theme="dark"] .cta-card {
+background: linear-gradient(135deg, #164E63, #0E7490) !important;
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .cta-card h2 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .cta-card p {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .mindora-primary-button {
+background: #06B6D4 !important;
+color: #FFFFFF !important;
+}
+
+/* ============================================================
+CARDS (Generic)
+============================================================ */
+[data-theme="dark"] .card {
+background: #1E293B !important;
+border-color: #334155 !important;
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .card-body {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .card h1,
+[data-theme="dark"] .card h2,
+[data-theme="dark"] .card h3,
+[data-theme="dark"] .card h4,
+[data-theme="dark"] .card h5,
+[data-theme="dark"] .card h6 {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .card .text-muted {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+FORMS
+============================================================ */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="tel"],
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] textarea {
+background: #1E293B !important;
+border-color: #334155 !important;
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .form-control::placeholder,
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+color: #64748B !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus {
+background: #1E293B !important;
+border-color: #06B6D4 !important;
+color: #F1F5F9 !important;
+box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15) !important;
+}
+
+[data-theme="dark"] .form-label {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .form-text,
+[data-theme="dark"] small.text-muted {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+BACKGROUND UTILITIES
+============================================================ */
+[data-theme="dark"] .bg-light {
+background: #0F172A !important;
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .bg-white {
+background: #1E293B !important;
+}
+
+[data-theme="dark"] .bg-body,
+[data-theme="dark"] .bg-body-secondary {
+background: #0F172A !important;
+}
+
+[data-theme="dark"] .text-dark {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .text-muted {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+TABLES
+============================================================ */
+[data-theme="dark"] .table {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .table thead th {
+border-color: #334155 !important;
+color: #94A3B8 !important;
+background: #1E293B !important;
+}
+
+[data-theme="dark"] .table td {
+border-color: #1E293B !important;
+}
+
+[data-theme="dark"] .table-hover tbody tr:hover {
+background: #1E293B !important;
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) > * {
+background: rgba(15, 23, 42, 0.4) !important;
+color: #CBD5E1 !important;
+}
+
+/* ============================================================
+DROPDOWNS
+============================================================ */
+[data-theme="dark"] .dropdown-menu {
+background: #1E293B !important;
+border-color: #334155 !important;
+color: #CBD5E1 !important;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .dropdown-item {
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .dropdown-item:hover,
+[data-theme="dark"] .dropdown-item:focus {
+background: #334155 !important;
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .dropdown-divider {
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .dropdown-header {
+color: #94A3B8 !important;
+}
+
+/* ============================================================
+ALERTS
+============================================================ */
+[data-theme="dark"] .alert-info {
+background: rgba(59, 130, 246, 0.1) !important;
+border-color: rgba(59, 130, 246, 0.3) !important;
+color: #93C5FD !important;
+}
+
+[data-theme="dark"] .alert-success {
+background: rgba(16, 185, 129, 0.1) !important;
+border-color: rgba(16, 185, 129, 0.3) !important;
+color: #6EE7B7 !important;
+}
+
+[data-theme="dark"] .alert-warning {
+background: rgba(245, 158, 11, 0.1) !important;
+border-color: rgba(245, 158, 11, 0.3) !important;
+color: #FCD34D !important;
+}
+
+[data-theme="dark"] .alert-danger {
+background: rgba(239, 68, 68, 0.1) !important;
+border-color: rgba(239, 68, 68, 0.3) !important;
+color: #FCA5A5 !important;
+}
+
+/* ============================================================
+MODALS
+============================================================ */
+[data-theme="dark"] .modal-content {
+background: #1E293B !important;
+border-color: #334155 !important;
+color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .modal-footer {
+border-color: #334155 !important;
+}
+
+[data-theme="dark"] .modal-title {
+color: #F1F5F9 !important;
+}
+
+[data-theme="dark"] .btn-close {
+filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* ============================================================
+BADGES
+============================================================ */
+[data-theme="dark"] .badge.bg-light,
+[data-theme="dark"] .bg-light.text-dark {
+background: #334155 !important;
+color: #CBD5E1 !important;
+}
+
+/* ============================================================
+BUTTONS (outline adjustments)
+============================================================ */
+[data-theme="dark"] .btn-outline-dark {
+color: #CBD5E1 !important;
+border-color: #475569 !important;
+}
+
+[data-theme="dark"] .btn-outline-dark:hover {
+background: #334155 !important;
+color: #F1F5F9 !important;
+border-color: #475569 !important;
+}
+
+[data-theme="dark"] .btn-outline-secondary {
+color: #CBD5E1 !important;
+border-color: #475569 !important;
+}
+
+[data-theme="dark"] .btn-outline-secondary:hover {
+background: #334155 !important;
+color: #F1F5F9 !important;
+border-color: #475569 !important;
+}
+
+/* ============================================================
+THEME TOGGLE ICONS
+============================================================ */
+.theme-icon-light,
+.theme-icon-dark {
+transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+[data-theme="light"] .theme-icon-dark {
+display: none;
+}
+
+[data-theme="dark"] .theme-icon-light {
+display: none;
+}
+
+#themeToggle:hover .theme-icon-light,
+#themeToggle:hover .theme-icon-dark {
+transform: rotate(15deg);
+}
+
+/* ============================================================
+USER DROPDOWN (Navbar)
+============================================================ */
+.mindora-user-dropdown {
+min-width: 240px;
+padding: 6px;
+}
+
+.mindora-user-dropdown .dropdown-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 8px 12px;
+border-radius: 8px;
+font-size: 14px;
+transition: all 0.15s ease;
+}
+
+.mindora-user-dropdown .dropdown-item:hover {
+background: rgba(6, 182, 212, 0.08);
+color: #06B6D4;
+}
+
+.mindora-user-dropdown .dropdown-item.text-danger:hover {
+background: rgba(239, 68, 68, 0.08);
+color: #DC2626;
+}
+
+.mindora-user-dropdown .dropdown-header {
+padding: 10px 12px 6px;
+font-size: 13px;
+}
+
+.mindora-user-dropdown .dropdown-header .fw-semibold {
+font-size: 14px;
+color: #0F172A;
+}
+
+[data-theme="dark"] .mindora-user-dropdown .dropdown-header .fw-semibold {
+color: #F1F5F9;
+}
+
+/* ============================================================
+MEMBER TEXT (Navbar)
+============================================================ */
+.mindora-member-text {
+font-size: 14px;
+font-weight: 500;
+max-width: 120px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+/* ============================================================
+AVATAR IMAGES
+============================================================ */
+.mindora-avatar-img {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+object-fit: cover;
+flex-shrink: 0;
+border: 2px solid rgba(6, 182, 212, 0.2);
+}
+
+.mindora-sidebar-avatar-img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+object-fit: cover;
+flex-shrink: 0;
+box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+border: 2px solid #FFFFFF;
+}
+
+[data-theme="dark"] .mindora-sidebar-avatar-img {
+border-color: #1E293B;
+}
+
+/* ============================================================
+LAYOUT SHIFT
+============================================================ */
+body.mindora-with-sidebar .mindora-main-content {
+margin-left: 260px;
+padding-top: 80px;
+min-height: 100vh;
+transition: margin-left 0.3s ease;
+}
+
+body.mindora-with-sidebar.mindora-sidebar-collapsed .mindora-main-content {
+margin-left: 72px;
+}
+
+body.mindora-with-sidebar .mindora-footer {
+margin-left: 260px;
+transition: margin-left 0.3s ease;
+position: relative;
+z-index: 1;
+}
+
+body.mindora-with-sidebar.mindora-sidebar-collapsed .mindora-footer {
+margin-left: 72px;
+}
+
+body:not(.mindora-with-sidebar) .mindora-main-content {
+margin-left: 0;
+padding-top: 80px;
+min-height: 100vh;
+}
+
+body:not(.mindora-with-sidebar) .mindora-footer {
+margin-left: 0;
+}
+
+@@media (max-width: 991px) {
+body.mindora-with-sidebar .mindora-main-content,
+body.mindora-with-sidebar .mindora-footer {
+margin-left: 0;
+}
+}
+
+/* ============================================================
+SCROLLBAR (Dark Mode)
+============================================================ */
+[data-theme="dark"] ::-webkit-scrollbar {
+width: 10px;
+height: 10px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+background: #0F172A;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+background: #334155;
+border-radius: 999px;
+border: 2px solid #0F172A;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+background: #475569;
+}
+
+/* ============================================================
+SCROLL ANCHOR OFFSET
+============================================================ */
+[id] {
+scroll-margin-top: 90px;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+/* ============================================================
+REDUCED MOTION
+============================================================ */
+@@media (prefers-reduced-motion: reduce) {
+*,
+*::before,
+*::after {
+animation-duration: 0.01ms !important;
+animation-iteration-count: 1 !important;
+transition-duration: 0.01ms !important;
+scroll-behavior: auto !important;
+}
+}

@@ -1,0 +1,42 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AdminDashboard.AdminAuditLogDto>
+
+@{
+    ViewData["Title"] = "Audit Logs";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Audit Logs</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No audit logs.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Table</th>
+                        <th>Record ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in Model)
+                    {
+                        <tr>
+                            <td>@log.Timestamp.ToString("g")</td>
+                            <td>@log.UserEmail</td>
+                            <td>@log.Action</td>
+                            <td>@log.TableName</td>
+                            <td>@log.RecordId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

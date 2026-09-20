@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "New AI Session";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <h2 class="fw-bold mb-4">Start New AI Wellness Session</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label class="form-label">Initial Context (optional)</label>
+            <textarea name="initialContext" class="form-control" rows="4" placeholder="Share what's on your mind..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Start Session</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

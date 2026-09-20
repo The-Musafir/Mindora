@@ -1,0 +1,40 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Analytics.AnalyticsEventDto>
+
+@{
+    ViewData["Title"] = "Analytics Events";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Analytics Events</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No events recorded.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Event Type</th>
+                        <th>User</th>
+                        <th>Payload</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var evt in Model)
+                    {
+                        <tr>
+                            <td>@evt.Timestamp.ToString("g")</td>
+                            <td>@evt.EventType</td>
+                            <td>@(evt.UserId?.ToString() ?? "Anonymous")</td>
+                            <td>@(evt.Payload?.Length > 100 ? evt.Payload.Substring(0, 100) + "..." : evt.Payload)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,0 +1,56 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Notification.NotificationTemplateDto>
+
+@{
+    ViewData["Title"] = "Notification Templates";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Notification Templates</h2>
+        <a asp-action="CreateTemplate" class="btn btn-primary btn-sm">+ New Template</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No templates yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Key</th>
+                        <th>Subject</th>
+                        <th>Channel</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var template in Model)
+                    {
+                        <tr>
+                            <td><code>@template.TemplateKey</code></td>
+                            <td>@template.Subject</td>
+                            <td>@template.Channel</td>
+                            <td>
+                                <span class="badge @(template.IsActive ? "bg-success" : "bg-secondary")">
+                                    @(template.IsActive ? "Active" : "Inactive")
+                                </span>
+                            </td>
+                            <td>
+                                <form asp-action="ToggleTemplate" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@template.TemplateId" />
+                                    <button type="submit" name="isActive" value="@(!template.IsActive)" class="btn btn-sm @(template.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                        @(template.IsActive ? "Deactivate" : "Activate")
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

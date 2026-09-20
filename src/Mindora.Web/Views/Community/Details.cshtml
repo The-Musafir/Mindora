@@ -1,0 +1,217 @@
+﻿@using System.Security.Claims
+@model Mindora.Application.DTOs.Community.PostResponse
+
+@{
+    ViewData["Title"] = Model.Title;
+    var currentUserIdStr = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    Guid? currentUserId = Guid.TryParse(currentUserIdStr, out var uid) ? uid : null;
+    var postAuthorInitial = !string.IsNullOrEmpty(Model.AuthorName)
+        ? Model.AuthorName.Substring(0, 1).ToUpper()
+        : "U";
+}
+
+<div class="container mt-4" style="max-width: 900px;">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Community</a></li>
+            <li class="breadcrumb-item active">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <!-- ============================================================
+         POST CARD
+         ============================================================ -->
+    <div class="card community-card shadow-sm border-0 mb-4">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-start gap-2">
+                <h2 class="fw-bold flex-grow-1">@Model.Title</h2>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back</a>
+            </div>
+
+            <!-- Author row with profile link -->
+            <div class="d-flex align-items-center gap-2 mt-2 mb-3">
+                @if (!Model.IsAnonymous)
+                {
+                    <a href="/u/@Model.UserId"
+                       class="community-author-block"
+                       title="View @Model.AuthorName's profile">
+                        <span class="community-avatar community-avatar-link">@postAuthorInitial</span>
+                        <div class="community-author-meta">
+                            <span class="community-author-name">@Model.AuthorName</span>
+                            <span class="community-author-date">@Model.CreatedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                        </div>
+                    </a>
+                }
+                else
+                {
+                    <div class="community-author-block">
+                        <span class="community-avatar community-avatar-anon">?</span>
+                        <div class="community-author-meta">
+                            <span class="community-author-name">Anonymous</span>
+                            <span class="community-author-date">@Model.CreatedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                        </div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(Model.Category))
+                {
+                    <span class="community-feed-badge bg-primary text-white ms-auto">@Model.Category</span>
+                }
+            </div>
+
+            <hr />
+
+            <p class="fs-5 community-post-full-body">@Model.Body</p>
+
+            <!-- Post Actions -->
+            <div class="d-flex flex-wrap gap-2 mt-4">
+                <form asp-action="ToggleReaction" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="postId" value="@Model.PostId" />
+                    <input type="hidden" name="reactionType" value="Like" />
+                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                        ❤️ @Model.LikeCount Likes
+                    </button>
+                </form>
+
+                <span class="btn btn-sm btn-outline-secondary disabled">
+                    💬 @Model.CommentCount Comments
+                </span>
+
+                @if (currentUserId.HasValue && Model.UserId == currentUserId.Value && !Model.IsAnonymous)
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.PostId"
+                       class="btn btn-sm btn-outline-secondary ms-auto">
+                        Edit Post
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         ADD COMMENT
+         ============================================================ -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Add Comment</h5>
+            <form asp-action="AddComment" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PostId" value="@Model.PostId" />
+                <textarea name="Content"
+                          class="form-control mb-2"
+                          rows="3"
+                          placeholder="Write a supportive comment..."
+                          required></textarea>
+                <button type="submit" class="btn btn-primary btn-sm">Post Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         COMMENTS LIST
+         ============================================================ -->
+    <h5 class="fw-bold mb-3">
+        Comments
+        @if (Model.CommentCount > 0)
+        {
+            <span class="text-muted">(@Model.CommentCount)</span>
+        }
+    </h5>
+
+    @if (Model.Comments == null || Model.Comments.Count == 0)
+    {
+        <div class="alert alert-info">No comments yet. Be the first to support!</div>
+    }
+    else
+    {
+        foreach (var comment in Model.Comments)
+        {
+            var commentAuthorInitial = !string.IsNullOrEmpty(comment.AuthorName)
+                ? comment.AuthorName.Substring(0, 1).ToUpper()
+                : "U";
+
+            <div class="community-comment-box mb-4">
+
+                <!-- Comment author -->
+                <div class="d-flex align-items-center gap-2">
+                    <a href="/u/@comment.UserId"
+                       class="community-author-block community-author-block-sm"
+                       title="View @comment.AuthorName's profile">
+                        <span class="community-avatar community-avatar-link">@commentAuthorInitial</span>
+                        <div class="community-author-meta">
+                            <span class="community-author-name">@comment.AuthorName</span>
+                            <span class="community-author-date">@comment.CreatedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                        </div>
+                    </a>
+                </div>
+
+                <p class="mt-2 mb-2">@comment.Content</p>
+
+                <!-- Comment actions -->
+                <div class="d-flex gap-2">
+                    <form asp-action="ToggleReaction" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="commentId" value="@comment.CommentId" />
+                        <input type="hidden" name="reactionType" value="Like" />
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            ❤️ @comment.LikeCount
+                        </button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                            onclick="document.getElementById('reply-@comment.CommentId').style.display='block'">
+                        Reply
+                    </button>
+                </div>
+
+                <!-- Reply form -->
+                <div id="reply-@comment.CommentId" style="display:none;" class="mt-2">
+                    <form asp-action="AddComment" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="PostId" value="@Model.PostId" />
+                        <input type="hidden" name="ParentCommentId" value="@comment.CommentId" />
+                        <textarea name="Content"
+                                  class="form-control mb-2"
+                                  rows="2"
+                                  placeholder="Write a reply..."
+                                  required></textarea>
+                        <button type="submit" class="btn btn-sm btn-primary">Post Reply</button>
+                    </form>
+                </div>
+
+                <!-- Nested replies -->
+                @if (comment.Replies != null && comment.Replies.Any())
+                {
+                    <div class="ms-4 mt-3">
+                        @foreach (var reply in comment.Replies)
+                        {
+                            var replyInitial = !string.IsNullOrEmpty(reply.AuthorName)
+                                ? reply.AuthorName.Substring(0, 1).ToUpper()
+                                : "U";
+
+                            <div class="community-comment-box mb-2 community-reply-box">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <a href="/u/@reply.UserId"
+                                       class="community-author-block community-author-block-sm"
+                                       title="View @reply.AuthorName's profile">
+                                        <span class="community-avatar community-avatar-sm community-avatar-link">@replyInitial</span>
+                                        <div class="community-author-meta">
+                                            <span class="community-author-name">@reply.AuthorName</span>
+                                            <span class="community-author-date">@reply.CreatedAt.ToString("MMM dd, HH:mm")</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <p class="mb-0">@reply.Content</p>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>

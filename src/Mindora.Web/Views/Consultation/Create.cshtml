@@ -1,0 +1,45 @@
+﻿@model Mindora.Application.DTOs.Consultation.CreateConsultationSessionRequest
+
+@{
+    ViewData["Title"] = "Create Consultation Session";
+}
+
+<div class="container mt-4" style="max-width: 650px;">
+    <h2 class="fw-bold mb-4">New Consultation Session</h2>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="ProviderId" class="form-label">Provider</label>
+            <input asp-for="ProviderId" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SessionType" class="form-label">Session Type</label>
+            <select asp-for="SessionType" class="form-select">
+                <option value="Chat">Chat</option>
+                <option value="Video">Video</option>
+                <option value="Audio">Audio</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ScheduledAt" class="form-label">Scheduled At</label>
+            <input asp-for="ScheduledAt" type="datetime-local" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="MeetingLink" class="form-label">Meeting Link (optional)</label>
+            <input asp-for="MeetingLink" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label">Notes (optional)</label>
+            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Session</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

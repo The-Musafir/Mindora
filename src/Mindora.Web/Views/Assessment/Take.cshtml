@@ -1,0 +1,51 @@
+﻿@model Mindora.Application.DTOs.Assessment.TakeAssessmentRequest
+
+@{
+    ViewData["Title"] = "Take Assessment";
+    var questionnaireTitle = ViewBag.QuestionnaireTitle as string;
+    var questions = ViewBag.Questions as List<Mindora.Application.DTOs.Assessment.QuestionDto>;
+}
+
+<div class="container mt-4" style="max-width: 800px;">
+    <h2 class="fw-bold mb-3">@questionnaireTitle</h2>
+    <p class="text-muted mb-4">Please answer the following questions honestly.</p>
+
+    <form asp-action="Take" method="post">
+        <input asp-for="QuestionnaireId" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        @if (questions != null && questions.Any())
+        {
+            int index = 0;
+            foreach (var question in questions)
+            {
+                <div class="card mb-3 shadow-sm border-0">
+                    <div class="card-body">
+                        <p class="fw-semibold">@question.OrderIndex. @question.QuestionText</p>
+                        <input type="hidden" name="Answers[@index].QuestionId" value="@question.QuestionId" />
+                        @foreach (var option in question.Options)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio"
+                                       name="Answers[@index].SelectedOptionId"
+                                       id="option_@question.QuestionId@option.OptionId"
+                                       value="@option.OptionId" />
+                                <label class="form-check-label" for="option_@question.QuestionId@option.OptionId">
+                                    @option.OptionText
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                index++;
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning">Questions not loaded. Please go back and try again.</div>
+        }
+
+        <button type="submit" class="btn btn-primary btn-lg">Submit Assessment</button>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-lg">Cancel</a>
+    </form>
+</div>

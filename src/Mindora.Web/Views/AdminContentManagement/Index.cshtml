@@ -1,0 +1,140 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AdminDashboard.AdminWellnessResourceDto>
+
+@{
+    ViewData["Title"] = "Content Management";
+    var assessments = ViewBag.Assessments as IReadOnlyList<Mindora.Application.DTOs.AdminDashboard.AdminAssessmentQuestionnaireDto>;
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Content Management</h2>
+
+    <div class="row">
+        <!-- Wellness Resources -->
+        <div class="col-lg-7 mb-4">
+            <h5 class="fw-bold mb-3">Wellness Resources</h5>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body">
+                    <form asp-action="CreateWellnessResource" method="post">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <input name="Title" class="form-control" placeholder="Title" required />
+                            </div>
+                            <div class="col-md-3">
+                                <select name="ContentType" class="form-select">
+                                    <option value="Article">Article</option>
+                                    <option value="Video">Video</option>
+                                    <option value="Audio">Audio</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input name="Url" class="form-control" placeholder="URL" required />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Add</button>
+                            </div>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" name="IsPublished" value="true" checked />
+                            <label class="form-check-label">Published</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var resource in Model)
+                        {
+                            <tr>
+                                <td>@resource.Title</td>
+                                <td>@resource.ContentType</td>
+                                <td>
+                                    <span class="badge @(resource.IsPublished ? "bg-success" : "bg-secondary")">
+                                        @(resource.IsPublished ? "Published" : "Draft")
+                                    </span>
+                                </td>
+                                <td>
+                                    <form asp-action="ToggleWellnessResource" method="post" class="d-inline">
+                                        <input type="hidden" name="resourceId" value="@resource.ResourceId" />
+                                        <button type="submit" name="isPublished" value="@(!resource.IsPublished)" class="btn btn-sm @(resource.IsPublished ? "btn-outline-secondary" : "btn-outline-success")">
+                                            @(resource.IsPublished ? "Unpublish" : "Publish")
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Assessment Questionnaires -->
+        <div class="col-lg-5 mb-4">
+            <h5 class="fw-bold mb-3">Assessment Questionnaires</h5>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body">
+                    <form asp-action="CreateAssessment" method="post">
+                        <div class="mb-2">
+                            <input name="Title" class="form-control" placeholder="Title" required />
+                        </div>
+                        <div class="mb-2">
+                            <textarea name="Description" class="form-control" rows="2" placeholder="Description (optional)"></textarea>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="IsActive" value="true" checked />
+                            <label class="form-check-label">Active</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Questionnaire</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (assessments != null)
+                        {
+                            @foreach (var assessment in assessments)
+                            {
+                                <tr>
+                                    <td>@assessment.Title</td>
+                                    <td>
+                                        <span class="badge @(assessment.IsActive ? "bg-success" : "bg-secondary")">
+                                            @(assessment.IsActive ? "Active" : "Inactive")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <form asp-action="ToggleAssessment" method="post" class="d-inline">
+                                            <input type="hidden" name="questionnaireId" value="@assessment.QuestionnaireId" />
+                                            <button type="submit" name="isActive" value="@(!assessment.IsActive)" class="btn btn-sm @(assessment.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                                @(assessment.IsActive ? "Deactivate" : "Activate")
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

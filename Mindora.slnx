@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="playwright.config.js" />
+    <File Path="setup_mindora_folders.ps1" />
+  </Folder>
+  <Project Path="src/Mindora.AI/Mindora.AI.csproj" Id="d34451ab-ef18-49a1-ad84-ff8d2510ca99" />
+  <Project Path="src/Mindora.Application/Mindora.Application.csproj" Id="2d274f73-2746-4a8f-8e13-7c72ed9039b0" />
+  <Project Path="src/Mindora.Domain/Mindora.Domain.csproj" Id="b651d02e-9db3-41ec-8e47-34f69d3191e4" />
+  <Project Path="src/Mindora.Infrastructure/Mindora.Infrastructure.csproj" Id="0d4ed656-1b34-4f52-b443-bb4e4606463d" />
+  <Project Path="src/Mindora.Web/Mindora.Web.csproj" Id="cc1c6892-c96c-4f72-9389-eeb20f3ec2c7" />
+</Solution>

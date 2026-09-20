@@ -1,0 +1,311 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using Mindora.Infrastructure.Persistence.DbContext
+@inject SignInManager<Mindora.Domain.Entities.User> SignInManager
+@inject UserManager<Mindora.Domain.Entities.User> UserManager
+@inject MindoraDbContext DbContext
+
+@{
+    var isAuthenticated = SignInManager.IsSignedIn(User);
+    var currentUser = isAuthenticated ? await UserManager.GetUserAsync(User) : null;
+
+    var profile = currentUser != null
+        ? await DbContext.UserProfiles.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.UserId == currentUser.Id)
+        : null;
+
+    var displayName = profile?.DisplayName
+        ?? currentUser?.UserName
+        ?? currentUser?.Email
+        ?? "Member";
+
+    var avatarUrl = profile?.AvatarUrl;
+    var initial = !string.IsNullOrEmpty(displayName) ? displayName.Substring(0, 1).ToUpper() : "M";
+}
+
+<nav class="mindora-navbar navbar navbar-expand-lg" aria-label="Main navigation">
+    <div class="container-fluid px-4">
+
+        <!-- LEFT: Mobile Toggle + Logo -->
+        <div class="d-flex align-items-center gap-2">
+
+            @if (isAuthenticated)
+            {
+                <button class="mindora-icon-button d-lg-none"
+                        type="button"
+                        id="sidebarToggleMobile"
+                        aria-label="Open menu">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+
+                <button class="mindora-icon-button d-none d-lg-inline-flex"
+                        type="button"
+                        id="sidebarToggle"
+                        aria-label="Toggle sidebar">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+            }
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="navbar-brand d-flex align-items-center"
+               aria-label="Mindora Home">
+                <img src="/images/logo/Mindora-Logo.svg"
+                     alt="Mindora"
+                     class="mindora-logo" />
+            </a>
+
+        </div>
+
+        <!-- MOBILE TOGGLE (public only) -->
+        @if (!isAuthenticated)
+        {
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mindoraNavbar"
+                    aria-controls="mindoraNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        }
+
+        <!-- COLLAPSIBLE CONTENT -->
+        <div class="collapse navbar-collapse" id="mindoraNavbar">
+
+            @if (!isAuthenticated)
+            {
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#recovery">Recovery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#wellness">Wellness</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#community">Community</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#consultation">Professionals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#pricing">Pricing</a>
+                    </li>
+                </ul>
+            }
+
+            <!-- RIGHT SIDE ACTIONS -->
+            <div class="d-flex align-items-center gap-2 ms-auto">
+
+                @if (isAuthenticated)
+                {
+                    <!-- NOTIFICATION BELL -->
+                    <div class="dropdown">
+                        <button class="mindora-icon-button position-relative"
+                                type="button"
+                                id="notificationBell"
+                                data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside"
+                                aria-expanded="false"
+                                aria-label="Notifications">
+                            <span id="notificationBadge"
+                                  class="notification-dot d-none"
+                                  aria-hidden="true"></span>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20" fill="currentColor">
+                                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+                                <path d="M10 21h4" />
+                            </svg>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
+                            aria-labelledby="notificationBell">
+                            <li class="dropdown-header d-flex justify-content-between align-items-center">
+                                <strong>Notifications</strong>
+                                <button id="markAllReadBtn"
+                                        type="button"
+                                        class="btn btn-sm btn-link p-0 text-decoration-none">
+                                    Mark all read
+                                </button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li id="notificationListContainer">
+                                <div class="text-center py-3 text-muted small">
+                                    <span class="spinner-border spinner-border-sm"></span> Loading...
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-center small" href="/Notification">
+                                    View all notifications
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- THEME TOGGLE -->
+                    <button class="mindora-icon-button"
+                            type="button"
+                            id="themeToggle"
+                            aria-label="Toggle theme">
+                        <svg class="theme-icon-light" viewBox="0 0 24 24"
+                             aria-hidden="true" width="20" height="20"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="theme-icon-dark" viewBox="0 0 24 24"
+                             aria-hidden="true" width="20" height="20"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+
+                    <!-- USER MENU -->
+                    <div class="dropdown">
+                        <button class="mindora-profile-button"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                aria-label="User menu">
+                            @if (!string.IsNullOrEmpty(avatarUrl))
+                            {
+                                <img src="@avatarUrl"
+                                     alt="@displayName"
+                                     class="mindora-avatar-img" />
+                            }
+                            else
+                            {
+                                <span class="mindora-avatar">@initial</span>
+                            }
+                            <span class="mindora-member-text d-none d-md-inline">@displayName</span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end mindora-user-dropdown">
+                            <li class="dropdown-header">
+                                <div class="fw-semibold">@displayName</div>
+                                <div class="text-muted small">@currentUser?.Email</div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         style="margin-right:8px;vertical-align:-2px;">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Notification" asp-action="Preferences">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         style="margin-right:8px;vertical-align:-2px;">
+                                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18c0-2-3-2-3-9" />
+                                        <path d="M10 21h4" />
+                                    </svg>
+                                    Preferences
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Payment" asp-action="MySubscription">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                         style="margin-right:8px;vertical-align:-2px;">
+                                        <rect x="1" y="4" width="22" height="16" rx="2" />
+                                        <line x1="1" y1="10" x2="23" y2="10" />
+                                    </svg>
+                                    Billing
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form asp-area="Identity" asp-page="/Account/Logout"
+                                      asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"
+                                      method="post" class="m-0">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             style="margin-right:8px;vertical-align:-2px;">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                            <polyline points="16 17 21 12 16 7" />
+                                            <line x1="21" y1="12" x2="9" y2="12" />
+                                        </svg>
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <!-- PUBLIC: Theme toggle + Login + Register -->
+                    <button class="mindora-icon-button"
+                            type="button"
+                            id="themeToggle"
+                            aria-label="Toggle theme">
+                        <svg class="theme-icon-light" viewBox="0 0 24 24"
+                             aria-hidden="true" width="20" height="20"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <svg class="theme-icon-dark" viewBox="0 0 24 24"
+                             aria-hidden="true" width="20" height="20"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                    </button>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login"
+                       class="btn btn-outline-primary btn-sm">
+                        Login
+                    </a>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Register"
+                       class="btn btn-primary btn-sm">
+                        Sign up
+                    </a>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</nav>

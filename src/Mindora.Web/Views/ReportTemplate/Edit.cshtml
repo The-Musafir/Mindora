@@ -1,0 +1,61 @@
+﻿@model Mindora.Application.DTOs.Reporting.ReportTemplateDto
+
+@{
+    ViewData["Title"] = "Edit Report Template";
+}
+
+<div class="container mt-4" style="max-width: 650px;">
+    <h2 class="fw-bold mb-4">Edit Report Template</h2>
+
+    <form asp-action="Edit" method="post">
+        <input asp-for="TemplateId" type="hidden" />
+        <input asp-for="TemplateKey" type="hidden" />
+        <input asp-for="CreatedAt" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label class="form-label">Template Key</label>
+            <input class="form-control" value="@Model.TemplateKey" readonly />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Category" class="form-label">Category</label>
+                <select asp-for="Category" class="form-select">
+                    <option value="Business">Business</option>
+                    <option value="User">User</option>
+                    <option value="Wellness">Wellness</option>
+                    <option value="Community">Community</option>
+                    <option value="Compliance">Compliance</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="DefaultFormat" class="form-label">Default Format</label>
+                <select asp-for="DefaultFormat" class="form-select">
+                    <option value="CSV">CSV</option>
+                    <option value="Excel">Excel</option>
+                    <option value="PDF">PDF</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+            <label asp-for="IsActive" class="form-check-label">Active</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

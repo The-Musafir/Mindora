@@ -1,0 +1,47 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Professional.ProviderVerificationDocumentDto>
+
+@{
+    ViewData["Title"] = "Verify Documents";
+    var providerId = ViewBag.ProviderId as Guid?;
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Provider Verification Documents</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No documents submitted.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Type</th>
+                        <th>File</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doc in Model)
+                    {
+                        <tr>
+                            <td>@doc.DocumentType</td>
+                            <td><a href="@doc.FileUrl" target="_blank">View</a></td>
+                            <td><span class="badge bg-warning text-dark">@doc.Status</span></td>
+                            <td>
+                                <form asp-action="UpdateDocumentStatus" method="post" class="d-inline">
+                                    <input type="hidden" name="documentId" value="@doc.DocumentId" />
+                                    <button type="submit" name="status" value="Approved" class="btn btn-sm btn-success">Approve</button>
+                                    <button type="submit" name="status" value="Rejected" class="btn btn-sm btn-danger">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

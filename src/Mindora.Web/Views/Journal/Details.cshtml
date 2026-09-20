@@ -1,0 +1,48 @@
+﻿@model Mindora.Application.DTOs.Journal.JournalResponse
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="fw-bold">@Model.Title</h2>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back</a>
+            </div>
+            <span class="badge bg-secondary">@Model.Category</span>
+            <span class="badge @(Model.IsPrivate ? "bg-secondary" : "bg-success")">@(Model.IsPrivate ? "Private" : "Public")</span>
+
+            <hr />
+
+            <p class="fs-5">@Model.Content</p>
+
+            <div class="mt-3">
+                <strong>Date:</strong> @Model.EntryDate.ToShortDateString()
+            </div>
+
+            @if (Model.Moods.Any())
+            {
+                <div class="mt-3">
+                    <strong>Moods:</strong>
+                    @foreach (var mood in Model.Moods)
+                    {
+                        <span class="badge bg-info me-1">@mood.MoodLabel (@mood.Intensity/5)</span>
+                    }
+                </div>
+            }
+
+            @if (Model.Tags.Any())
+            {
+                <div class="mt-3">
+                    <strong>Tags:</strong>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <span class="badge bg-light text-dark me-1">#@tag</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

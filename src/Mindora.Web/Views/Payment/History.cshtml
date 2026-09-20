@@ -1,0 +1,85 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Payment.TransactionDto>
+
+@{
+    ViewData["Title"] = "Payment History";
+    var payments = ViewBag.Payments as IReadOnlyList<Mindora.Application.DTOs.Payment.PaymentResponseDto>;
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Payment History</h2>
+
+    <h5 class="fw-bold mb-3">Payments</h5>
+    @if (payments == null || payments.Count == 0)
+    {
+        <div class="alert alert-info">No payments yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive mb-4">
+            <table class="table payment-table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Gateway</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var payment in payments)
+                    {
+                        <tr>
+                            <td>@payment.CreatedAt.ToShortDateString()</td>
+                            <td>@payment.Amount @payment.Currency</td>
+                            <td>@payment.Gateway</td>
+                            <td>
+                                <span class="payment-badge @(payment.Status == "Completed" ? "bg-success" : payment.Status == "Pending" ? "bg-warning text-dark" : payment.Status == "Failed" ? "bg-danger" : "bg-secondary") text-white">
+                                    @payment.Status
+                                </span>
+                            </td>
+                            <td>
+                                @if (payment.Status == "Completed")
+                                {
+                                    <form asp-action="GenerateInvoice" asp-route-paymentId="@payment.PaymentId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Generate Invoice</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <h5 class="fw-bold mb-3">Transactions</h5>
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No transactions.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table payment-table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tx in Model)
+                    {
+                        <tr>
+                            <td>@tx.CreatedAt.ToShortDateString()</td>
+                            <td>@tx.Amount</td>
+                            <td>@tx.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

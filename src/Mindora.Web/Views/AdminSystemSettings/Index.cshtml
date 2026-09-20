@@ -1,0 +1,277 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminSystemSettingsDto
+
+@{
+    ViewData["Title"] = "System Settings";
+}
+
+<div class="container mt-4" style="max-width: 900px;">
+    <h2 class="fw-bold mb-4">System Settings</h2>
+
+    @if (TempData["SettingsSaved"] != null)
+    {
+        <div class="alert alert-success">@TempData["SettingsSaved"]</div>
+    }
+
+    <form asp-action="Update" method="post">
+        <!-- General -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">General</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Platform Name</label>
+                        <input asp-for="PlatformName" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Support Email</label>
+                        <input asp-for="SupportEmail" class="form-control" type="email" />
+                    </div>
+                </div>
+                <div class="form-check form-switch">
+                    <input asp-for="MaintenanceMode" class="form-check-input" type="checkbox" />
+                    <label asp-for="MaintenanceMode" class="form-check-label">Maintenance Mode</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Toggles -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Feature Toggles</h5>
+                <div class="row">
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="HabitModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="HabitModuleEnabled" class="form-check-label">Habit</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="JournalModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="JournalModuleEnabled" class="form-check-label">Journal</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="AssessmentModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="AssessmentModuleEnabled" class="form-check-label">Assessment</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="CommunityModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="CommunityModuleEnabled" class="form-check-label">Community</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="ProfessionalModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="ProfessionalModuleEnabled" class="form-check-label">Professional</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="AIModuleEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="AIModuleEnabled" class="form-check-label">AI</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Gateway -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Payment Gateway</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">SSLCommerz Store ID</label>
+                        <input asp-for="SslcommerzStoreId" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">SSLCommerz Store Password</label>
+                        <input asp-for="SslcommerzStorePassword" class="form-control" type="password" />
+                    </div>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input asp-for="PaymentSandboxMode" class="form-check-input" type="checkbox" />
+                    <label asp-for="PaymentSandboxMode" class="form-check-label">Sandbox Mode</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="BkashEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="BkashEnabled" class="form-check-label">bKash</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="NagadEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="NagadEnabled" class="form-check-label">Nagad</label>
+                    </div>
+                    <div class="col-md-4 form-check form-switch mb-2">
+                        <input asp-for="CardEnabled" class="form-check-input" type="checkbox" />
+                        <label asp-for="CardEnabled" class="form-check-label">Card</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Settings -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">AI Settings</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Gemini API Key</label>
+                        <input asp-for="GeminiApiKey" class="form-control" type="password" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Default Model</label>
+                        <input asp-for="DefaultAiModel" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Max Output Tokens</label>
+                        <input asp-for="MaxOutputTokens" class="form-control" type="number" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Temperature (0-1)</label>
+                        <input asp-for="Temperature" class="form-control" type="number" step="0.1" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Response Tone</label>
+                        <select asp-for="ResponseTone" class="form-select">
+                            <option value="Supportive">Supportive</option>
+                            <option value="Professional">Professional</option>
+                            <option value="Friendly">Friendly</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Settings -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Email Settings</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">SMTP Host</label>
+                        <input asp-for="SmtpHost" class="form-control" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">SMTP Port</label>
+                        <input asp-for="SmtpPort" class="form-control" type="number" />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Enable SSL</label>
+                        <div class="form-check form-switch mt-2">
+                            <input asp-for="EmailEnableSsl" class="form-check-input" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Sender Address</label>
+                        <input asp-for="EmailSenderAddress" class="form-control" type="email" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Sender Password</label>
+                        <input asp-for="EmailSenderPassword" class="form-control" type="password" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Security</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Password Min Length</label>
+                        <input asp-for="PasswordMinLength" class="form-control" type="number" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Lockout Threshold</label>
+                        <input asp-for="AccountLockoutThreshold" class="form-control" type="number" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Session Timeout (min)</label>
+                        <input asp-for="SessionTimeoutMinutes" class="form-control" type="number" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-check form-switch mb-2">
+                        <input asp-for="PasswordRequireUppercase" class="form-check-input" type="checkbox" />
+                        <label asp-for="PasswordRequireUppercase" class="form-check-label">Require Uppercase</label>
+                    </div>
+                    <div class="col-md-3 form-check form-switch mb-2">
+                        <input asp-for="PasswordRequireLowercase" class="form-check-input" type="checkbox" />
+                        <label asp-for="PasswordRequireLowercase" class="form-check-label">Require Lowercase</label>
+                    </div>
+                    <div class="col-md-3 form-check form-switch mb-2">
+                        <input asp-for="PasswordRequireDigit" class="form-check-input" type="checkbox" />
+                        <label asp-for="PasswordRequireDigit" class="form-check-label">Require Digit</label>
+                    </div>
+                    <div class="col-md-3 form-check form-switch mb-2">
+                        <input asp-for="PasswordRequireNonAlphanumeric" class="form-check-input" type="checkbox" />
+                        <label asp-for="PasswordRequireNonAlphanumeric" class="form-check-label">Require Special Char</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Notification Defaults</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Default Channel</label>
+                        <select asp-for="DefaultNotificationChannel" class="form-select">
+                            <option value="InApp">In-App</option>
+                            <option value="Email">Email</option>
+                            <option value="Push">Push</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Email Enabled</label>
+                        <div class="form-check form-switch mt-2">
+                            <input asp-for="EmailNotificationEnabled" class="form-check-input" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Push Enabled</label>
+                        <div class="form-check form-switch mt-2">
+                            <input asp-for="PushNotificationEnabled" class="form-check-input" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">In-App Enabled</label>
+                        <div class="form-check form-switch mt-2">
+                            <input asp-for="InAppNotificationEnabled" class="form-check-input" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Quiet Hours Start</label>
+                        <input asp-for="QuietHoursStart" class="form-control" type="time" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Quiet Hours End</label>
+                        <input asp-for="QuietHoursEnd" class="form-control" type="time" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Registration</h5>
+                <div class="row">
+                    <div class="col-md-6 form-check form-switch mb-2">
+                        <input asp-for="AllowPublicRegistration" class="form-check-input" type="checkbox" />
+                        <label asp-for="AllowPublicRegistration" class="form-check-label">Allow Public Registration</label>
+                    </div>
+                    <div class="col-md-6 form-check form-switch mb-2">
+                        <input asp-for="RequireEmailConfirmation" class="form-check-input" type="checkbox" />
+                        <label asp-for="RequireEmailConfirmation" class="form-check-label">Require Email Confirmation</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Default User Role</label>
+                        <select asp-for="DefaultUserRole" class="form-select">
+                            <option value="User">User</option>
+                            <option value="Professional">Professional</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Settings</button>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+﻿@model Mindora.Application.DTOs.Journal.UpdateJournalRequest
+
+@{
+    ViewData["Title"] = "Edit Journal Entry";
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="mb-4 fw-bold">Edit Journal Entry</h2>
+
+    <form asp-action="Edit" method="post">
+        <input asp-for="EntryId" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Content" class="form-label"></label>
+            <textarea asp-for="Content" class="form-control" rows="8"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Category" class="form-label"></label>
+                <select asp-for="Category" class="form-select">
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Health">Health</option>
+                    <option value="Travel">Travel</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="EntryDate" class="form-label"></label>
+                <input asp-for="EntryDate" type="date" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="IsPrivate" class="form-check-input" type="checkbox" />
+            <label asp-for="IsPrivate" class="form-check-label">Private</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,132 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminNotificationManagementDto
+
+@{
+    ViewData["Title"] = "Notification Management";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Notification Management</h2>
+
+    @if (TempData["BroadcastSuccess"] != null)
+    {
+        <div class="alert alert-success">@TempData["BroadcastSuccess"]</div>
+    }
+
+    <div class="row">
+        <!-- Templates -->
+        <div class="col-lg-7 mb-4">
+            <h5 class="fw-bold mb-3">Notification Templates</h5>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body">
+                    <form asp-action="CreateTemplate" method="post">
+                        <div class="row g-2">
+                            <div class="col-md-3">
+                                <input name="TemplateKey" class="form-control" placeholder="Key" required />
+                            </div>
+                            <div class="col-md-3">
+                                <input name="Subject" class="form-control" placeholder="Subject" required />
+                            </div>
+                            <div class="col-md-2">
+                                <select name="Channel" class="form-select">
+                                    <option value="InApp">In-App</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Push">Push</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Add</button>
+                            </div>
+                        </div>
+                        <textarea name="BodyTemplate" class="form-control mt-2" rows="3" placeholder="Body template..." required></textarea>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Key</th>
+                            <th>Subject</th>
+                            <th>Channel</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var template in Model.Templates)
+                        {
+                            <tr>
+                                <td><code>@template.TemplateKey</code></td>
+                                <td>@template.Subject</td>
+                                <td>@template.Channel</td>
+                                <td>
+                                    <span class="badge @(template.IsActive ? "bg-success" : "bg-secondary")">
+                                        @(template.IsActive ? "Active" : "Inactive")
+                                    </span>
+                                </td>
+                                <td>
+                                    <form asp-action="ToggleTemplate" method="post" class="d-inline">
+                                        <input type="hidden" name="templateId" value="@template.TemplateId" />
+                                        <button type="submit" name="isActive" value="@(!template.IsActive)" class="btn btn-sm @(template.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                            @(template.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Broadcast + Logs -->
+        <div class="col-lg-5 mb-4">
+            <h5 class="fw-bold mb-3">Send Broadcast</h5>
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <form asp-action="Broadcast" method="post">
+                        <div class="mb-2">
+                            <input name="Title" class="form-control" placeholder="Title" required />
+                        </div>
+                        <div class="mb-2">
+                            <textarea name="Body" class="form-control" rows="3" placeholder="Message..." required></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <select name="Channel" class="form-select">
+                                <option value="InApp">In-App</option>
+                                <option value="Email">Email</option>
+                                <option value="Push">Push</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Send Broadcast</button>
+                    </form>
+                </div>
+            </div>
+
+            <h5 class="fw-bold mb-3">Recent Logs</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Notification ID</th>
+                            <th>Status</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in Model.RecentLogs)
+                        {
+                            <tr>
+                                <td><code>@log.NotificationId</code></td>
+                                <td>@log.Status</td>
+                                <td>@log.CreatedAt.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

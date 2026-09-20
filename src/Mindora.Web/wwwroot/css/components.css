@@ -1,0 +1,358 @@
+﻿/* ============================================================
+   Mindora — Shared Components
+   Skeleton, Empty States, Stat Cards, Chart Wrappers
+   ============================================================ */
+
+/* ============================================================
+   STAT CARDS (reusable)
+   ============================================================ */
+.mindora-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.mindora-stat-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .mindora-stat-card {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+.mindora-stat-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.mindora-stat-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+}
+
+.mindora-stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0F172A;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+[data-theme="dark"] .mindora-stat-value {
+    color: #F1F5F9;
+}
+
+.mindora-stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+[data-theme="dark"] .mindora-stat-label {
+    color: #94A3B8;
+}
+
+/* ============================================================
+   CHART CONTAINER
+   ============================================================ */
+.mindora-chart-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+[data-theme="dark"] .mindora-chart-card {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+.mindora-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.mindora-chart-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0F172A;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+[data-theme="dark"] .mindora-chart-title {
+    color: #F1F5F9;
+}
+
+.mindora-chart-subtitle {
+    font-size: 13px;
+    color: #64748B;
+    margin: 4px 0 0;
+}
+
+.mindora-chart-body {
+    position: relative;
+    height: 280px;
+}
+
+/* ============================================================
+   LOADING SKELETON
+   ============================================================ */
+.mindora-skeleton {
+    background: linear-gradient( 90deg, #F1F5F9 0%, #E2E8F0 50%, #F1F5F9 100% );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+[data-theme="dark"] .mindora-skeleton {
+    background: linear-gradient( 90deg, #1E293B 0%, #334155 50%, #1E293B 100% );
+    background-size: 200% 100%;
+}
+
+@@keyframes skeletonShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.mindora-skeleton-text {
+    height: 14px;
+    margin-bottom: 10px;
+}
+
+.mindora-skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin-bottom: 16px;
+}
+
+.mindora-skeleton-chart {
+    height: 280px;
+    border-radius: 16px;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.mindora-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    background: #FFFFFF;
+    border: 1px dashed #CBD5E1;
+    border-radius: 16px;
+}
+
+[data-theme="dark"] .mindora-empty-state {
+    background: #1E293B;
+    border-color: #475569;
+}
+
+.mindora-empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(6, 182, 212, 0.08);
+    color: #06B6D4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.mindora-empty-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+[data-theme="dark"] .mindora-empty-title {
+    color: #F1F5F9;
+}
+
+.mindora-empty-text {
+    font-size: 14px;
+    color: #64748B;
+    max-width: 400px;
+    margin: 0 0 24px;
+    line-height: 1.6;
+}
+
+[data-theme="dark"] .mindora-empty-text {
+    color: #94A3B8;
+}
+
+.mindora-empty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #06B6D4, #0891B2);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+    .mindora-empty-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(6, 182, 212, 0.3);
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+/* ============================================================
+   PAGE HEADER (reusable)
+   ============================================================ */
+.mindora-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.mindora-page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+[data-theme="dark"] .mindora-page-title {
+    color: #F1F5F9;
+}
+
+.mindora-page-subtitle {
+    font-size: 14px;
+    color: #64748B;
+    margin: 4px 0 0;
+}
+
+[data-theme="dark"] .mindora-page-subtitle {
+    color: #94A3B8;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+    .mindora-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .mindora-stat-value {
+        font-size: 22px;
+    }
+
+    .mindora-page-title {
+        font-size: 22px;
+    }
+
+    .mindora-chart-body {
+        height: 220px;
+    }
+}
+/* ============================================================
+   SKELETON CARD
+   ============================================================ */
+.mindora-skeleton-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+[data-theme="dark"] .mindora-skeleton-card {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+/* ============================================================
+   GLOBAL LOADING BAR (top of page)
+   ============================================================ */
+.mindora-loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #06B6D4, #8B5CF6);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+    .mindora-loading-bar.active {
+        opacity: 1;
+    }
+
+/* ============================================================
+   TOAST (lightweight, non-notification)
+   ============================================================ */
+.mindora-quick-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(15, 23, 42, 0.95);
+    color: #FFFFFF;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 9998;
+    max-width: 90%;
+    text-align: center;
+}
+
+    .mindora-quick-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }

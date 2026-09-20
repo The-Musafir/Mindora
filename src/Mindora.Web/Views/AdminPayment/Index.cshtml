@@ -1,0 +1,157 @@
+﻿@model Mindora.Application.DTOs.Payment.AdminPaymentDashboardDto
+
+@{
+    ViewData["Title"] = "Admin Payment Dashboard";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Payment Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Total Revenue</strong><br />
+                <span class="fs-4 fw-bold text-success">@Model.TotalRevenue.ToString("C")</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Total Payments</strong><br />
+                <span class="fs-4 fw-bold">@Model.TotalPayments</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Pending Refunds</strong><br />
+                <span class="fs-4 fw-bold text-warning">@Model.PendingRefundsCount</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Active Subscriptions</strong><br />
+                <span class="fs-4 fw-bold text-primary">@Model.ActiveSubscriptionsCount</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Pending Payouts</strong><br />
+                <span class="fs-4 fw-bold text-info">@Model.PendingPayoutsCount</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Active Coupons</strong><br />
+                <span class="fs-4 fw-bold text-secondary">@Model.ActiveCouponsCount</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Recent Payments -->
+        <div class="col-lg-6 mb-4">
+            <h5 class="fw-bold">Recent Payments</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payment in Model.RecentPayments)
+                        {
+                            <tr>
+                                <td>@payment.CreatedAt.ToString("g")</td>
+                                <td>@payment.Amount @payment.Currency</td>
+                                <td>@payment.PaymentType</td>
+                                <td>@payment.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pending Refunds -->
+        <div class="col-lg-6 mb-4">
+            <h5 class="fw-bold">Pending Refunds</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var refund in Model.PendingRefunds)
+                        {
+                            <tr>
+                                <td>@refund.UserEmail</td>
+                                <td>@refund.Amount</td>
+                                <td>@refund.Reason</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pending Payouts -->
+        <div class="col-lg-6 mb-4">
+            <h5 class="fw-bold">Pending Payouts</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Provider</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var payout in Model.PendingPayouts)
+                        {
+                            <tr>
+                                <td>@payout.ProviderName</td>
+                                <td>@payout.Amount</td>
+                                <td>@payout.Method</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Active Coupons -->
+        <div class="col-lg-6 mb-4">
+            <h5 class="fw-bold">Active Coupons</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Discount</th>
+                            <th>Usage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var coupon in Model.ActiveCoupons)
+                        {
+                            <tr>
+                                <td>@coupon.Code</td>
+                                <td>@coupon.DiscountType @coupon.DiscountValue</td>
+                                <td>@coupon.UsageCount / @coupon.UsageLimit</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,274 @@
+﻿@model Mindora.Application.DTOs.Assessment.AssessmentStatisticsViewModel
+@{
+    ViewData["Title"] = "Assessment Statistics";
+}
+
+<div class="container-fluid py-4" style="max-width: 1200px;">
+
+    <!-- PAGE HEADER -->
+    <div class="mindora-page-header">
+        <div>
+            <h1 class="mindora-page-title">Assessment Insights</h1>
+            <p class="mindora-page-subtitle">Your mental health assessment journey</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Index" class="btn btn-primary">
+                Take Assessment
+            </a>
+            <a asp-action="History" class="btn btn-outline-secondary">
+                History
+            </a>
+        </div>
+    </div>
+
+    @if (!Model.HasData)
+    {
+        <div class="mindora-empty-state">
+            <div class="mindora-empty-icon">📋</div>
+            <h3 class="mindora-empty-title">No assessments yet</h3>
+            <p class="mindora-empty-text">
+                Take your first assessment to track your mental wellness progress over time.
+            </p>
+            <a asp-action="Index" class="mindora-empty-btn">
+                Browse Assessments
+            </a>
+        </div>
+    }
+    else
+    {
+        <!-- STAT CARDS -->
+        <div class="mindora-stat-grid">
+            <div class="mindora-stat-card">
+                <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                        <path d="M12 2v14" />
+                        <polyline points="9 5 12 2 15 5" />
+                    </svg>
+                </div>
+                <div class="mindora-stat-value">@Model.TotalAssessments</div>
+                <div class="mindora-stat-label">Total Assessments</div>
+            </div>
+
+            <div class="mindora-stat-card">
+                <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                </div>
+                <div class="mindora-stat-value">@Model.CompletedAssessments</div>
+                <div class="mindora-stat-label">Completed</div>
+            </div>
+
+            <div class="mindora-stat-card">
+                <div class="mindora-stat-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                </div>
+                <div class="mindora-stat-value">@Model.InProgressAssessments</div>
+                <div class="mindora-stat-label">In Progress</div>
+            </div>
+
+            <div class="mindora-stat-card">
+                <div class="mindora-stat-icon" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10" />
+                        <line x1="12" y1="20" x2="12" y2="4" />
+                        <line x1="6" y1="20" x2="6" y2="14" />
+                    </svg>
+                </div>
+                <div class="mindora-stat-value">@Model.AverageScoreDisplay</div>
+                <div class="mindora-stat-label">Average Score</div>
+            </div>
+        </div>
+
+        <!-- RISK BREAKDOWN CARDS -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="assessment-risk-card low">
+                    <div class="assessment-risk-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="assessment-risk-count">@Model.LowRiskCount</div>
+                        <div class="assessment-risk-label">Low Risk</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="assessment-risk-card moderate">
+                    <div class="assessment-risk-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="assessment-risk-count">@Model.ModerateRiskCount</div>
+                        <div class="assessment-risk-label">Moderate Risk</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="assessment-risk-card high">
+                    <div class="assessment-risk-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="assessment-risk-count">@Model.HighRiskCount</div>
+                        <div class="assessment-risk-label">High Risk</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCORE TREND CHART -->
+        @if (Model.ScoreHistory.Count > 1)
+        {
+            <div class="mindora-chart-card">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Score Progression</h3>
+                        <p class="mindora-chart-subtitle">How your scores have changed over time</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="scoreTrendChart"></canvas>
+                </div>
+            </div>
+        }
+
+        <!-- TYPE DISTRIBUTION + RISK DOUGHNUT -->
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="mindora-chart-card h-100">
+                    <div class="mindora-chart-header">
+                        <div>
+                            <h3 class="mindora-chart-title">Assessment Types</h3>
+                            <p class="mindora-chart-subtitle">What you've taken</p>
+                        </div>
+                    </div>
+                    @if (Model.TypeBreakdown.Any())
+                    {
+                        <div class="mindora-chart-body">
+                            <canvas id="typeBreakdownChart"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5 text-muted">No data yet</div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="mindora-chart-card h-100">
+                    <div class="mindora-chart-header">
+                        <div>
+                            <h3 class="mindora-chart-title">Risk Distribution</h3>
+                            <p class="mindora-chart-subtitle">Your overall risk profile</p>
+                        </div>
+                    </div>
+                    @if (Model.TotalRisk > 0)
+                    {
+                        <div class="mindora-chart-body">
+                            <canvas id="riskDistChart"></canvas>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5 text-muted">No data yet</div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            @if (Model.HasData && Model.ScoreHistory.Count > 1)
+                {
+                    <text>
+                                // ============================================================
+                            // SCORE TREND CHART
+                            // ============================================================
+                            const scoreLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                                            Model.ScoreHistory.Select(s => s.Date.ToString("MMM dd")).ToList()));
+
+                            const scoreData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                                            Model.ScoreHistory.Select(s => s.Score).ToList()));
+
+                            MindoraCharts.line('scoreTrendChart', scoreLabels, [{
+                                label: 'Score',
+                            data: scoreData,
+                            color: '#06B6D4',
+                            fill: true
+                                }], {
+                                plugins: {
+                                tooltip: {
+                                callbacks: {
+                                label: function (ctx) {
+                                                    return `Score: ${ctx.parsed.y}`;
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                    </text>
+            }
+
+                @if (Model.HasData && Model.TypeBreakdown.Any())
+                {
+                    <text>
+                                // ============================================================
+                            // TYPE BREAKDOWN DOUGHNUT
+                            // ============================================================
+                            const typeLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                                            Model.TypeBreakdown.Select(t => t.Name).ToList()));
+
+                            const typeData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                                            Model.TypeBreakdown.Select(t => t.Count).ToList()));
+
+                            MindoraCharts.doughnut('typeBreakdownChart', typeLabels, typeData);
+                    </text>
+            }
+
+                @if (Model.HasData && Model.TotalRisk > 0)
+                {
+                    <text>
+                                // ============================================================
+                            // RISK DISTRIBUTION DOUGHNUT
+                            // ============================================================
+                            const riskLabels = ['Low Risk', 'Moderate Risk', 'High Risk'];
+                            const riskData = [@Model.LowRiskCount, @Model.ModerateRiskCount, @Model.HighRiskCount];
+                            const riskColors = ['#10B981', '#F59E0B', '#EF4444'];
+
+                            MindoraCharts.doughnut('riskDistChart', riskLabels, riskData, riskColors);
+                    </text>
+            }
+                });
+    </script>
+}

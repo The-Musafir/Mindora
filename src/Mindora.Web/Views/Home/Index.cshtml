@@ -1,0 +1,407 @@
+﻿@using System.Security.Claims
+@model Mindora.Application.DTOs.Home.HomeViewModel
+@{
+    ViewData["Title"] = "Mindora";
+}
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+<section id="hero" class="mindora-hero-section py-5 position-relative overflow-hidden">
+    <div class="container py-lg-4">
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-7 text-start">
+                <h1 class="hero-main-title display-4 fw-bold mb-4">
+                    <span class="d-block">Understand Your Patterns,</span>
+                    <span class="d-block text-primary">Transform Your Habits,</span>
+                    <span class="d-block">Create Lasting Well-being.</span>
+                </h1>
+
+                <div class="hero-subtitle-box p-4 mb-4 rounded-4 shadow-sm border bg-white bg-opacity-75 backdrop-blur">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="feature-icon-badge bg-primary bg-opacity-10 text-primary p-2 rounded-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-1 text-dark">Personalized Habit Recovery & Growth</h6>
+                            <p class="text-muted mb-0 small">
+                                Experience a seamless ecosystem combining recovery tools, mental health support, and community growth—all engineered inside a unified space designed for your success.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 align-items-center">
+                    @if (Model.IsUserLoggedIn)
+                    {
+                        <a asp-controller="Habit" asp-action="Index" class="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm fw-semibold">
+                            Go to Dashboard
+                        </a>
+                        <a asp-controller="Chat" asp-action="Index" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill fw-semibold d-flex align-items-center gap-2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            AI Coach
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow-sm fw-semibold">
+                            Get Started Free
+                        </a>
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-dark btn-lg px-4 py-3 rounded-pill fw-semibold">
+                            Sign In
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <!-- Dashboard Preview Card -->
+            <div class="col-lg-5">
+                <div class="dashboard-preview-wrapper position-relative">
+                    <div class="card border-0 shadow-lg rounded-4 p-4 bg-white dashboard-main-card">
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                @if (Model.IsUserLoggedIn)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success px-3 py-1 rounded-pill fw-semibold small">Live</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill fw-semibold small">Preview</span>
+                                }
+                                <h5 class="fw-bold text-dark mt-2 mb-0">Today's Progress</h5>
+                            </div>
+                        </div>
+
+                        @if (Model.IsUserLoggedIn)
+                        {
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between text-muted small mb-2">
+                                    <span>Daily Goal Completion</span>
+                                    <span class="fw-bold text-primary">@(Model.DailyGoalPercent ?? 0)%</span>
+                                </div>
+                                <div class="progress rounded-pill" style="height: 10px;">
+                                    <div class="progress-bar bg-primary rounded-pill"
+                                         role="progressbar"
+                                         style="width: @(Model.DailyGoalPercent ?? 0)%;"
+                                         aria-valuenow="@(Model.DailyGoalPercent ?? 0)"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-6">
+                                    <div class="p-3 rounded-4 bg-light border-0 d-flex align-items-center gap-3">
+                                        <div class="bg-success text-white rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted d-block small">Habits Done</span>
+                                            <h6 class="fw-bold mb-0 text-dark">@(Model.TodayHabitsDone ?? 0) / @(Model.TodayHabitsTotal ?? 0)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="p-3 rounded-4 bg-light border-0 d-flex align-items-center gap-3">
+                                        <div class="bg-info text-white rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <span class="fs-5">😊</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-muted d-block small">Wellness Score</span>
+                                            <h6 class="fw-bold mb-0 text-dark">
+                                                @(Model.LatestMoodScore.HasValue ? Model.LatestMoodScore.Value.ToString("F1") : "—")
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="fs-4">🔥</span>
+                                    <div>
+                                        <h6 class="fw-bold text-dark mb-0 small">@(Model.CurrentStreak ?? 0) Days Streak</h6>
+                                        <span class="text-muted text-xs" style="font-size: 0.75rem;">
+                                            @(Model.CurrentStreak > 0 ? "Keep going!" : "Start today!")
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="badge bg-primary text-white">Active</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <div style="font-size: 3rem; opacity: 0.3; margin-bottom: 16px;">📊</div>
+                                <h6 class="fw-bold text-dark mb-2">Track your progress</h6>
+                                <p class="text-muted small mb-3">
+                                    Sign up to see your daily habits, wellness score, and streak.
+                                </p>
+                                <a asp-area="Identity" asp-page="/Account/Register"
+                                   class="btn btn-primary btn-sm rounded-pill px-4">
+                                    Create Free Account
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 bg-primary opacity-10 rounded-circle filter-blur z-n1" style="filter: blur(50px);"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     FEATURES SECTION
+========================= -->
+<section id="features" class="mindora-section features-section">
+    <span id="recovery" style="position:relative; display:block; height:0; visibility:hidden;" aria-hidden="true"></span>
+    <span id="wellness" style="position:relative; display:block; height:0; visibility:hidden;" aria-hidden="true"></span>
+
+    <div class="container">
+        <div class="section-heading">
+            <span class="section-eyebrow">WHY MINDORA</span>
+            <h2>Everything you need to <span>grow stronger.</span></h2>
+            <p>One simple platform designed to help you understand yourself, build healthier habits, and keep moving forward.</p>
+        </div>
+
+        <div class="features-grid">
+            <article class="feature-card feature-cyan">
+                <div class="feature-icon">↗</div>
+                <h3>Habit Recovery</h3>
+                <p>Understand unhealthy patterns and gradually replace them with healthier daily habits.</p>
+                <a asp-controller="Habit" asp-action="Index">Explore feature →</a>
+            </article>
+
+            <article class="feature-card feature-purple">
+                <div class="feature-icon">◉</div>
+                <h3>Mental Wellness</h3>
+                <p>Track your mood, reflect on your emotions, and understand your wellness journey over time.</p>
+                <a asp-controller="Journal" asp-action="Index">Explore feature →</a>
+            </article>
+
+            <article class="feature-card feature-orange">
+                <div class="feature-icon">♙</div>
+                <h3>Professional Support</h3>
+                <p>Connect with qualified professionals whenever you need additional guidance and support.</p>
+                <a asp-controller="Professional" asp-action="Index">Explore feature →</a>
+            </article>
+
+            <article class="feature-card feature-green">
+                <div class="feature-icon">◎</div>
+                <h3>Supportive Community</h3>
+                <p>Find people who understand your journey and share progress in a safe and supportive environment.</p>
+                <a asp-controller="Community" asp-action="Index">Explore feature →</a>
+            </article>
+
+            <article class="feature-card feature-blue">
+                <div class="feature-icon">✦</div>
+                <h3>AI Guidance</h3>
+                <p>Receive personalized insights and recommendations based on your habits and progress.</p>
+                <a asp-controller="Chat" asp-action="Index">Explore feature →</a>
+            </article>
+
+            <article class="feature-card feature-pink">
+                <div class="feature-icon">★</div>
+                <h3>Progress & Rewards</h3>
+                <p>Turn recovery into an engaging journey with milestones, streaks, challenges, and achievements.</p>
+                <a asp-controller="Habit" asp-action="Statistics">Explore feature →</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     PROFESSIONAL CONSULTATION
+========================= -->
+<section id="consultation" class="mindora-section consultation-section">
+    <div class="container">
+        <div class="consultation-heading">
+            <div>
+                <span class="section-eyebrow">PROFESSIONAL SUPPORT</span>
+                <h2>You don't have to <span>do it alone.</span></h2>
+            </div>
+            <a asp-controller="Professional" asp-action="Index" class="text-button">View all professionals →</a>
+        </div>
+
+        @if (Model.TopProviders.Any())
+        {
+            <div class="doctor-grid">
+                @foreach (var provider in Model.TopProviders)
+                {
+                    <article class="doctor-card">
+                        <div class="doctor-image doctor-image-one">@provider.Initial</div>
+                        <div class="doctor-content">
+                            <div class="doctor-rating">
+                                ★ @(provider.Rating?.ToString("F1") ?? "New")
+                            </div>
+                            <h3>@provider.Name</h3>
+                            <p>@(provider.Specialty ?? "Professional")</p>
+                            <div class="doctor-meta">@provider.YearsOfExperience+ Years Experience</div>
+                            <a asp-controller="Professional" asp-action="Details" asp-route-id="@provider.ProviderId"
+                               class="doctor-button">View Profile</a>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                No professionals available yet. Check back soon!
+            </div>
+        }
+    </div>
+</section>
+
+
+<!-- =========================
+     I'M BORED SECTION
+========================= -->
+<section id="bored" class="bored-section">
+    <div class="container">
+        <div class="bored-card">
+            <div class="bored-decoration bored-decoration-one"></div>
+            <div class="bored-decoration bored-decoration-two"></div>
+
+            <span class="section-eyebrow">NEED A BREAK?</span>
+            <h2>Feeling bored?</h2>
+            <p>Let Mindora surprise you with something meaningful, fun, productive, or relaxing.</p>
+
+            @if (Model.IsUserLoggedIn)
+            {
+                <a asp-controller="Boredom" asp-action="Index" class="bored-button" style="text-decoration:none;">
+                    <span class="bored-button-icon">✦</span>
+                    I'm Bored
+                    <span>→</span>
+                </a>
+            }
+            else
+            {
+                <a asp-area="Identity" asp-page="/Account/Login" class="bored-button" style="text-decoration:none;">
+                    <span class="bored-button-icon">✦</span>
+                    Sign in to Try
+                    <span>→</span>
+                </a>
+            }
+
+            <small>One click. One new activity.</small>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     STATISTICS SECTION
+========================= -->
+<section id="statistics" class="statistics-section">
+    <div class="container">
+        <div class="statistics-grid">
+            <div class="stat-item">
+                <strong>@Model.MembersDisplay</strong>
+                <span>Community Members</span>
+            </div>
+            <div class="stat-item">
+                <strong>@Model.HabitsDisplay</strong>
+                <span>Habits Completed</span>
+            </div>
+            <div class="stat-item">
+                <strong>@Model.SessionsDisplay</strong>
+                <span>Professional Sessions</span>
+            </div>
+            <div class="stat-item">
+                <strong>@Model.PositiveProgressRate%</strong>
+                <span>Positive Progress Rate</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =========================
+     TESTIMONIALS / COMMUNITY
+========================= -->
+<section id="community" class="mindora-section testimonials-section">
+    <div class="container">
+        <div class="section-heading">
+            <span class="section-eyebrow">COMMUNITY STORIES</span>
+            <h2>Real people. <span>Real progress.</span></h2>
+        </div>
+
+        @if (Model.Testimonials.Any())
+        {
+            <div class="testimonial-grid">
+                @foreach (var t in Model.Testimonials)
+                {
+                    <article class="testimonial-card">
+                        <div class="testimonial-stars">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <span class="@(i <= t.Rating ? "" : "opacity-25")">★</span>
+                            }
+                        </div>
+                        <p>"@t.Comment"</p>
+                        <div class="testimonial-user">
+                            <span>@t.Initial</span>
+                            <div>
+                                <strong>@t.ReviewerName</strong>
+                                <small>Community Member</small>
+                            </div>
+                        </div>
+                    </article>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="testimonial-grid">
+                <article class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"Mindora made my recovery journey feel manageable."</p>
+                    <div class="testimonial-user">
+                        <span>M</span>
+                        <div><strong>Community Member</strong><small>Early User</small></div>
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+</section>
+
+
+<!-- =========================
+     CTA / PRICING SECTION
+========================= -->
+<section id="cta" class="cta-section">
+    <span id="pricing" style="position:relative; display:block; height:0; visibility:hidden;" aria-hidden="true"></span>
+
+    <div class="container">
+        <div class="cta-card">
+            <div>
+                <span class="section-eyebrow">YOUR NEXT CHAPTER</span>
+                <h2>Start your recovery journey today.</h2>
+                <p>Small steps every day can create meaningful change. Mindora is here to help you take the first one.</p>
+            </div>
+            @if (Model.IsUserLoggedIn)
+            {
+                <a asp-controller="Habit" asp-action="Create" class="mindora-primary-button cta-button">
+                    Create Your First Habit
+                    <span>→</span>
+                </a>
+            }
+            else
+            {
+                <a asp-area="Identity" asp-page="/Account/Register" class="mindora-primary-button cta-button">
+                    Get Started Free
+                    <span>→</span>
+                </a>
+            }
+        </div>
+    </div>
+</section>

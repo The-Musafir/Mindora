@@ -1,0 +1,132 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Reporting.GeneratedReportDto>
+
+@{
+    ViewData["Title"] = "My Reports";
+}
+
+<div class="container mt-4">
+    <!-- Header with actions -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <div>
+            <h2 class="fw-bold mb-0">My Reports</h2>
+            <p class="text-muted small mb-0">View and manage all reports you have generated.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="ExportUserAnalytics" class="btn btn-outline-primary btn-sm">
+                Quick Export (CSV)
+            </a>
+            <a asp-action="Create" class="btn btn-primary btn-sm">
+                + New Report
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="reporting-card shadow-sm">
+            <div class="text-center py-5">
+                <h5 class="text-muted mb-3">No reports yet</h5>
+                <p class="text-muted mb-3">Click the button below to generate your first report.</p>
+                <a asp-action="Create" class="btn btn-primary">+ Create Report</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="reporting-card shadow-sm">
+            <div class="table-responsive">
+                <table class="table reporting-table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Report Type</th>
+                            <th>Format</th>
+                            <th>Date Range</th>
+                            <th>Status</th>
+                            <th>Requested</th>
+                            <th>Completed</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var report in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@report.ReportType</strong>
+                                    @if (!string.IsNullOrEmpty(report.TemplateName))
+                                    {
+                                        <br />
+                                        <small class="text-muted">@report.TemplateName</small>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">@report.Format</span>
+                                </td>
+                                <td>
+                                    @if (report.FromDate.HasValue && report.ToDate.HasValue)
+                                    {
+                                        <small>
+                                            @report.FromDate.Value.ToString("dd MMM yyyy")
+                                            &nbsp;→&nbsp;
+                                            @report.ToDate.Value.ToString("dd MMM yyyy")
+                                        </small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">All Time</small>
+                                    }
+                                </td>
+                                <td>
+                                    <span class="reporting-badge @(report.Status == "Completed" ? "bg-success text-white" : report.Status == "Failed" ? "bg-danger text-white" : "bg-warning text-dark")">
+                                        @report.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <small>@report.RequestedAt.ToString("dd MMM yyyy HH:mm")</small>
+                                </td>
+                                <td>
+                                    @if (report.CompletedAt.HasValue)
+                                    {
+                                        <small>@report.CompletedAt.Value.ToString("dd MMM yyyy HH:mm")</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">-</small>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    @if (report.Status == "Completed")
+                                    {
+                                        <a asp-action="Download"
+                                           asp-route-id="@report.GeneratedReportId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Download
+                                        </a>
+                                    }
+                                    else if (report.Status == "Failed")
+                                    {
+                                        <span class="text-danger small">Generation Failed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Processing...</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

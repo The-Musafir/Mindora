@@ -1,0 +1,149 @@
+﻿@model Mindora.Application.DTOs.Professional.CreateAppointmentRequest
+
+@{
+    ViewData["Title"] = "Book Appointment";
+    var providerId = ViewBag.ProviderId as Guid?;
+    var services = ViewBag.Services as List<Mindora.Application.DTOs.Professional.ServiceDto>;
+    var slots = ViewBag.Slots as List<Mindora.Application.DTOs.Professional.AvailabilitySlotDto>;
+    var hasSlots = slots != null && slots.Any();
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-action="Index">Professionals</a>
+            </li>
+            @if (providerId.HasValue)
+            {
+                <li class="breadcrumb-item">
+                    <a asp-action="Details" asp-route-id="@providerId">Provider</a>
+                </li>
+            }
+            <li class="breadcrumb-item active">Book Appointment</li>
+        </ol>
+    </nav>
+
+    <h2 class="fw-bold mb-4">Book Appointment</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (!hasSlots)
+    {
+        <div class="alert alert-warning">
+            <strong>No slots available.</strong>
+            This provider hasn't set up their availability yet.
+            Please try another provider or come back later.
+        </div>
+
+        <a asp-action="Index" class="btn btn-primary">Browse Other Providers</a>
+
+        @if (providerId.HasValue)
+        {
+            <a asp-action="Details" asp-route-id="@providerId" class="btn btn-outline-secondary">
+                Back to Provider
+            </a>
+        }
+    }
+    else
+    {
+        <form asp-action="Book" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <!-- SLOT SELECTION -->
+            <div class="mb-3">
+                <label class="form-label">Select Time Slot <span class="text-danger">*</span></label>
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var slot in slots!)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="SlotId"
+                                   id="slot-@slot.SlotId"
+                                   value="@slot.SlotId"
+                                   required />
+                            <label class="form-check-label" for="slot-@slot.SlotId">
+                                @((DayOfWeek)slot.DayOfWeek)
+                                @slot.StartTime.ToString(@"hh\:mm")–@slot.EndTime.ToString(@"hh\:mm")
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- SERVICE -->
+            @if (services != null && services.Any())
+            {
+                <div class="mb-3">
+                    <label class="form-label">Service</label>
+                    <select name="ServiceId" class="form-select">
+                        <option value="">-- Select Service --</option>
+                        @foreach (var service in services)
+                        {
+                            <option value="@service.ServiceId">
+                                @service.ServiceName (@service.DurationMinutes mins)
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
+
+            <!-- DATE + TIME -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Date <span class="text-danger">*</span></label>
+                    <input type="date"
+                           name="AppointmentDate"
+                           class="form-control"
+                           required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Start Time <span class="text-danger">*</span></label>
+                    <input type="time"
+                           name="StartTime"
+                           class="form-control"
+                           required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">End Time <span class="text-danger">*</span></label>
+                    <input type="time"
+                           name="EndTime"
+                           class="form-control"
+                           required />
+                </div>
+            </div>
+
+            <!-- NOTES -->
+            <div class="mb-3">
+                <label class="form-label">Notes</label>
+                <textarea name="Notes"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Any specific concerns..."></textarea>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit" class="btn btn-primary">
+                Confirm Booking
+            </button>
+
+            @if (providerId.HasValue)
+            {
+                <a asp-action="Details" asp-route-id="@providerId" class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            }
+            else
+            {
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+            }
+        </form>
+    }
+
+</div>

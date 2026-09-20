@@ -1,0 +1,59 @@
+﻿@model Mindora.Application.DTOs.Habit.HabitResponse
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="fw-bold">@Model.Name</h2>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Back</a>
+            </div>
+            <p class="text-muted">@Model.Description</p>
+            <span class="badge bg-primary">@Model.CategoryName</span>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-3"><strong>Frequency:</strong> @Model.Frequency</div>
+                <div class="col-md-3"><strong>Priority:</strong> @Model.Priority</div>
+                <div class="col-md-3"><strong>Difficulty:</strong> @Model.Difficulty</div>
+                <div class="col-md-3"><strong>Archived:</strong> @(Model.IsArchived ? "Yes" : "No")</div>
+            </div>
+
+            <h5 class="mt-4">Goals</h5>
+            @if (Model.Goals.Any())
+            {
+                <ul>
+                    @foreach (var goal in Model.Goals)
+                    {
+                        <li>@goal.TargetValue @goal.Unit - @(goal.IsCompleted ? "Completed" : "Active")</li>
+                    }
+                </ul>
+            }
+            else
+            {
+
+                <p class="text-muted">No goals yet.</p>
+            }
+
+            <h5 class="mt-4">Recent Logs</h5>
+            @if (Model.Logs.Any())
+            {
+                <ul>
+                    @foreach (var log in Model.Logs.Take(5))
+                    {
+                        <li>@log.LogDate.ToShortDateString() - @(log.IsCompleted ? "✅ Done" : "❌ Missed")</li>
+                    }
+                </ul>
+            }
+            else
+            {
+
+                <p class="text-muted">No logs yet.</p>
+            }
+        </div>
+    </div>
+</div>

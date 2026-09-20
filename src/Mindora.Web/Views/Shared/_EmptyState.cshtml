@@ -1,0 +1,31 @@
+﻿@* 
+    Usage: 
+    <partial name="_EmptyState" view-data='new ViewDataDictionary(ViewData) {
+        { "Icon", "📋" },
+        { "Title", "No items yet" },
+        { "Message", "Start by creating your first item" },
+        { "ActionText", "Create" },
+        { "ActionUrl", "/Items/Create" }
+    }' />
+*@
+
+@{
+    var icon = ViewData["Icon"] as string ?? "📭";
+    var title = ViewData["Title"] as string ?? "Nothing here yet";
+    var message = ViewData["Message"] as string ?? "Check back soon.";
+    var actionText = ViewData["ActionText"] as string;
+    var actionUrl = ViewData["ActionUrl"] as string;
+}
+
+<div class="mindora-empty-state">
+    <div class="mindora-empty-icon">@icon</div>
+    <h3 class="mindora-empty-title">@title</h3>
+    <p class="mindora-empty-text">@message</p>
+
+    @if (!string.IsNullOrEmpty(actionText) && !string.IsNullOrEmpty(actionUrl))
+    {
+        <a href="@actionUrl" class="mindora-empty-btn">
+            @actionText
+        </a>
+    }
+</div>

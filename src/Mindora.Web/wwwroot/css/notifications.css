@@ -1,0 +1,26 @@
+﻿/* ============================================================
+   Reconnection Banner
+   ============================================================ */
+
+.reconnect-banner {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    background: #ffc107;
+    color: #212529;
+    padding: 8px 20px;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    z-index: 10000;
+    transition: transform .3s ease-out;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+    .reconnect-banner.show {
+        transform: translateX(-50%) translateY(0);
+    }

@@ -1,0 +1,253 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminAnalyticsViewModel
+@{
+    ViewData["Title"] = "Analytics & Reports";
+}
+
+<div class="container-fluid py-4" style="max-width: 1400px;">
+
+    <!-- PAGE HEADER -->
+    <div class="mindora-page-header">
+        <div>
+            <h1 class="mindora-page-title">Analytics & Reports</h1>
+            <p class="mindora-page-subtitle">Comprehensive platform metrics and insights</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="AdminDashboard" asp-action="Index" class="btn btn-outline-secondary">
+                ← Dashboard
+            </a>
+            <a asp-controller="Report" asp-action="Index" class="btn btn-primary">
+                Generate Report
+            </a>
+        </div>
+    </div>
+
+    <!-- USERS SECTION -->
+    <h3 class="mindora-section-title">Users</h3>
+    <div class="mindora-stat-grid">
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalUsers.ToString("N0")</div>
+            <div class="mindora-stat-label">Total Users</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalActiveUsers.ToString("N0")</div>
+            <div class="mindora-stat-label">Active Users</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalProfessionals.ToString("N0")</div>
+            <div class="mindora-stat-label">Professionals</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAppointments.ToString("N0")</div>
+            <div class="mindora-stat-label">Appointments</div>
+        </div>
+    </div>
+
+    <!-- REVENUE SECTION -->
+    <h3 class="mindora-section-title">Revenue</h3>
+    <div class="mindora-stat-grid">
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value" style="font-size: 20px;">@Model.TotalRevenueDisplay</div>
+            <div class="mindora-stat-label">Total Revenue</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value" style="font-size: 20px;">@Model.MonthlyRevenueDisplay</div>
+            <div class="mindora-stat-label">Monthly Revenue</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.ActiveSubscriptions.ToString("N0")</div>
+            <div class="mindora-stat-label">Active Subscriptions</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(239, 68, 68, 0.12); color: #EF4444;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="15" y1="9" x2="9" y2="15" />
+                    <line x1="9" y1="9" x2="15" y2="15" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.ExpiredSubscriptions.ToString("N0")</div>
+            <div class="mindora-stat-label">Expired Subscriptions</div>
+        </div>
+    </div>
+
+    <!-- ENGAGEMENT + REVENUE SPLIT -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-6">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Engagement Breakdown</h3>
+                        <p class="mindora-chart-subtitle">Total activity by feature</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="engagementChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Revenue Split</h3>
+                        <p class="mindora-chart-subtitle">Subscription vs Consultation</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="revenueSplitChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUBSCRIPTION STATUS + CONVERSION RATES -->
+    <div class="row g-3">
+        <div class="col-lg-5">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Subscription Status</h3>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="subStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Completion Rates</h3>
+                        <p class="mindora-chart-subtitle">Key engagement metrics</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body" style="height: 200px;">
+                    <canvas id="ratesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // ENGAGEMENT
+            const engLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.EngagementBreakdown.Select(e => e.Name).ToList()));
+            const engData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.EngagementBreakdown.Select(e => e.Count).ToList()));
+
+            MindoraCharts.doughnut('engagementChart', engLabels, engData,
+                ['#06B6D4', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981']);
+
+            // REVENUE SPLIT
+            const revLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueSplit.Select(r => r.Name).ToList()));
+            const revData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueSplit.Select(r => (double)r.Amount).ToList()));
+
+            MindoraCharts.doughnut('revenueSplitChart', revLabels, revData,
+                ['#10B981', '#06B6D4']);
+
+            // SUBSCRIPTION STATUS
+            const subLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.SubscriptionStatus.Select(s => s.Name).ToList()));
+            const subData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.SubscriptionStatus.Select(s => s.Count).ToList()));
+
+            MindoraCharts.doughnut('subStatusChart', subLabels, subData,
+                ['#10B981', '#94A3B8']);
+
+            // CONVERSION RATES (bar)
+            const rateLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ConversionRates.Select(r => r.Label).ToList()));
+            const rateData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ConversionRates.Select(r => r.Value).ToList()));
+
+            MindoraCharts.bar('ratesChart', rateLabels, [{
+                label: 'Rate %',
+                data: rateData,
+                color: '#06B6D4'
+            }], {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.parsed.y.toFixed(1)}%`
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: (v) => v + '%'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,44 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AdminDashboard.AdminLoginHistoryDto>
+
+@{
+    ViewData["Title"] = "Login History";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Login History</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No login history.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>User</th>
+                        <th>Login At</th>
+                        <th>IP Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var login in Model)
+                    {
+                        <tr>
+                            <td>@login.UserEmail</td>
+                            <td>@login.LoginAt.ToString("g")</td>
+                            <td>@login.IpAddress</td>
+                            <td>
+                                <span class="badge @(login.IsSuccess ? "bg-success" : "bg-danger")">
+                                    @(login.IsSuccess ? "Success" : "Failed")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

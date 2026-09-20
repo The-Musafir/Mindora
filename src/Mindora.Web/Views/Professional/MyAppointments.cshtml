@@ -1,0 +1,55 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Professional.AppointmentDto>
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">My Appointments</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No appointments yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Provider</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model)
+                    {
+                        <tr>
+                            <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                            <td>@appointment.StartTime.ToString(@"hh\:mm") - @appointment.EndTime.ToString(@"hh\:mm")</td>
+                            <td>@appointment.PatientName</td>
+                            <td>@appointment.ServiceName</td>
+                            <td>
+                                <span class="badge @(appointment.Status == "Scheduled" ? "bg-primary" : appointment.Status == "Completed" ? "bg-success" : appointment.Status == "Cancelled" ? "bg-secondary" : "bg-danger")">
+                                    @appointment.Status
+                                </span>
+                            </td>
+                            <td>
+                                @if (appointment.Status == "Scheduled")
+                                {
+                                    <form asp-action="CancelAppointment" asp-route-id="@appointment.AppointmentId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

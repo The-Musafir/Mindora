@@ -1,0 +1,30 @@
+﻿{
+  "name": "mindora",
+  "version": "1.0.0",
+  "description": "Mindora - AI-Powered Habit Recovery, Mental Wellness & Professional Support Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "PLACEHOLDER_PERSONAL_REPO_URL"
+  },
+  "keywords": [
+    "aspnet-core",
+    "clean-architecture",
+    "signalr",
+    "ef-core",
+    "mental-wellness"
+  ],
+  "author": "Habibur Rahman",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "PLACEHOLDER_PERSONAL_REPO_URL/issues"
+  },
+  "homepage": "PLACEHOLDER_PERSONAL_REPO_URL#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

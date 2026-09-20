@@ -1,0 +1,76 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AI.AIPromptTemplateDto>
+
+@{
+    ViewData["Title"] = "AI Prompt Templates";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">AI Prompt Templates</h2>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('createForm').style.display='block'">+ New Template</button>
+    </div>
+
+    <div id="createForm" style="display:none;" class="mb-4">
+        <form asp-action="CreateTemplate" method="post" class="card p-3">
+            <div class="row g-2">
+                <div class="col-md-3">
+                    <input name="TemplateKey" class="form-control" placeholder="Key" required />
+                </div>
+                <div class="col-md-3">
+                    <input name="Title" class="form-control" placeholder="Title" required />
+                </div>
+                <div class="col-md-2">
+                    <input name="Tone" class="form-control" placeholder="Tone" value="Supportive" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Create</button>
+                </div>
+            </div>
+            <textarea name="PromptText" class="form-control mt-2" rows="3" placeholder="Prompt text..." required></textarea>
+        </form>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No templates yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Key</th>
+                        <th>Title</th>
+                        <th>Tone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var template in Model)
+                    {
+                        <tr>
+                            <td><code>@template.TemplateKey</code></td>
+                            <td>@template.Title</td>
+                            <td>@template.Tone</td>
+                            <td>
+                                <span class="badge @(template.IsActive ? "bg-success" : "bg-secondary")">
+                                    @(template.IsActive ? "Active" : "Inactive")
+                                </span>
+                            </td>
+                            <td>
+                                <form asp-action="ToggleTemplate" method="post" class="d-inline">
+                                    <input type="hidden" name="templateId" value="@template.TemplateId" />
+                                    <button type="submit" name="isActive" value="@(!template.IsActive)" class="btn btn-sm @(template.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                        @(template.IsActive ? "Deactivate" : "Activate")
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

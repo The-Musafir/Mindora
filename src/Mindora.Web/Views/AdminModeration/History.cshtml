@@ -1,0 +1,45 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AdminDashboard.AdminModerationFlagDto>
+
+@{
+    ViewData["Title"] = "Moderation History";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Resolved Flags</h2>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to Pending</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No resolved flags.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Type</th>
+                        <th>Content</th>
+                        <th>Reported By</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var flag in Model)
+                    {
+                        <tr>
+                            <td>@flag.ContentType</td>
+                            <td>@flag.ContentSnippet</td>
+                            <td>@flag.ReportedByEmail</td>
+                            <td>@flag.Reason</td>
+                            <td>@flag.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

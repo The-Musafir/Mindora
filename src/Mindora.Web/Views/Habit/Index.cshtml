@@ -1,0 +1,51 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Habit.HabitResponse>
+
+@{
+    ViewData["Title"] = "My Habits";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">My Habits</h2>
+        <a asp-action="Create" class="btn btn-primary">+ New Habit</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No habits yet. Start your first habit!</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var habit in Model)
+            {
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card h-100 shadow-sm border-0 w-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fw-bold">@habit.Name</h5>
+                            <span class="badge bg-primary mb-2 align-self-start">@habit.CategoryName</span>
+                            <p class="text-muted small flex-grow-1">@habit.Description</p>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <strong>@habit.CurrentStreak</strong> day streak
+                                </div>
+                                <span class="badge bg-success">@habit.CompletionRate%</span>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-auto">
+                                <a asp-action="Details" asp-route-id="@habit.HabitId" class="btn btn-sm btn-outline-primary">Details</a>
+                                <a asp-action="Edit" asp-route-id="@habit.HabitId" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a asp-action="Statistics" asp-route-id="@habit.HabitId" class="btn btn-sm btn-outline-info">Statistics</a>
+                                <a asp-action="Relapse" asp-route-id="@habit.HabitId" class="btn btn-sm btn-outline-warning">Relapse</a>
+                                <form asp-action="Delete" asp-route-id="@habit.HabitId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

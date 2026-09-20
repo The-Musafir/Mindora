@@ -1,0 +1,331 @@
+﻿/* ============================================================
+   Mindora — Sidebar Styles
+   Uses site.css design tokens (Cyan theme, 16px radius)
+   ============================================================ */
+
+/* ============================================================
+   BASE SIDEBAR
+   ============================================================ */
+.mindora-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    background: #FFFFFF;
+    border-right: 1px solid var(--mindora-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: width 0.3s ease, transform 0.3s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 80px;
+}
+
+    .mindora-sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .mindora-sidebar::-webkit-scrollbar-thumb {
+        background: var(--mindora-border);
+        border-radius: 3px;
+    }
+
+    .mindora-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+[data-theme="dark"] .mindora-sidebar {
+    background: #0F172A;
+    border-right-color: #1E293B;
+}
+
+/* Collapsed state (desktop) */
+body.mindora-sidebar-collapsed .mindora-sidebar {
+    width: 72px;
+}
+
+/* ============================================================
+   PROFILE BLOCK
+   ============================================================ */
+.mindora-sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--mindora-border);
+    min-height: 72px;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .mindora-sidebar-profile {
+    border-bottom-color: #1E293B;
+}
+
+.mindora-sidebar-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mindora-primary), var(--mindora-primary-dark));
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+}
+
+.mindora-sidebar-userinfo {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.mindora-sidebar-username {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mindora-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.3;
+}
+
+[data-theme="dark"] .mindora-sidebar-username {
+    color: #F8FAFC;
+}
+
+.mindora-sidebar-role {
+    font-size: 12px;
+    color: var(--mindora-text);
+    opacity: 0.7;
+    line-height: 1.3;
+    margin-top: 2px;
+}
+
+[data-theme="dark"] .mindora-sidebar-role {
+    color: #94A3B8;
+}
+
+body.mindora-sidebar-collapsed .mindora-sidebar-userinfo {
+    display: none;
+}
+
+body.mindora-sidebar-collapsed .mindora-sidebar-profile {
+    justify-content: center;
+    padding: 20px 12px 16px;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.mindora-sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 0;
+}
+
+.mindora-sidebar-section {
+    margin-bottom: 8px;
+}
+
+.mindora-sidebar-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--mindora-text);
+    opacity: 0.5;
+    padding: 12px 24px 8px;
+    margin: 0;
+}
+
+[data-theme="dark"] .mindora-sidebar-section-title {
+    color: #64748B;
+}
+
+body.mindora-sidebar-collapsed .mindora-sidebar-section-title {
+    display: none;
+}
+
+/* Nav Item */
+.mindora-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    margin: 2px 12px;
+    border-radius: 12px;
+    color: var(--mindora-text);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    width: calc(100% - 24px);
+    text-align: left;
+    font-family: inherit;
+}
+
+[data-theme="dark"] .mindora-nav-item {
+    color: #CBD5E1;
+}
+
+.mindora-nav-item:hover {
+    background: rgba(6, 182, 212, 0.08);
+    color: var(--mindora-primary);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .mindora-nav-item:hover {
+    background: rgba(6, 182, 212, 0.12);
+    color: var(--mindora-primary);
+}
+
+.mindora-nav-item.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+    color: var(--mindora-primary);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .mindora-nav-item.active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.08));
+}
+
+.mindora-nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 60%;
+    background: var(--mindora-primary);
+    border-radius: 0 4px 4px 0;
+}
+
+.mindora-nav-item svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.mindora-nav-item span {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mindora-nav-badge {
+    background: var(--mindora-primary);
+    color: #FFFFFF;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+body.mindora-sidebar-collapsed .mindora-nav-item span,
+body.mindora-sidebar-collapsed .mindora-nav-item .mindora-nav-badge {
+    display: none;
+}
+
+body.mindora-sidebar-collapsed .mindora-nav-item {
+    justify-content: center;
+    padding: 12px;
+    margin: 4px 8px;
+    width: calc(100% - 16px);
+}
+
+    body.mindora-sidebar-collapsed .mindora-nav-item.active::before {
+        left: -8px;
+    }
+
+/* ============================================================
+   FOOTER / VERSION
+   ============================================================ */
+.mindora-sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--mindora-border);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .mindora-sidebar-footer {
+    border-top-color: #1E293B;
+}
+
+.mindora-sidebar-version {
+    font-size: 11px;
+    color: var(--mindora-text);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+body.mindora-sidebar-collapsed .mindora-sidebar-footer {
+    display: none;
+}
+
+/* ============================================================
+   MOBILE OVERLAY
+   ============================================================ */
+.mindora-sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+    .mindora-sidebar-overlay.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+@media (max-width: 991px) {
+    .mindora-sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+        padding-top: 72px;
+    }
+
+    body.mindora-sidebar-open .mindora-sidebar {
+        transform: translateX(0);
+    }
+
+    body.mindora-sidebar-collapsed .mindora-sidebar {
+        width: 280px;
+    }
+
+    body.mindora-sidebar-collapsed .mindora-sidebar-userinfo,
+    body.mindora-sidebar-collapsed .mindora-nav-item span,
+    body.mindora-sidebar-collapsed .mindora-nav-item .mindora-nav-badge,
+    body.mindora-sidebar-collapsed .mindora-sidebar-section-title,
+    body.mindora-sidebar-collapsed .mindora-sidebar-footer {
+        display: flex;
+    }
+
+    body.mindora-sidebar-collapsed .mindora-nav-item {
+        justify-content: flex-start;
+        padding: 10px 20px;
+        margin: 2px 12px;
+        width: calc(100% - 24px);
+    }
+}

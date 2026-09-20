@@ -1,0 +1,39 @@
+﻿@model Mindora.Application.DTOs.Payment.CreatePaymentRequest
+
+@{
+    ViewData["Title"] = "Pay with SSLCommerz";
+}
+
+<div class="container mt-4" style="max-width: 500px;">
+    <h2 class="fw-bold mb-4">Pay with SSLCommerz</h2>
+
+    <form asp-action="InitiatePayment" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Amount" class="form-label"></label>
+            <input asp-for="Amount" class="form-control" type="number" step="0.01" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PaymentType" class="form-label"></label>
+            <select asp-for="PaymentType" class="form-select">
+                <option value="Subscription">Subscription</option>
+                <option value="Consultation">Consultation</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PaymentMethod" class="form-label">Payment Method</label>
+            <select asp-for="PaymentMethod" class="form-select">
+                <option value="">Select Payment Method</option>
+                <option value="bKash">bKash</option>
+                <option value="Nagad">Nagad</option>
+                <option value="Rocket">Rocket</option>
+                <option value="Card">Card</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Pay Now</button>
+    </form>
+</div>

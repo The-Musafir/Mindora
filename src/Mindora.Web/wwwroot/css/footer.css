@@ -1,0 +1,85 @@
+﻿/* ============================================================
+   Mindora — Footer Enhancements
+   ============================================================ */
+
+/* SVG icons in social */
+.footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+    .footer-social a svg {
+        display: block;
+    }
+
+    .footer-social a:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Coming soon social icons */
+    .footer-social a.footer-social-soon {
+        opacity: 0.45;
+        cursor: not-allowed;
+        position: relative;
+    }
+
+        .footer-social a.footer-social-soon:hover {
+            opacity: 0.65;
+            transform: none;
+        }
+
+/* "Soon" link style (non-clickable) */
+.footer-link-soon {
+    color: #64748B;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    line-height: 1.5;
+}
+
+    .footer-link-soon:hover {
+        opacity: 0.9;
+    }
+
+/* "Soon" badge */
+.footer-soon-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    color: #F59E0B;
+    background: rgba(245, 158, 11, 0.15);
+    padding: 2px 6px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* Footer link hover smooth */
+.footer-col ul li a {
+    transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+    .footer-col ul li a:hover {
+        padding-left: 4px;
+    }
+
+/* Footer bottom links (Privacy, Terms) */
+.footer-bottom-links a {
+    color: #94A3B8;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .footer-bottom-links a:hover {
+        color: #06B6D4;
+        text-decoration: none;
+    }

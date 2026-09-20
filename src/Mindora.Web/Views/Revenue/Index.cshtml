@@ -1,0 +1,74 @@
+﻿@model Mindora.Application.DTOs.Payment.RevenueAnalyticsDto
+
+@{
+    ViewData["Title"] = "Revenue Analytics";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Revenue Analytics</h2>
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Total Revenue</strong><br />
+                <span class="fs-4 fw-bold text-success">@Model.TotalRevenue.ToString("C")</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Monthly Revenue</strong><br />
+                <span class="fs-4 fw-bold text-primary">@Model.MonthlyRevenue.ToString("C")</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Yearly Revenue</strong><br />
+                <span class="fs-4 fw-bold text-info">@Model.YearlyRevenue.ToString("C")</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Refunded</strong><br />
+                <span class="fs-4 fw-bold text-danger">@Model.RefundedAmount.ToString("C")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-3">
+        <div class="col-md-6">
+            <div class="card p-3 border-0 shadow-sm">
+                <strong>Subscription Revenue</strong>
+                <span class="float-end">@Model.SubscriptionRevenue.ToString("C")</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 border-0 shadow-sm">
+                <strong>Consultation Revenue</strong>
+                <span class="float-end">@Model.ConsultationRevenue.ToString("C")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mt-3">
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Total Payments</strong><br />@Model.TotalPayments
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Completed</strong><br />@Model.CompletedPayments
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Pending</strong><br />@Model.PendingPayments
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3 border-0 shadow-sm">
+                <strong>Failed</strong><br />@Model.FailedPayments
+            </div>
+        </div>
+    </div>
+</div>

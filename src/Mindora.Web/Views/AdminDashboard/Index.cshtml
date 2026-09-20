@@ -1,0 +1,244 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container-fluid py-4" style="max-width: 1400px;">
+
+    <!-- PAGE HEADER -->
+    <div class="mindora-page-header">
+        <div>
+            <h1 class="mindora-page-title">Platform Overview</h1>
+            <p class="mindora-page-subtitle">Real-time metrics across Mindora</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="AdminAnalytics" asp-action="Index" class="btn btn-outline-secondary">
+                Full Analytics →
+            </a>
+            <a asp-controller="AdminUser" asp-action="Index" class="btn btn-primary">
+                Manage Users
+            </a>
+        </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="mindora-stat-grid">
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(6, 182, 212, 0.12); color: #06B6D4;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalUsers.ToString("N0")</div>
+            <div class="mindora-stat-label">Total Users</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(139, 92, 246, 0.12); color: #8B5CF6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalProfessionals.ToString("N0")</div>
+            <div class="mindora-stat-label">Professionals</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(59, 130, 246, 0.12); color: #3B82F6;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAppointments.ToString("N0")</div>
+            <div class="mindora-stat-label">Appointments</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalCommunityPosts.ToString("N0")</div>
+            <div class="mindora-stat-label">Community Posts</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                    <path d="M12 2v14" />
+                    <polyline points="9 5 12 2 15 5" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAssessmentsTaken.ToString("N0")</div>
+            <div class="mindora-stat-label">Assessments</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(236, 72, 153, 0.12); color: #EC4899;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value">@Model.TotalAIConversations.ToString("N0")</div>
+            <div class="mindora-stat-label">AI Conversations</div>
+        </div>
+
+        <div class="mindora-stat-card">
+            <div class="mindora-stat-icon" style="background: rgba(16, 185, 129, 0.12); color: #10B981;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+            </div>
+            <div class="mindora-stat-value" style="font-size: 20px;">@Model.TotalRevenueDisplay</div>
+            <div class="mindora-stat-label">Total Revenue</div>
+        </div>
+    </div>
+
+    <!-- USER GROWTH + REVENUE TREND -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-7">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">User Growth</h3>
+                        <p class="mindora-chart-subtitle">New registrations (last 30 days)</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="userGrowthChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Content Distribution</h3>
+                        <p class="mindora-chart-subtitle">Platform activity breakdown</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="contentDistChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REVENUE TREND -->
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Revenue Trend</h3>
+                        <p class="mindora-chart-subtitle">Daily revenue (last 30 days)</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="revenueTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="mindora-chart-card h-100">
+                <div class="mindora-chart-header">
+                    <div>
+                        <h3 class="mindora-chart-title">Revenue Source</h3>
+                        <p class="mindora-chart-subtitle">Where money comes from</p>
+                    </div>
+                </div>
+                <div class="mindora-chart-body">
+                    <canvas id="revenueBreakdownChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // USER GROWTH
+            const userLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.UserGrowth.Select(u => u.Date.ToString("MMM dd")).ToList()));
+            const userData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.UserGrowth.Select(u => u.Value).ToList()));
+
+            MindoraCharts.line('userGrowthChart', userLabels, [{
+                label: 'New Users',
+                data: userData,
+                color: '#06B6D4',
+                fill: true
+            }], {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.parsed.y} users`
+                        }
+                    }
+                }
+            });
+
+            // CONTENT DISTRIBUTION
+            const contentLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ContentDistribution.Select(c => c.Name).ToList()));
+            const contentData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ContentDistribution.Select(c => c.Count).ToList()));
+
+            MindoraCharts.doughnut('contentDistChart', contentLabels, contentData,
+                ['#06B6D4', '#8B5CF6', '#EC4899', '#F59E0B']);
+
+            // REVENUE TREND
+            const revLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueTrend.Select(r => r.Date.ToString("MMM dd")).ToList()));
+            const revData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueTrend.Select(r => r.Value).ToList()));
+
+            MindoraCharts.line('revenueTrendChart', revLabels, [{
+                label: 'Revenue',
+                data: revData,
+                color: '#10B981',
+                fill: true
+            }], {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `৳${ctx.parsed.y.toLocaleString()}`
+                        }
+                    }
+                }
+            });
+
+            // REVENUE BREAKDOWN
+            const srcLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueBreakdown.Select(r => r.Name).ToList()));
+            const srcData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                            Model.RevenueBreakdown.Select(r => (double)r.Amount).ToList()));
+
+            MindoraCharts.doughnut('revenueBreakdownChart', srcLabels, srcData,
+                ['#10B981', '#06B6D4']);
+        });
+    </script>
+}

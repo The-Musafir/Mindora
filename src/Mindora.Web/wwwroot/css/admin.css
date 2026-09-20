@@ -1,0 +1,285 @@
+﻿/* ============================================================
+   Mindora — Admin Module Styles
+   ============================================================ */
+
+/* Section title (between stat groups) */
+.mindora-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 12px 4px;
+}
+
+[data-theme="dark"] .mindora-section-title {
+    color: #94A3B8;
+}
+
+/* Admin sidebar-like vertical nav (future) */
+.admin-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.admin-quick-action {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .admin-quick-action {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+.admin-quick-action:hover {
+    border-color: #06B6D4;
+    color: inherit;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.1);
+}
+
+.admin-quick-action-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 182, 212, 0.1);
+    color: #06B6D4;
+    flex-shrink: 0;
+}
+
+.admin-quick-action-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0F172A;
+}
+
+[data-theme="dark"] .admin-quick-action-text {
+    color: #F1F5F9;
+}
+
+/* ============================================================
+   ADMIN HUB PAGE
+   ============================================================ */
+
+/* Alert Cards */
+.admin-alert-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-radius: 16px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid;
+    position: relative;
+}
+
+    .admin-alert-card.warning {
+        background: rgba(245, 158, 11, 0.08);
+        border-color: rgba(245, 158, 11, 0.2);
+        color: #92400E;
+    }
+
+    .admin-alert-card.info {
+        background: rgba(59, 130, 246, 0.08);
+        border-color: rgba(59, 130, 246, 0.2);
+        color: #1E40AF;
+    }
+
+[data-theme="dark"] .admin-alert-card.warning {
+    background: rgba(245, 158, 11, 0.12);
+    color: #FCD34D;
+}
+
+[data-theme="dark"] .admin-alert-card.info {
+    background: rgba(59, 130, 246, 0.12);
+    color: #93C5FD;
+}
+
+.admin-alert-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: inherit;
+}
+
+.admin-alert-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .admin-alert-icon {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-alert-count {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 4px;
+}
+
+.admin-alert-label {
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.admin-alert-arrow {
+    margin-left: auto;
+    opacity: 0.5;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.admin-alert-card:hover .admin-alert-arrow {
+    transform: translateX(4px);
+    opacity: 1;
+}
+
+/* Tools Section */
+.admin-tools-section {
+    margin-top: 40px;
+}
+
+.admin-tools-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 0 0 20px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .admin-tools-title {
+    color: #F1F5F9;
+}
+
+/* Tools Grid */
+.admin-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+/* Tool Card */
+.admin-tool-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .admin-tool-card {
+    background: #1E293B;
+    border-color: #334155;
+}
+
+.admin-tool-card:hover {
+    transform: translateY(-4px);
+    border-color: #06B6D4;
+    box-shadow: 0 12px 32px rgba(6, 182, 212, 0.12);
+    text-decoration: none;
+    color: inherit;
+}
+
+.admin-tool-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.08), transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.admin-tool-card:hover::after {
+    opacity: 1;
+}
+
+.admin-tool-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.admin-tool-content {
+    flex: 1;
+    min-width: 0;
+}
+
+    .admin-tool-content h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0F172A;
+        margin: 0 0 6px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+[data-theme="dark"] .admin-tool-content h3 {
+    color: #F1F5F9;
+}
+
+.admin-tool-content p {
+    font-size: 13px;
+    color: #64748B;
+    margin: 0;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .admin-tool-content p {
+    color: #94A3B8;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .admin-tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-tool-card {
+        padding: 20px;
+    }
+
+    .admin-tool-icon {
+        width: 44px;
+        height: 44px;
+    }
+}

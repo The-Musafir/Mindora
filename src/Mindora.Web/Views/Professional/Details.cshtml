@@ -1,0 +1,126 @@
+﻿@model Mindora.Application.DTOs.Professional.ProviderDto
+
+@{
+    ViewData["Title"] = Model.FullName;
+    var reviews = ViewBag.Reviews as IReadOnlyList<Mindora.Application.DTOs.Professional.ReviewDto>;
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Professionals</a></li>
+            <li class="breadcrumb-item active">@Model.FullName</li>
+        </ol>
+    </nav>
+
+    <div class="card professional-card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="professional-avatar">@Model.FullName.Substring(0, 1).ToUpper()</div>
+                    <div>
+                        <h2 class="fw-bold mb-1">@Model.FullName</h2>
+                        <p class="text-muted mb-0">@Model.Email</p>
+                        <div class="d-flex align-items-center gap-2 mt-1">
+                            <span class="text-warning">★ @(Model.AverageRating?.ToString("F1") ?? "N/A")</span>
+                            <span class="text-muted">(@Model.ReviewCount reviews)</span>
+                            @if (Model.IsVerified)
+                            {
+                                <span class="badge bg-success">✓ Verified</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a asp-action="Book" asp-route-id="@Model.ProviderId" class="btn btn-primary">Book Appointment</a>
+                    @if (Model.UserId == Guid.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString()))
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.ProviderId" class="btn btn-outline-secondary">Edit</a>
+                    }
+                </div>
+            </div>
+
+            <hr />
+
+            <h5 class="fw-bold">Bio</h5>
+            <p class="text-muted">@Model.Bio</p>
+
+            <h5 class="fw-bold mt-4">Specialties</h5>
+            <div class="d-flex flex-wrap gap-2">
+                @foreach (var specialty in Model.Specialties)
+                {
+                    <span class="badge bg-light text-dark">@specialty.Name</span>
+                }
+            </div>
+
+            <h5 class="fw-bold mt-4">Practices & Services</h5>
+            @foreach (var practice in Model.Practices)
+            {
+                <div class="mb-3 p-3 border rounded">
+                    <h6 class="fw-semibold">@practice.PracticeName <span class="badge bg-secondary">@(practice.IsVirtual ? "Online" : "In-person")</span></h6>
+                    <p class="text-muted small">@practice.Address</p>
+                    <p class="text-muted small">Phone: @practice.Phone</p>
+                    <ul>
+                        @foreach (var service in practice.Services)
+                        {
+                            <li>@service.ServiceName - @service.DurationMinutes mins @(service.Fee.HasValue ? " - $" + service.Fee.Value : "")</li>
+                        }
+                    </ul>
+                    <div>
+                        @foreach (var slot in practice.AvailabilitySlots.Take(5))
+                        {
+                            <span class="slot-pill">@((DayOfWeek)slot.DayOfWeek) @slot.StartTime.ToString(@"hh\:mm")-@slot.EndTime.ToString(@"hh\:mm")</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Write a Review</h5>
+            <form asp-action="AddReview" method="post">
+                <input type="hidden" name="ProviderId" value="@Model.ProviderId" />
+                <div class="mb-2">
+                    <label class="form-label">Rating</label>
+                    <select name="Rating" class="form-select" required>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <textarea name="Comment" class="form-control" rows="3" placeholder="Share your experience..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="fw-bold mb-3">Reviews</h5>
+    @if (reviews == null || reviews.Count == 0)
+    {
+        <div class="alert alert-info">No reviews yet.</div>
+    }
+    else
+    {
+        @foreach (var review in reviews)
+        {
+            <div class="review-item mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="/u/@review.UserId"
+                       class="review-author-link"
+                       title="View @review.ReviewerName's profile">
+                        <strong>@review.ReviewerName</strong>
+                    </a>
+                    <span class="star-rating">@("★".PadRight(review.Rating, '★'))</span>
+                </div>
+                <p class="mb-1 text-muted">@review.Comment</p>
+                <small class="text-muted">@review.CreatedAt.ToShortDateString()</small>
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,122 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Boredom.BoredomSessionDto>
+@{
+    ViewData["Title"] = "Boredom History";
+}
+
+<div class="boredom-page">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h1 class="fw-bold mb-1">Activity History</h1>
+            <p class="text-muted mb-0">Your past "I'm Bored" sessions</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            ← Back to Boredom
+        </a>
+    </div>
+
+    <!-- EMPTY STATE -->
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="boredom-card-container" style="min-height: 300px;">
+            <div>
+                <div style="font-size: 3rem; opacity: 0.3; margin-bottom: 16px;">📋</div>
+                <h3 class="fw-bold mb-2">No activity history yet</h3>
+                <p class="text-muted mb-3">Start your first boredom session today!</p>
+                <a asp-action="Index" class="boredom-primary-btn" style="text-decoration:none;">
+                    Try "I'm Bored"
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- SUMMARY STATS -->
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="boredom-history-stat">
+                    <div class="boredom-history-stat-value">@Model.Count</div>
+                    <div class="boredom-history-stat-label">Total Sessions</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="boredom-history-stat">
+                    <div class="boredom-history-stat-value">@Model.Count(s => s.IsCompleted)</div>
+                    <div class="boredom-history-stat-label">Completed</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="boredom-history-stat">
+                    @{
+                        var completedWithMood = Model.Where(s => s.MoodImprovement.HasValue).ToList();
+                        var avgMood = completedWithMood.Any()
+                            ? completedWithMood.Average(s => s.MoodImprovement!.Value)
+                            : 0;
+                    }
+                    <div class="boredom-history-stat-value">
+                        @(avgMood > 0 ? "+" : "")@avgMood.ToString("F1")
+                    </div>
+                    <div class="boredom-history-stat-label">Avg Mood</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="boredom-history-stat">
+                    <div class="boredom-history-stat-value">
+                        @Model.Count(s => s.IsCompleted && s.MoodAfter >= 4)
+                    </div>
+                    <div class="boredom-history-stat-label">Happy After</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIST -->
+        <div class="boredom-history-list">
+            @foreach (var session in Model)
+            {
+                <div class="boredom-history-item">
+                    <div class="boredom-history-icon">
+                        @(session.Category switch
+                        {
+                            "Relaxing" => "🧘",
+                            "Productive" => "⚡",
+                            "Fun" => "🎉",
+                            "Meaningful" => "💗",
+                            "Physical" => "🏃",
+                            "Social" => "💬",
+                            "Creative" => "🎨",
+                            _ => "✨"
+                        })
+                    </div>
+
+                    <div class="boredom-history-content">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h6 class="fw-bold mb-1">@session.ActivityTitle</h6>
+                            @if (session.IsCompleted)
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Incomplete</span>
+                            }
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-3 text-muted small">
+                            <span>@session.Category</span>
+                            <span>•</span>
+                            <span>@session.StartedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                            @if (session.MoodImprovement.HasValue)
+                            {
+                                <span>•</span>
+                                <span class="@(session.MoodImprovement > 0 ? "text-success" : "text-muted")">
+                                    Mood @(session.MoodImprovement > 0 ? "+" : "")@session.MoodImprovement
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

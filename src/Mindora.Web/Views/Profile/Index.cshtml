@@ -1,0 +1,215 @@
+﻿@model Mindora.Application.DTOs.Profile.ProfileViewModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="profile-page">
+
+    <!-- 🆕 TEMPORARY: Public Profile View Button -->
+    <div class="mb-3 text-end">
+        <a asp-controller="Profile"
+           asp-action="Public"
+           asp-route-id="@Model.UserId"
+           target="_blank"
+           class="btn btn-outline-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 style="vertical-align:-2px;margin-right:4px;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+            </svg>
+            View Public Profile
+        </a>
+    </div>
+
+    <!-- ============================================================
+         SUCCESS / ERROR ALERTS
+         ============================================================ -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="profile-alert profile-alert-success">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="profile-alert profile-alert-error">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- ============================================================
+         PROFILE HEADER (Avatar + Name + Role Badge)
+         ============================================================ -->
+    <div class="profile-card">
+        <partial name="_ProfileHeader" model="Model" />
+
+        <!-- Hidden file input for avatar upload -->
+        <form asp-action="UploadAvatar" method="post" enctype="multipart/form-data" id="avatarForm">
+            @Html.AntiForgeryToken()
+            <input type="file"
+                   id="avatarInput"
+                   name="avatar"
+                   accept="image/jpeg,image/png,image/webp"
+                   style="display:none;"
+                   onchange="document.getElementById('avatarForm').submit();" />
+        </form>
+
+        @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+        {
+            <form asp-action="RemoveAvatar" method="post" class="profile-remove-avatar">
+                @Html.AntiForgeryToken()
+                <button type="submit"
+                        onclick="return confirm('Remove your profile picture?');"
+                        class="profile-remove-avatar-btn">
+                    Remove Photo
+                </button>
+            </form>
+        }
+    </div>
+
+    <!-- ============================================================
+         MAIN FORM: BIO + ACCOUNT INFO
+         ============================================================ -->
+    <form asp-action="Update" method="post">
+        @Html.AntiForgeryToken()
+
+        <!-- ============================================================
+             BIO SECTION
+             ============================================================ -->
+        <div class="profile-card">
+            <div class="profile-section-header">
+                <h2>About Me</h2>
+                <p class="profile-section-subtitle">
+                    Tell the community about yourself. Recommended 150+ words for a complete profile.
+                </p>
+            </div>
+
+            <div class="profile-form-group">
+                <textarea id="bioInput"
+                          name="Bio"
+                          rows="8"
+                          maxlength="1000"
+                          class="profile-textarea"
+                          placeholder="Share your journey, interests, and what brought you to Mindora...">@Model.Bio</textarea>
+                <div class="profile-textarea-footer">
+                    <span id="bioWordCount" class="profile-word-count">
+                        @Model.BioWordCount words
+                    </span>
+                    <span class="profile-char-count">
+                        <span id="bioCharCount">@(Model.Bio?.Length ?? 0)</span> / 1000 characters
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             ACCOUNT INFO
+             ============================================================ -->
+        <div class="profile-card">
+            <div class="profile-section-header">
+                <h2>Account Information</h2>
+                <p class="profile-section-subtitle">Keep your details up to date.</p>
+            </div>
+
+            <div class="profile-form-grid">
+                <!-- Display Name -->
+                <div class="profile-form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text"
+                           name="DisplayName"
+                           value="@Model.DisplayName"
+                           class="profile-input"
+                           required
+                           maxlength="200" />
+                </div>
+
+                <!-- Email (read-only) -->
+                <div class="profile-form-group">
+                    <label>Email</label>
+                    <input type="email"
+                           value="@Model.Email"
+                           class="profile-input"
+                           readonly />
+                    <small class="profile-help-text">Email cannot be changed here</small>
+                </div>
+
+                <!-- Phone -->
+                <div class="profile-form-group">
+                    <label>Phone Number</label>
+                    <input type="tel"
+                           name="PhoneNumber"
+                           value="@Model.PhoneNumber"
+                           class="profile-input"
+                           placeholder="+880 1XXX-XXXXXX" />
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="profile-form-group">
+                    <label>Date of Birth</label>
+                    <input type="date"
+                           name="DateOfBirth"
+                           value="@(Model.DateOfBirth?.ToString("yyyy-MM-dd"))"
+                           class="profile-input" />
+                </div>
+
+                <!-- Gender -->
+                <div class="profile-form-group">
+                    <label>Gender</label>
+                    <select name="Gender" class="profile-input">
+                        <option value="">Select...</option>
+                        <option value="Male" selected="@(Model.Gender == "Male")">Male</option>
+                        <option value="Female" selected="@(Model.Gender == "Female")">Female</option>
+                        <option value="Other" selected="@(Model.Gender == "Other")">Other</option>
+                    </select>
+                </div>
+
+                <!-- Timezone -->
+                <div class="profile-form-group">
+                    <label>Timezone</label>
+                    <select name="Timezone" class="profile-input">
+                        <option value="UTC" selected="@(Model.Timezone == "UTC")">UTC</option>
+                        <option value="Asia/Dhaka" selected="@(Model.Timezone == "Asia/Dhaka")">Asia/Dhaka (BST)</option>
+                        <option value="Asia/Kolkata" selected="@(Model.Timezone == "Asia/Kolkata")">Asia/Kolkata (IST)</option>
+                        <option value="America/New_York" selected="@(Model.Timezone == "America/New_York")">America/New York (EST)</option>
+                        <option value="Europe/London" selected="@(Model.Timezone == "Europe/London")">Europe/London (GMT)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="profile-form-actions">
+                <button type="submit" class="profile-btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         style="vertical-align:-2px;margin-right:6px;">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13 7 21" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    Save Changes
+                </button>
+                <a asp-action="Index" class="profile-btn-secondary">Cancel</a>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+}

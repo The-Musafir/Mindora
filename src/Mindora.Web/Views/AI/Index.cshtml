@@ -1,0 +1,57 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AI.AIWellnessCoachSessionDto>
+
+@{
+    ViewData["Title"] = "AI Wellness Coach";
+}
+
+<div class="container mt-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <h2 class="fw-bold">AI Wellness Coach</h2>
+        <div class="d-flex gap-2">
+            <a asp-action="Wellness" class="btn btn-outline-secondary btn-sm">Wellness Dashboard</a>
+            <a asp-action="Create" class="btn btn-primary btn-sm">+ New Session</a>
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No AI sessions yet. Start a conversation with your AI coach!</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var session in Model)
+            {
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="card ai-card h-100 shadow-sm border-0 w-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold">Session</h5>
+                                <span class="badge @(session.IsActive ? "bg-success" : "bg-secondary")">
+                                    @(session.IsActive ? "Active" : "Ended")
+                                </span>
+                            </div>
+
+                            <p class="text-muted small mb-1">
+                                <strong>Started:</strong> @session.StartedAt.ToString("g")
+                            </p>
+                            <p class="text-muted small flex-grow-1">
+                                <strong>Messages:</strong> @session.MessageCount
+                            </p>
+
+                            <div class="d-flex flex-wrap gap-2 mt-auto">
+                                <a asp-action="Chat" asp-route-id="@session.SessionId" class="btn btn-sm btn-outline-primary">Open Chat</a>
+                                @if (session.IsActive)
+                                {
+                                    <form asp-action="EndSession" asp-route-id="@session.SessionId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">End</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

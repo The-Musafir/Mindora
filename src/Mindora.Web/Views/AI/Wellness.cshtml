@@ -1,0 +1,81 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.AI.WellnessScoreDto>
+
+@{
+    ViewData["Title"] = "Wellness Dashboard";
+    var riskPredictions = ViewBag.RiskPredictions as IReadOnlyList<Mindora.Application.DTOs.AI.RiskPredictionDto>;
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">Wellness Dashboard</h2>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card text-center p-3 ai-card">
+                <strong>Latest Score</strong><br />
+                <span class="display-6">@(Model.FirstOrDefault()?.Score.ToString("F0") ?? "N/A")</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3 ai-card">
+                <strong>Category</strong><br />
+                <span class="display-6">@(Model.FirstOrDefault()?.Category ?? "N/A")</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3 ai-card">
+                <strong>Risk Predictions</strong><br />
+                <span class="display-6">@(riskPredictions?.Count ?? 0)</span>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="fw-bold mb-3">Wellness History</h5>
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No wellness score yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Score</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var score in Model)
+                    {
+                        <tr>
+                            <td>@score.CalculatedAt.ToShortDateString()</td>
+                            <td>@score.Score</td>
+                            <td><span class="badge bg-primary">@score.Category</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <h5 class="fw-bold mt-4 mb-3">Risk Predictions</h5>
+    @if (riskPredictions == null || riskPredictions.Count == 0)
+    {
+        <div class="alert alert-info">No risk predictions yet.</div>
+    }
+    else
+    {
+        <ul class="list-group">
+            @foreach (var risk in riskPredictions)
+            {
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>@risk.PredictedAt.ToShortDateString() - @risk.RiskLevel</span>
+                    <span class="badge @(risk.RiskLevel == "High" ? "bg-danger" : risk.RiskLevel == "Moderate" ? "bg-warning text-dark" : "bg-success")">
+                        @risk.Probability.ToString("P0")
+                    </span>
+                </li>
+            }
+        </ul>
+    }
+</div>

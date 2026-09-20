@@ -1,0 +1,45 @@
+﻿@model Mindora.Application.DTOs.Community.GroupResponse
+
+@{
+    ViewData["Title"] = Model.Name;
+    var members = ViewBag.Members as IReadOnlyList<Mindora.Application.DTOs.Community.GroupMemberDto>;
+}
+
+<div class="container mt-4" style="max-width: 900px;">
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h2 class="fw-bold">@Model.Name</h2>
+            <p class="text-muted">@Model.Description</p>
+        </div>
+        <a asp-action="Groups" class="btn btn-sm btn-outline-secondary">Back to Groups</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h5 class="fw-bold mb-3">Group Posts</h5>
+            @if (Model.PostCount == 0)
+            {
+                <div class="alert alert-info">No posts in this group yet.</div>
+            }
+            else
+            {
+                <p>Posts loading coming soon...</p>
+            }
+        </div>
+        <div class="col-md-4">
+            <h5 class="fw-bold mb-3">Members (@Model.MemberCount)</h5>
+            @if (members != null && members.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var member in members)
+                    {
+                        <li class="list-group-item d-flex justify-content-between">
+                            @member.UserName
+                            <span class="text-muted small">Joined @member.JoinedAt.ToShortDateString()</span>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+﻿@model Mindora.Application.DTOs.Assessment.UserAssessmentHistoryDto
+
+@{
+    ViewData["Title"] = "Assessment Result";
+    var assessmentId = ViewBag.AssessmentId as Guid?;
+
+    var severityClass = Model.SeverityLevel switch
+    {
+        "Low" => "low",
+        "Moderate" => "moderate",
+        "High" => "high",
+        _ => "low"
+    };
+
+    var severityIcon = Model.SeverityLevel switch
+    {
+        "Low" => "✓",
+        "Moderate" => "!",
+        "High" => "⚠",
+        _ => "○"
+    };
+}
+
+<div class="container py-4" style="max-width: 720px;">
+
+    <div class="assessment-result-card @severityClass">
+
+        <!-- DECORATION -->
+        <div class="assessment-result-decoration"></div>
+
+        <!-- HEADER -->
+        <div class="assessment-result-header">
+            <div class="assessment-result-icon @severityClass">
+                @severityIcon
+            </div>
+            <p class="assessment-result-label">Your Result</p>
+            <h1 class="assessment-result-title">@Model.QuestionnaireTitle</h1>
+        </div>
+
+        <!-- SCORE -->
+        <div class="assessment-result-score @severityClass">
+            <div class="assessment-result-score-value">@Model.TotalScore</div>
+            <div class="assessment-result-score-label">Total Score</div>
+        </div>
+
+        <!-- SEVERITY -->
+        <div class="assessment-result-severity">
+            <div class="assessment-result-severity-badge @severityClass">
+                @Model.SeverityLevel Risk
+            </div>
+        </div>
+
+        <!-- INTERPRETATION -->
+        @if (!string.IsNullOrEmpty(Model.Interpretation))
+        {
+            <div class="assessment-result-interpretation">
+                <p>@Model.Interpretation</p>
+            </div>
+        }
+
+        <!-- DISCLAIMER -->
+        <div class="assessment-result-disclaimer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>This is a screening tool, not a medical diagnosis. Please consult a professional if concerned.</span>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="assessment-result-actions">
+            <a asp-action="History" class="assessment-action-btn secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                </svg>
+                View History
+            </a>
+            <a asp-action="Index" class="assessment-action-btn primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4" />
+                    <path d="M12 2v14" />
+                    <polyline points="9 5 12 2 15 5" />
+                </svg>
+                Take Another
+            </a>
+        </div>
+    </div>
+
+</div>

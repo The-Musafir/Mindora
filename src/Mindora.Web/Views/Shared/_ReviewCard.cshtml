@@ -1,0 +1,31 @@
+﻿@model Mindora.Application.DTOs.Professional.ReviewDto
+
+<div class="review-card">
+    <div class="review-header">
+
+        @if (!string.IsNullOrEmpty(Model.UserId.ToString()))
+        {
+            <a href="/u/@Model.UserId" class="review-author">
+                <div class="review-author-avatar">
+                    @(Model.ReviewerName?.Substring(0, 1).ToUpper() ?? "U")
+                </div>
+                <div class="review-author-info">
+                    <span class="review-author-name">@Model.ReviewerName</span>
+                    <span class="review-date">@Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+                </div>
+            </a>
+        }
+
+        <div class="review-rating">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <span class="@(i <= Model.Rating ? "star-filled" : "star-empty")">★</span>
+            }
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Comment))
+    {
+        <p class="review-comment">"@Model.Comment"</p>
+    }
+</div>

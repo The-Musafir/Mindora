@@ -1,0 +1,56 @@
+﻿@model Mindora.Application.DTOs.Professional.UpdateProviderRequest
+
+@{
+    ViewData["Title"] = "Edit Professional Profile";
+    var specialties = ViewBag.Specialties as IReadOnlyList<Mindora.Application.DTOs.Professional.SpecialtyDto>;
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="fw-bold mb-4">Edit Professional Profile</h2>
+
+    <form asp-action="Edit" method="post">
+        <input asp-for="ProviderId" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Bio" class="form-label"></label>
+            <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="LicenseNumber" class="form-label"></label>
+                <input asp-for="LicenseNumber" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="YearsOfExperience" class="form-label"></label>
+                <input asp-for="YearsOfExperience" type="number" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+            <label asp-for="IsActive" class="form-check-label">Active</label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Specialties</label>
+            <div class="d-flex flex-wrap gap-3">
+                @if (specialties != null)
+                {
+                    @foreach (var specialty in specialties)
+                    {
+                        bool isChecked = Model.SpecialtyIds.Contains(specialty.SpecialtyId);
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="SpecialtyIds" value="@specialty.SpecialtyId" id="spec_@specialty.SpecialtyId" checked="@isChecked" />
+                            <label class="form-check-label" for="spec_@specialty.SpecialtyId">@specialty.Name</label>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Details" asp-route-id="@Model.ProviderId" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

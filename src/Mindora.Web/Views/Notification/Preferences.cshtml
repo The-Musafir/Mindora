@@ -1,0 +1,69 @@
+﻿@model Mindora.Application.DTOs.Notification.NotificationPreferenceDto
+
+@{
+    ViewData["Title"] = "Notification Settings";
+}
+
+<div class="container mt-4" style="max-width: 650px;">
+    <h2 class="fw-bold mb-4">Notification Preferences</h2>
+
+    <form asp-action="Preferences" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Channels</h5>
+
+                <div class="form-check form-switch mb-2">
+                    <input asp-for="EmailEnabled" class="form-check-input" type="checkbox" />
+                    <label asp-for="EmailEnabled" class="form-check-label">Email Notifications</label>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input asp-for="PushEnabled" class="form-check-input" type="checkbox" />
+                    <label asp-for="PushEnabled" class="form-check-label">Push Notifications</label>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input asp-for="InAppEnabled" class="form-check-input" type="checkbox" />
+                    <label asp-for="InAppEnabled" class="form-check-label">In-App Notifications</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Quiet Hours</h5>
+
+                <div class="form-check form-switch mb-3">
+                    <input asp-for="QuietHoursEnabled" class="form-check-input" type="checkbox" />
+                    <label asp-for="QuietHoursEnabled" class="form-check-label">Enable Quiet Hours</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="QuietHoursStart" class="form-label">Start Time</label>
+                        <input asp-for="QuietHoursStart" type="time" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="QuietHoursEnd" class="form-label">End Time</label>
+                        <input asp-for="QuietHoursEnd" type="time" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3">Frequency</h5>
+
+                <select asp-for="Frequency" class="form-select">
+                    <option value="RealTime">Real Time</option>
+                    <option value="DailyDigest">Daily Digest</option>
+                    <option value="WeeklySummary">Weekly Summary</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Preferences</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,68 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Reporting.ReportTemplateDto>
+
+@{
+    ViewData["Title"] = "Report Templates";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Report Templates</h2>
+        <a asp-action="Create" class="btn btn-primary btn-sm">+ New Template</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-info">No templates yet.</div>
+    }
+    else
+    {
+        <div class="reporting-card shadow-sm">
+            <div class="table-responsive">
+                <table class="table reporting-table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Key</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Format</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var t in Model)
+                        {
+                            <tr>
+                                <td><code>@t.TemplateKey</code></td>
+                                <td>@t.Name</td>
+                                <td>@t.Category</td>
+                                <td>@t.DefaultFormat</td>
+                                <td>
+                                    <span class="reporting-badge @(t.IsActive ? "bg-success text-white" : "bg-secondary text-white")">
+                                        @(t.IsActive ? "Active" : "Inactive")
+                                    </span>
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@t.TemplateId" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <form asp-action="ToggleActive" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="templateId" value="@t.TemplateId" />
+                                        <button type="submit" name="isActive" value="@(!t.IsActive)"
+                                                class="btn btn-sm @(t.IsActive ? "btn-outline-secondary" : "btn-outline-success")">
+                                            @(t.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
+                                    <form asp-action="Delete" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="templateId" value="@t.TemplateId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

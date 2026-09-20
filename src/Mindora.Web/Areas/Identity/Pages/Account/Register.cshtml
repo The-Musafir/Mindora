@@ -1,0 +1,431 @@
+@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up | Mindora</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+            .register-page {
+                min-height: 100vh;
+                background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 40px 20px;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .register-card {
+                background: #FFFFFF;
+                border-radius: 24px;
+                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+                width: 100%;
+                max-width: 720px;
+                padding: 48px 56px;
+            }
+
+            .register-header {
+                text-align: center;
+                margin-bottom: 32px;
+            }
+
+                .register-header img {
+                    height: 52px;
+                    margin-bottom: 16px;
+                }
+
+                .register-header h1 {
+                    font-size: 26px;
+                    font-weight: 700;
+                    color: #0F172A;
+                    margin-bottom: 6px;
+                    letter-spacing: -0.02em;
+                }
+
+                .register-header p {
+                    color: #64748B;
+                    font-size: 14px;
+                    margin: 0;
+                }
+
+            .social-container {
+                display: flex;
+                justify-content: center;
+                gap: 14px;
+                margin-bottom: 8px;
+            }
+
+                .social-container .social {
+                    width: 44px;
+                    height: 44px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1.5px solid #E2E8F0;
+                    border-radius: 12px;
+                    color: #334155;
+                    font-size: 18px;
+                    text-decoration: none;
+                    transition: all 0.25s ease;
+                    background: #FFFFFF;
+                }
+
+                    .social-container .social:hover {
+                        border-color: #06B6D4;
+                        color: #06B6D4;
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 16px rgba(6, 182, 212, 0.15);
+                    }
+
+            .social-coming-soon {
+                display: block;
+                text-align: center;
+                font-size: 11px;
+                color: #94A3B8;
+                margin-bottom: 20px;
+                font-style: italic;
+            }
+
+            .divider {
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: #94A3B8;
+                font-size: 12px;
+                margin: 20px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+                .divider::before,
+                .divider::after {
+                    content: '';
+                    flex: 1;
+                    height: 1px;
+                    background: #E2E8F0;
+                }
+
+                .divider span {
+                    padding: 0 14px;
+                }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+                .form-group label {
+                    display: block;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #334155;
+                    margin-bottom: 6px;
+                }
+
+                    .form-group label .required {
+                        color: #EF4444;
+                    }
+
+            .form-control-custom {
+                width: 100%;
+                padding: 12px 16px;
+                border: 1.5px solid #E2E8F0;
+                border-radius: 12px;
+                font-size: 14px;
+                font-family: 'Poppins', sans-serif;
+                color: #0F172A;
+                background: #FFFFFF;
+                transition: all 0.2s ease;
+                outline: none;
+            }
+
+                .form-control-custom:focus {
+                    border-color: #06B6D4;
+                    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+                }
+
+                .form-control-custom::placeholder {
+                    color: #94A3B8;
+                }
+
+            .field-validation-error {
+                display: block;
+                font-size: 12px;
+                color: #EF4444;
+                margin-top: 4px;
+            }
+
+            .gender-group {
+                display: flex;
+                gap: 10px;
+            }
+
+            .gender-option {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                padding: 10px 14px;
+                border: 1.5px solid #E2E8F0;
+                border-radius: 12px;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 500;
+                color: #334155;
+                transition: all 0.2s ease;
+                background: #FFFFFF;
+            }
+
+                .gender-option:hover {
+                    border-color: #06B6D4;
+                    color: #06B6D4;
+                }
+
+                .gender-option input[type="radio"] {
+                    display: none;
+                }
+
+                .gender-option:has(input:checked) {
+                    border-color: #06B6D4;
+                    background: rgba(6, 182, 212, 0.06);
+                    color: #06B6D4;
+                }
+
+            .consent-box {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                font-size: 12px;
+                color: #64748B;
+                margin: 12px 0 20px;
+                line-height: 1.5;
+            }
+
+                .consent-box input[type="checkbox"] {
+                    margin-top: 3px;
+                    accent-color: #06B6D4;
+                    width: 16px;
+                    height: 16px;
+                    flex-shrink: 0;
+                }
+
+                .consent-box a {
+                    color: #06B6D4;
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+
+                    .consent-box a:hover {
+                        text-decoration: underline;
+                    }
+
+            .btn-submit {
+                width: 100%;
+                padding: 14px;
+                background: linear-gradient(135deg, #06B6D4, #0891B2);
+                border: none;
+                border-radius: 12px;
+                color: #FFFFFF;
+                font-size: 15px;
+                font-weight: 600;
+                font-family: 'Poppins', sans-serif;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                letter-spacing: 0.02em;
+            }
+
+                .btn-submit:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 24px rgba(6, 182, 212, 0.3);
+                }
+
+            .login-link {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 13px;
+                color: #64748B;
+            }
+
+                .login-link a {
+                    color: #06B6D4;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                    .login-link a:hover {
+                        text-decoration: underline;
+                    }
+
+            .validation-summary-errors {
+                background: rgba(239, 68, 68, 0.08);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                border-radius: 12px;
+                padding: 12px 16px;
+                font-size: 13px;
+                color: #DC2626;
+                margin-bottom: 20px;
+            }
+
+                .validation-summary-errors ul {
+                    margin: 0;
+                    padding-left: 18px;
+                }
+
+            @@media (max-width: 640px) {
+                .register-card {
+                    padding: 32px 24px;
+                    border-radius: 20px;
+                }
+
+                .register-header h1 {
+                    font-size: 22px;
+                }
+
+                .form-row {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                }
+            }
+    </style>
+</head>
+<body>
+
+    <div class="register-page">
+        <div class="register-card">
+
+            <div class="register-header">
+                <img src="/images/logo/Mindora-Logo.svg" alt="Mindora" />
+                <h1>Create Your Account</h1>
+                <p>Join Mindora and start your wellness journey</p>
+            </div>
+
+            <!-- Social buttons -->
+            <div class="social-container">
+                <a href="#" class="social" title="Google"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" class="social" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <span class="social-coming-soon">Social sign up coming soon</span>
+
+            <div class="divider"><span>or continue with email</span></div>
+
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="validation-summary-errors" role="alert"></div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label asp-for="Input.DisplayName">Full Name <span class="required">*</span></label>
+                    <input asp-for="Input.DisplayName" class="form-control-custom" placeholder="Enter your full name" />
+                    <span asp-validation-for="Input.DisplayName" class="field-validation-error"></span>
+                </div>
+
+                <!-- Email + Phone -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="Input.Email">Email <span class="required">*</span></label>
+                        <input asp-for="Input.Email" type="email" class="form-control-custom" placeholder="you@example.com" autocomplete="email" />
+                        <span asp-validation-for="Input.Email" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.PhoneNumber">Phone <span class="required">*</span></label>
+                        <input asp-for="Input.PhoneNumber" type="tel" class="form-control-custom" placeholder="+880 1XXX-XXXXXX" autocomplete="tel" />
+                        <span asp-validation-for="Input.PhoneNumber" class="field-validation-error"></span>
+                    </div>
+                </div>
+
+                <!-- DOB + Gender -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="Input.DateOfBirth">Date of Birth <span class="required">*</span></label>
+                        <input asp-for="Input.DateOfBirth" type="date" class="form-control-custom" />
+                        <span asp-validation-for="Input.DateOfBirth" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <div class="gender-group">
+                            <label class="gender-option">
+                                <input asp-for="Input.Gender" type="radio" value="Male" />
+                                <span>Male</span>
+                            </label>
+                            <label class="gender-option">
+                                <input asp-for="Input.Gender" type="radio" value="Female" />
+                                <span>Female</span>
+                            </label>
+                            <label class="gender-option">
+                                <input asp-for="Input.Gender" type="radio" value="Other" />
+                                <span>Other</span>
+                            </label>
+                        </div>
+                        <span asp-validation-for="Input.Gender" class="field-validation-error"></span>
+                    </div>
+                </div>
+
+                <!-- Password + Confirm -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="Input.Password">Password <span class="required">*</span></label>
+                        <input asp-for="Input.Password" type="password" class="form-control-custom" placeholder="At least 8 characters" autocomplete="new-password" />
+                        <span asp-validation-for="Input.Password" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword">Confirm Password <span class="required">*</span></label>
+                        <input asp-for="Input.ConfirmPassword" type="password" class="form-control-custom" placeholder="Re-enter password" autocomplete="new-password" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="field-validation-error"></span>
+                    </div>
+                </div>
+
+                <!-- Consent -->
+                <label class="consent-box">
+                    <input asp-for="Input.AcceptTerms" type="checkbox" />
+                    <span>
+                        I agree to Mindora's <a href="/terms" target="_blank">Terms of Service</a>
+                        and <a href="/privacy" target="_blank">Privacy Policy</a>. I understand that my data will be
+                        used to personalize my wellness experience.
+                    </span>
+                </label>
+                <span asp-validation-for="Input.AcceptTerms" class="field-validation-error" style="margin-top:-12px; margin-bottom:12px; display:block;"></span>
+
+                <!-- Submit -->
+                <button type="submit" class="btn-submit">CREATE ACCOUNT</button>
+
+                <div class="login-link">
+                    Already have an account? <a asp-page="./Login">Sign in</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@model Mindora.Application.DTOs.Reporting.CreateGeneratedReportRequest
+
+@{
+    ViewData["Title"] = "Create Report";
+    var templates = ViewBag.Templates as IReadOnlyList<Mindora.Application.DTOs.Reporting.ReportTemplateDto>;
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="fw-bold mb-4">Request Report</h2>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label class="form-label">Report Template</label>
+            <select id="templateSelect" class="form-select">
+                <option value="">-- Select Template --</option>
+                @if (templates != null)
+                {
+                    @foreach (var t in templates)
+                    {
+                        <option value="@t.TemplateKey" data-format="@t.DefaultFormat">@t.Name (@t.Category)</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ReportType" class="form-label">Report Type</label>
+            <input asp-for="ReportType" class="form-control" id="reportType" />
+            <small class="text-muted">
+                Selecting a template auto-fills this field. Or type manually, e.g. RevenueReport, UserGrowthReport.
+            </small>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Format" class="form-label">Format</label>
+            <select asp-for="Format" class="form-select" id="formatSelect">
+                <option value="CSV">CSV</option>
+                <option value="Excel">Excel</option>
+                <option value="PDF">PDF</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FromDate" class="form-label">From Date</label>
+                <input asp-for="FromDate" class="form-control" type="date" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="ToDate" class="form-label">To Date</label>
+                <input asp-for="ToDate" class="form-control" type="date" />
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('templateSelect').addEventListener('change', function () {
+            const option = this.options[this.selectedIndex];
+            document.getElementById('reportType').value = option.value || '';
+            const fmt = option.getAttribute('data-format');
+            if (fmt) document.getElementById('formatSelect').value = fmt;
+        });
+    </script>
+}

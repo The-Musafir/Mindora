@@ -1,0 +1,176 @@
+﻿@model Mindora.Application.DTOs.Analytics.AdminAnalyticsFullDto
+
+@{
+    ViewData["Title"] = "Platform Analytics";
+}
+
+<div class="container mt-4">
+    <!-- Header with buttons -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Platform Analytics</h2>
+        <div class="d-flex gap-2">
+            <form asp-action="GenerateSnapshot" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-warning btn-sm">Generate Snapshot Now</button>
+            </form>
+            <a asp-controller="Report" asp-action="DownloadAdminAnalytics" class="btn btn-outline-primary btn-sm">
+                Download CSV
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SnapshotMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SnapshotMessage"]</div>
+    }
+
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Total Users</div>
+                <div class="analytics-kpi-value">@Model.TotalUsers</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">New Users (Month)</div>
+                <div class="analytics-kpi-value text-success">@Model.NewUsersThisMonth</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Active Users (Week)</div>
+                <div class="analytics-kpi-value text-primary">@Model.ActiveUsersThisWeek</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Total Revenue</div>
+                <div class="analytics-kpi-value text-success">@Model.TotalRevenue.ToString("C")</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Monthly Revenue</div>
+                <div class="analytics-kpi-value">@Model.MonthlyRevenue.ToString("C")</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">ARPU</div>
+                <div class="analytics-kpi-value">@Model.AverageRevenuePerUser.ToString("C")</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Active Subscriptions</div>
+                <div class="analytics-kpi-value text-info">@Model.ActiveSubscriptions</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Professionals</div>
+                <div class="analytics-kpi-value">@Model.TotalProfessionals</div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Community Posts</div>
+                <div class="analytics-kpi-value">@Model.TotalCommunityPosts</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Assessments Taken</div>
+                <div class="analytics-kpi-value">@Model.TotalAssessmentsTaken</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">AI Conversations</div>
+                <div class="analytics-kpi-value">@Model.TotalAIConversations</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="analytics-kpi-card shadow-sm">
+                <div class="analytics-kpi-label">Appointments (Month)</div>
+                <div class="analytics-kpi-value">@Model.AppointmentsThisMonth</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="analytics-chart-card shadow-sm">
+                <div class="analytics-chart-title">User Growth (Last 30 Days)</div>
+                <div class="analytics-chart-wrapper">
+                    <canvas id="userGrowthChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="analytics-chart-card shadow-sm">
+                <div class="analytics-chart-title">Revenue Trend (Last 30 Days)</div>
+                <div class="analytics-chart-wrapper">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // User Growth Chart
+        const userGrowth = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.UserGrowthTrend));
+        new Chart(document.getElementById('userGrowthChart'), {
+            type: 'line',
+            data: {
+                labels: userGrowth.map(u => u.Date.split('T')[0]),
+                datasets: [{
+                    label: 'Total Users',
+                    data: userGrowth.map(u => u.TotalUsers),
+                    borderColor: '#4F46E5',
+                    backgroundColor: 'rgba(79,70,229,0.1)',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'New Users',
+                    data: userGrowth.map(u => u.NewUsers),
+                    borderColor: '#F59E0B',
+                    backgroundColor: 'rgba(245,158,11,0.1)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } }
+            }
+        });
+
+        // Revenue Chart
+        const revenue = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.RevenueTrend));
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'bar',
+            data: {
+                labels: revenue.map(r => r.Date.split('T')[0]),
+                datasets: [{
+                    label: 'Revenue',
+                    data: revenue.map(r => r.Revenue),
+                    backgroundColor: '#06B6D4'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+}

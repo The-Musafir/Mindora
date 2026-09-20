@@ -1,0 +1,114 @@
+﻿/* ============================================================
+   Mindora — Theme (Minimal, Safe)
+   ============================================================ */
+
+/* Global transitions */
+body, .card, .mindora-navbar, .mindora-sidebar, .mindora-footer {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode toggle icons */
+.theme-icon-light, .theme-icon-dark {
+    transition: opacity 0.2s ease;
+}
+
+[data-theme="light"] .theme-icon-dark {
+    display: none;
+}
+
+[data-theme="dark"] .theme-icon-light {
+    display: none;
+}
+
+/* Layout shift */
+body.mindora-with-sidebar .mindora-main-content {
+    margin-left: 260px;
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+body.mindora-with-sidebar.mindora-sidebar-collapsed .mindora-main-content {
+    margin-left: 72px;
+}
+
+body.mindora-with-sidebar .mindora-footer {
+    margin-left: 260px;
+    position: relative;
+    z-index: 1;
+}
+
+body.mindora-with-sidebar.mindora-sidebar-collapsed .mindora-footer {
+    margin-left: 72px;
+}
+
+body:not(.mindora-with-sidebar) .mindora-main-content {
+    margin-left: 0;
+    padding-top: 80px;
+}
+
+body:not(.mindora-with-sidebar) .mindora-footer {
+    margin-left: 0;
+}
+
+@media (max-width: 991px) {
+    body.mindora-with-sidebar .mindora-main-content,
+    body.mindora-with-sidebar .mindora-footer {
+        margin-left: 0;
+    }
+}
+
+/* Avatar images */
+.mindora-avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(6, 182, 212, 0.2);
+}
+
+.mindora-sidebar-avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFFFFF;
+}
+
+/* Member text */
+.mindora-member-text {
+    font-size: 14px;
+    font-weight: 500;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Scroll anchor */
+[id] {
+    scroll-margin-top: 90px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* User dropdown */
+.mindora-user-dropdown {
+    min-width: 240px;
+    padding: 6px;
+}
+
+    .mindora-user-dropdown .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .mindora-user-dropdown .dropdown-header {
+        padding: 10px 12px 6px;
+        font-size: 13px;
+    }

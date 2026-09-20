@@ -1,0 +1,65 @@
+﻿@model IReadOnlyList<Mindora.Application.DTOs.Follow.FollowUserDto>
+@{
+    ViewData["Title"] = $"Followers · {ViewBag.DisplayName}";
+    var userId = (Guid)ViewBag.UserId;
+    var displayName = (string)ViewBag.DisplayName;
+    var avatarUrl = ViewBag.AvatarUrl as string;
+    var isOwnProfile = (bool)ViewBag.IsOwnProfile;
+}
+
+<div class="profile-page">
+    <div class="profile-card">
+        <div class="profile-tabs">
+            <a asp-action="Public" asp-route-id="@userId" class="profile-tab">Profile</a>
+            <a asp-action="Followers" asp-route-id="@userId" class="profile-tab active">Followers</a>
+            <a asp-action="Following" asp-route-id="@userId" class="profile-tab">Following</a>
+        </div>
+
+        <div class="profile-section-header mt-4">
+            <h2>@displayName's Followers</h2>
+            <p class="profile-section-subtitle">
+                @Model.Count @(Model.Count == 1 ? "person" : "people") follow @displayName
+            </p>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="profile-empty-state">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                     style="opacity:.25;margin-bottom:16px;">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+                <h5>No followers yet</h5>
+                <p class="text-muted">When people follow, they'll appear here.</p>
+            </div>
+        }
+        else
+        {
+            <div class="follow-user-list">
+                @foreach (var user in Model)
+                {
+                    <a asp-action="Public" asp-route-id="@user.UserId" class="follow-user-item">
+                        @if (!string.IsNullOrEmpty(user.AvatarUrl))
+                        {
+                            <img src="@user.AvatarUrl" alt="@user.DisplayName" class="follow-user-avatar-img" />
+                        }
+                        else
+                        {
+                            <div class="follow-user-avatar">@user.Initial</div>
+                        }
+
+                        <div class="follow-user-info">
+                            <div class="follow-user-name">@user.DisplayName</div>
+                            @if (!string.IsNullOrEmpty(user.Bio))
+                            {
+                                <div class="follow-user-bio">@user.Bio</div>
+                            }
+                        </div>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</div>

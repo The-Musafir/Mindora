@@ -1,0 +1,24 @@
+﻿@model Mindora.Application.DTOs.AdminDashboard.AdminProfessionalDto
+
+@{
+    ViewData["Title"] = "Professional Details";
+}
+
+<div class="container mt-4" style="max-width: 700px;">
+    <h2 class="fw-bold mb-4">Professional Details</h2>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <p><strong>Name:</strong> @Model.FullName</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>License:</strong> @Model.LicenseNumber</p>
+            <p><strong>Experience:</strong> @Model.YearsOfExperience years</p>
+            <p><strong>Status:</strong> @(Model.IsActive ? "Active" : "Suspended")</p>
+            <p><strong>Verified:</strong> @(Model.IsVerified ? "Yes" : "No")</p>
+            <p><strong>Specialties:</strong> @string.Join(", ", Model.Specialties)</p>
+            <p><strong>Created:</strong> @Model.CreatedAt.ToString("g")</p>
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-secondary mt-3">Back</a>
+</div>

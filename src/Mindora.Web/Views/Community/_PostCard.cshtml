@@ -1,0 +1,78 @@
+﻿@model Mindora.Application.DTOs.Community.PostResponse
+@{
+    var authorLink = !Model.IsAnonymous ? "/u/" + Model.UserId : null;
+    var avatarInitial = !string.IsNullOrEmpty(Model.AuthorName)
+        ? Model.AuthorName.Substring(0, 1).ToUpper()
+        : "U";
+}
+
+<article class="community-post-card">
+
+    <!-- Author header -->
+    <div class="community-post-header">
+
+        @if (!Model.IsAnonymous)
+        {
+            <a href="@authorLink" class="community-post-author">
+                <div class="community-post-avatar">@avatarInitial</div>
+                <div class="community-post-author-info">
+                    <span class="community-post-author-name">@Model.AuthorName</span>
+                    <span class="community-post-date">@Model.CreatedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                </div>
+            </a>
+        }
+        else
+        {
+            <div class="community-post-author community-post-anonymous">
+                <div class="community-post-avatar">?</div>
+                <div class="community-post-author-info">
+                    <span class="community-post-author-name">Anonymous</span>
+                    <span class="community-post-date">@Model.CreatedAt.ToString("MMM dd, yyyy · HH:mm")</span>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Category))
+        {
+            <span class="community-post-category">@Model.Category</span>
+        }
+    </div>
+
+    <!-- Title + Body -->
+    <div class="community-post-body">
+        <h3 class="community-post-title">
+            <a asp-controller="Community"
+               asp-action="Details"
+               asp-route-id="@Model.PostId">
+                @Model.Title
+            </a>
+        </h3>
+        <p class="community-post-excerpt">
+            @(Model.Body.Length > 200 ? Model.Body.Substring(0, 200) + "..." : Model.Body)
+        </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="community-post-footer">
+        <span class="community-post-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+            </svg>
+            @Model.LikeCount
+        </span>
+        <span class="community-post-stat">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            @Model.CommentCount
+        </span>
+        <a asp-controller="Community"
+           asp-action="Details"
+           asp-route-id="@Model.PostId"
+           class="community-post-readmore">
+            Read more →
+        </a>
+    </div>
+</article>
