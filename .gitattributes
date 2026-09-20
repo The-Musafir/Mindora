@@ -1,0 +1,92 @@
+﻿# ============================================================
+# Mindora — Git attributes
+# ============================================================
+# Normalize line endings across platforms.
+# See https://git-scm.com/docs/gitattributes
+# ============================================================
+
+# Auto-detect text files and normalize to LF in the repository
+* text=auto eol=lf
+
+# ------------------------------------------------------------
+# Explicit LF for source files
+# ------------------------------------------------------------
+*.cs       text eol=lf
+*.csproj   text eol=lf
+*.slnx     text eol=lf
+*.json     text eol=lf
+*.md       text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+*.xml      text eol=lf
+*.config   text eol=lf
+*.sh       text eol=lf
+*.ps1      text eol=crlf
+*.cmd      text eol=crlf
+*.bat      text eol=crlf
+
+# ------------------------------------------------------------
+# Explicit CRLF for Windows-native scripts
+# ------------------------------------------------------------
+.gitattributes  text eol=lf
+.gitignore      text eol=lf
+.editorconfig   text eol=lf
+Dockerfile      text eol=lf
+
+# ------------------------------------------------------------
+# Binary files — never touch line endings
+# ------------------------------------------------------------
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.svg       text eol=lf
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.eot       binary
+*.pdf       binary
+*.zip       binary
+*.7z        binary
+*.gz        binary
+*.tar       binary
+*.dll       binary
+*.exe       binary
+*.pdb       binary
+*.so        binary
+*.dylib     binary
+*.mp3       binary
+*.mp4       binary
+*.wav       binary
+*.webp      binary
+
+# ------------------------------------------------------------
+# Database / migration files — treat as text
+# ------------------------------------------------------------
+*.sql       text eol=lf
+
+# ------------------------------------------------------------
+# Sensitive / local-only — never commit
+# ------------------------------------------------------------
+*.snk       binary
+*.pfx       binary
+*.p12       binary
+*.key       binary
+
+# ------------------------------------------------------------
+# Language-specific GitHub Linguist hints
+# ------------------------------------------------------------
+*.cs        linguist-language=C#
+*.cshtml    linguist-language=HTML+Razor
+*.razor     linguist-language=HTML+Razor
+
+# ------------------------------------------------------------
+# Diff behavior for generated / vendored files
+# ------------------------------------------------------------
+# Treat generated migrations as text but ignore in stats
+src/Mindora.Infrastructure/Migrations/**/*.Designer.cs  linguist-generated=true
+src/Mindora.Infrastructure/Migrations/*Snapshot.cs      linguist-generated=true
+
+# wwwroot/lib is vendored third-party code
+src/Mindora.Web/wwwroot/lib/**                          linguist-vendored=true
