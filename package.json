@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "PLACEHOLDER_PERSONAL_REPO_URL"
+    "url": "https://github.com/The-Musafir/Mindora"
   },
   "keywords": [
     "aspnet-core",
@@ -21,9 +21,9 @@
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "PLACEHOLDER_PERSONAL_REPO_URL/issues"
+    "url": "https://github.com/The-Musafir/Mindora/issues"
   },
-  "homepage": "PLACEHOLDER_PERSONAL_REPO_URL#readme",
+  "homepage": "https://github.com/The-Musafir/Mindora#readme",
   "devDependencies": {
     "@playwright/test": "^1.63.0"
   }
