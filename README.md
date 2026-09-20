@@ -622,72 +622,15 @@ Prefer environment variables or [.NET User Secrets](https://learn.microsoft.com/
 
 ---
 
-# 👥 The Bithix Team
+# 👨‍💻 Author
 
 <div align="center">
 
-Built by a team. Designed as a platform. Engineered for growth.
+**MD. Habibur Rahman**
 
-</div>
-
-<table>
-<tr>
-<td align="center" width="50%">
-
-### 👨‍💻 MD. HABIBUR RAHMAN
-**Project Leader**  
-Backend · AI · Database
+Backend · AI · Database · Clean Architecture
 
 [![GitHub](https://img.shields.io/badge/GitHub-The--Musafir-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/The-Musafir)
-
-</td>
-<td align="center" width="50%">
-
-### 👨‍💻 SOROUV
-**Backend Engineer**  
-Backend · AI · Database
-
-[![GitHub](https://img.shields.io/badge/GitHub-Sorouv2024-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sorouv2024)
-
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-
-### 👨‍💻 MOFASSAL HOQUE (JISHAN)
-**Frontend Engineer**  
-Frontend Development
-
-[![GitHub](https://img.shields.io/badge/GitHub-jishan053-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jishan053)
-
-</td>
-<td align="center" width="50%">
-
-### 👩‍💻 TRIPORNA
-**Frontend Engineer**  
-Frontend Development
-
-[![GitHub](https://img.shields.io/badge/GitHub-Triporna-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Triporna)
-
-</td>
-</tr>
-</table>
-
----
-
-# 🏢 Bithix
-
-<div align="center">
-
-[![Bithix](https://img.shields.io/badge/BITHIX-Engineering%20Organization-7C3AED?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Bithix)
-
-Mindora is being developed under the **Bithix** organization.
-
-[github.com/Bithix](https://github.com/Bithix)
-
-**Project:** Mindora  
-**Project Lead:** MD. HABIBUR RAHMAN  
-**Email:** bithix29@gmail.com
 
 </div>
 
@@ -706,16 +649,15 @@ This repository contains a `LICENSE` file. Refer to `LICENSE` for the project's 
 
 <br>
 
-<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=20&duration=2600&pause=800&color=7C3AED&center=true&vCenter=true&width=650&lines=Built+with+modern+.NET;Engineered+by+Bithix;Designed+for+human-centered+wellness;Growing+one+commit+at+a+time" alt="Mindora closing animation">
+<img src="https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=20&duration=2600&pause=800&color=7C3AED&center=true&vCenter=true&width=650&lines=Built+with+modern+.NET;Powered+by+Clean+Architecture;Designed+for+human-centered+wellness;Growing+one+commit+at+a+time" alt="Mindora closing animation">
 
 <br><br>
 
 [![Explore Mindora](https://img.shields.io/badge/⭐%20Explore%20Mindora-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/The-Musafir/Mindora)
-[![Contact Bithix](https://img.shields.io/badge/✉%20Contact%20Bithix-7C3AED?style=for-the-badge&logo=gmail&logoColor=white)](mailto:bithix29@gmail.com)
 
 <br><br>
 
-**Mindora — A Bithix Engineering Project**
+**Mindora — A Personal Engineering Project**
 
 <sub>Recover. Reflect. Rebuild.</sub>
 
