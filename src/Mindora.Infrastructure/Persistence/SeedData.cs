@@ -24,6 +24,7 @@ namespace Mindora.Infrastructure.Persistence
             await SeedProviderSpecialtiesAsync(dbContext, logger);
             await SeedDemoProviderAsync(dbContext, userManager, logger);
             await SeedSubscriptionPlansAsync(dbContext, logger);
+            await SeedBoredomActivitiesAsync(dbContext, logger);
         }
 
         private static async Task SeedRolesAsync(RoleManager<Role> roleManager, ILogger logger)
@@ -298,5 +299,49 @@ namespace Mindora.Infrastructure.Persistence
             await dbContext.SaveChangesAsync();
             logger.LogInformation("Seeded {Count} subscription plans.", plans.Count);
         }
+
+        private static async Task SeedBoredomActivitiesAsync(MindoraDbContext dbContext, ILogger logger)
+        {
+            if (await dbContext.BoredomRecoveryActivities.AnyAsync())
+            {
+                logger.LogInformation("Boredom activities already seeded. Skipping.");
+                return;
+            }
+
+            var jsonPath = Path.Combine(AppContext.BaseDirectory, "SeedData", "boredom-activities.json");
+            if (!File.Exists(jsonPath))
+            {
+                logger.LogWarning("Boredom activities JSON not found at {Path}. Skipping seed.", jsonPath);
+                return;
+            }
+
+            var json = await File.ReadAllTextAsync(jsonPath);
+            using var doc = System.Text.Json.JsonDocument.Parse(json);
+            var list = new List<BoredomRecoveryActivity>();
+
+            foreach (var el in doc.RootElement.EnumerateArray())
+            {
+                list.Add(new BoredomRecoveryActivity
+                {
+                    ActivityId = Guid.NewGuid(),
+                    Title = el.GetProperty("title").GetString() ?? "Untitled",
+                    Description = el.TryGetProperty("description", out var d) ? d.GetString() : null,
+                    Category = el.GetProperty("category").GetString() ?? "General",
+                    DurationMinutes = el.TryGetProperty("durationMinutes", out var dm) && dm.ValueKind != System.Text.Json.JsonValueKind.Null ? dm.GetInt32() : (int?)null,
+                    Emoji = el.TryGetProperty("emoji", out var em) ? em.GetString() : null,
+                    Trivia = el.TryGetProperty("trivia", out var tv) ? tv.GetString() : null,
+                    IsActive = true
+                });
+            }
+
+            dbContext.BoredomRecoveryActivities.AddRange(list);
+            await dbContext.SaveChangesAsync();
+            logger.LogInformation("Seeded {Count} boredom recovery activities.", list.Count);
+        }
     }
 }
+
+
+
+
+

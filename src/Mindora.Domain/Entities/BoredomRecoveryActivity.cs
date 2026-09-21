@@ -10,6 +10,8 @@ namespace Mindora.Domain.Entities
         public string? Description { get; set; }
         public string Category { get; set; } = string.Empty;
         public int? DurationMinutes { get; set; }
+        public string? Emoji { get; set; }
+        public string? Trivia { get; set; }
         public bool IsActive { get; set; } = true;
         public virtual ICollection<BoredomRecoverySession> Sessions { get; set; } = new List<BoredomRecoverySession>();
     }
