@@ -16,6 +16,8 @@ using Mindora.Web.Realtime;
 using Mindora.Web.Services;
 
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ============================================================
